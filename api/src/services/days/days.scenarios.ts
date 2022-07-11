@@ -1,17 +1,17 @@
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from "@prisma/client";
 
 export const standard = defineScenario<Prisma.DayCreateArgs>({
   day: {
     one: {
       data: {
-        date: '2022-07-07T00:07:04Z',
+        date: "2022-07-09T15:55:01Z",
         event: {
           create: {
             user: {
               create: {
-                phoneNumber: 'String8973083',
-                hashedPassword: 'String',
-                salt: 'String',
+                phoneNumber: "String3134198",
+                hashedPassword: "String",
+                salt: "String",
               },
             },
           },
@@ -20,14 +20,14 @@ export const standard = defineScenario<Prisma.DayCreateArgs>({
     },
     two: {
       data: {
-        date: '2022-07-07T00:07:04Z',
+        date: "2022-07-09T15:55:01Z",
         event: {
           create: {
             user: {
               create: {
-                phoneNumber: 'String9015930',
-                hashedPassword: 'String',
-                salt: 'String',
+                phoneNumber: "String8479577",
+                hashedPassword: "String",
+                salt: "String",
               },
             },
           },
@@ -35,6 +35,6 @@ export const standard = defineScenario<Prisma.DayCreateArgs>({
       },
     },
   },
-})
+});
 
-export type StandardScenario = typeof standard
+export type StandardScenario = typeof standard;

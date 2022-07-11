@@ -6,7 +6,12 @@ import type {
 
 import { db } from 'src/lib/db'
 
-export const days: QueryResolvers['days'] = () => {
+export const days: QueryResolvers['days'] = ({ eventId }) => {
+  if (eventId) {
+    return db.day.findMany({
+      where: { eventId: eventId },
+    })
+  }
   return db.day.findMany()
 }
 
@@ -20,6 +25,19 @@ export const createDay: MutationResolvers['createDay'] = ({ input }) => {
   return db.day.create({
     data: input,
   })
+}
+
+export const createDayWithTimes: MutationResolvers['createDayWithTimes'] = ({
+  dayInput,
+  times,
+}) => {
+  const res = db.day.create({
+    data: {
+      ...dayInput,
+      times: { create: times },
+    },
+  })
+  return res
 }
 
 export const updateDay: MutationResolvers['updateDay'] = ({ id, input }) => {

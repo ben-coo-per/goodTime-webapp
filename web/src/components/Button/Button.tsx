@@ -64,7 +64,7 @@ const Button = ({
     }
     const buttonSizing = () => {
       if (variant === 'icon') {
-        return 'p-2 h-min rounded-lg'
+        return 'p-1 h-min rounded-lg'
       }
       if (variant != 'link') {
         switch (size) {

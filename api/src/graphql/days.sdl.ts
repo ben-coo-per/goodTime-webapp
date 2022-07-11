@@ -3,19 +3,24 @@ export const schema = gql`
     id: Int!
     date: DateTime!
     createdAt: DateTime!
-    times: [Time]!
+    times: [TimeRange]!
     event: Event!
     eventId: Int!
   }
 
   type Query {
-    days: [Day!]! @requireAuth
-    day(id: Int!): Day @requireAuth
+    days(eventId: Int): [Day!]! @requireAuth
+    day(id: Int!): Day @skipAuth
   }
 
   input CreateDayInput {
     date: DateTime!
     eventId: Int!
+  }
+
+  input CreateTimeRangeForDayInput {
+    startTime: String!
+    endTime: String!
   }
 
   input UpdateDayInput {
@@ -25,6 +30,11 @@ export const schema = gql`
 
   type Mutation {
     createDay(input: CreateDayInput!): Day! @requireAuth
+    createDayWithTimes(
+      dayInput: CreateDayInput!
+      times: [CreateTimeRangeForDayInput!]
+    ): Day! @skipAuth
+
     updateDay(id: Int!, input: UpdateDayInput!): Day! @requireAuth
     deleteDay(id: Int!): Day! @requireAuth
   }
