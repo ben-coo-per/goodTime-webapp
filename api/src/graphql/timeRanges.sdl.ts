@@ -1,11 +1,11 @@
 export const schema = gql`
   type TimeRange {
     id: Int!
-    startTime: String!
-    endTime: String!
+    startTime: Int!
+    endTime: Int!
     createdAt: DateTime!
-    day: Day!
-    dayId: Int!
+    event: Event!
+    eventId: Int!
     userAvailabilities: [UserAvailability]!
   }
 
@@ -15,15 +15,15 @@ export const schema = gql`
   }
 
   input CreateTimeRangeInput {
-    startTime: String!
-    endTime: String!
-    dayId: Int!
+    startTime: Int!
+    endTime: Int!
+    eventId: Int!
   }
 
   input UpdateTimeRangeInput {
-    startTime: String
-    endTime: String
-    dayId: Int
+    startTime: Int
+    endTime: Int
+    eventId: Int
   }
 
   type Mutation {
@@ -32,4 +32,4 @@ export const schema = gql`
       @requireAuth
     deleteTimeRange(id: Int!): TimeRange! @requireAuth
   }
-`
+`;

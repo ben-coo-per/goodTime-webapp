@@ -1,5 +1,5 @@
 import { useAuth } from '@redwoodjs/auth'
-import { Form, Submit, TextField } from '@redwoodjs/forms'
+import { Form, TextField } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -15,12 +15,8 @@ const CREATE_EVENT_MUTATION = gql`
   }
 `
 
-// const CREATE_DAY_MUTATION = gql`
-
-// `
-
 const EventCreatePage = () => {
-  const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { isAuthenticated, currentUser } = useAuth()
   const [createEvent, { loading }] = useMutation<CreateEventMutation>(
     CREATE_EVENT_MUTATION,
     {
@@ -35,9 +31,13 @@ const EventCreatePage = () => {
   )
 
   function onSubmit(data) {
-    createEvent({
-      variables: { input: { name: data.eventName, userId: currentUser.id } },
-    })
+    if (isAuthenticated) {
+      createEvent({
+        variables: { input: { name: data.eventName, userId: currentUser.id } },
+      })
+    } else {
+      // TODO: Reroute to login page
+    }
   }
 
   return (
@@ -58,9 +58,9 @@ const EventCreatePage = () => {
             validation={{ required: true }}
           />
 
-          <Submit className="self-end">
-            <Button size="lg">Next</Button>
-          </Submit>
+          <Button size="lg" type="submit" disabled={loading}>
+            Next
+          </Button>
         </Form>
       </div>
     </>

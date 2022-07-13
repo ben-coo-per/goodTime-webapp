@@ -3,7 +3,7 @@ export const schema = gql`
     id: Int!
     name: String
     createdAt: DateTime!
-    days: [Day]!
+    times: [TimeRange]!
     user: User!
     userId: String!
   }
@@ -28,4 +28,4 @@ export const schema = gql`
     updateEvent(id: Int!, input: UpdateEventInput!): Event! @requireAuth
     deleteEvent(id: Int!): Event! @requireAuth
   }
-`
+`;

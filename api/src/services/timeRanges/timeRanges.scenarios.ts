@@ -1,23 +1,18 @@
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from "@prisma/client";
 
 export const standard = defineScenario<Prisma.TimeRangeCreateArgs>({
   timeRange: {
     one: {
       data: {
-        startTime: 'String',
-        endTime: 'String',
-        day: {
+        startTime: 1028643,
+        endTime: 2262296,
+        event: {
           create: {
-            date: '2022-07-07T00:13:55Z',
-            event: {
+            user: {
               create: {
-                user: {
-                  create: {
-                    phoneNumber: 'String2588008',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                  },
-                },
+                phoneNumber: "String3025754",
+                hashedPassword: "String",
+                salt: "String",
               },
             },
           },
@@ -26,20 +21,15 @@ export const standard = defineScenario<Prisma.TimeRangeCreateArgs>({
     },
     two: {
       data: {
-        startTime: 'String',
-        endTime: 'String',
-        day: {
+        startTime: 1501775,
+        endTime: 8933886,
+        event: {
           create: {
-            date: '2022-07-07T00:13:55Z',
-            event: {
+            user: {
               create: {
-                user: {
-                  create: {
-                    phoneNumber: 'String8532840',
-                    hashedPassword: 'String',
-                    salt: 'String',
-                  },
-                },
+                phoneNumber: "String2433747",
+                hashedPassword: "String",
+                salt: "String",
               },
             },
           },
@@ -47,6 +37,6 @@ export const standard = defineScenario<Prisma.TimeRangeCreateArgs>({
       },
     },
   },
-})
+});
 
-export type StandardScenario = typeof standard
+export type StandardScenario = typeof standard;

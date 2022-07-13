@@ -28,27 +28,18 @@ model Event {
   id          Int         @id @default(autoincrement())
   name        String?
   createdAt   DateTime    @default(now())
-  days        Day[]
+  times       TimeRange[]
   user        User        @relation(fields: [userId], references: [id])
   userId      String
 }
 
-model Day {
-  id          Int         @id @default(autoincrement())
-  date        DateTime
-  createdAt   DateTime    @default(now())
-  times       TimeRange[]
-  event       Event       @relation(fields: [eventId], references: [id])
-  eventId     Int
-}
-
 model TimeRange {
   id          Int         @id @default(autoincrement())
-  startTime   String
-  endTime     String
+  startTime   Int
+  endTime     Int
   createdAt   DateTime    @default(now())
-  day         Day         @relation(fields: [dayId], references: [id])
-  dayId       Int
+  event       Event       @relation(fields: [eventId], references: [id])
+  eventId       Int
 
   userAvailabilities    UserAvailability[]
 }

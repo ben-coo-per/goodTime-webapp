@@ -14,7 +14,7 @@ const WebAppLayout = ({ children }: WebAppLayoutProps) => {
           <div>Logo</div>
           <div>Account</div>
         </header>
-        <div className="container max-w-3xl mx-auto grid place-items-center h-full ">
+        <div className="container max-w-3xl mx-auto grid place-items-center h-full">
           <div className="p-4 sm:p-0 h-3/4 overflow-y-auto hidden-scrollbar">
             {children}
           </div>
