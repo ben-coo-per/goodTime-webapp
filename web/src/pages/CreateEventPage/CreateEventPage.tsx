@@ -58,7 +58,12 @@ const EventCreatePage = () => {
             validation={{ required: true }}
           />
 
-          <Button size="lg" type="submit" disabled={loading}>
+          <Button
+            size="lg"
+            type="submit"
+            disabled={loading}
+            additionalClasses="mt-2"
+          >
             Next
           </Button>
         </Form>

@@ -56,7 +56,7 @@
 }
 
 .calendar-table-cell {
-  @apply text-center p-2;
+  @apply text-center;
 
   /* Remove text-highlighting default behavior */
   -webkit-touch-callout: none;
@@ -68,6 +68,9 @@
 }
 
 td.calendar-table-cell {
-  @apply hover:bg-turquoise-200 cursor-pointer border border-dark-gray rounded;
+  @apply cursor-pointer border border-dark-gray rounded;
 }
 
+th {
+  @apply p-2
+  }

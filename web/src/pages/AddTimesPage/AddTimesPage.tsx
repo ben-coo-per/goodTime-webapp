@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Form } from '@redwoodjs/forms'
 // import { Link, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
@@ -21,7 +23,15 @@ import CalendarSelectionInput from 'src/components/CalendarSelectionInput/Calend
 //   }
 // `
 
+type SelectedTimeRange = {
+  startTime: string
+  endTime: string
+}
+
 const AddTimesPage = ({ id }: { id: number }) => {
+  const [selectedTimeRanges, setSelectedTimeRanges] = useState<
+    SelectedTimeRange[]
+  >([])
   // const [createDayWithTimes, { loading }] =
   //   useMutation<CreateDayWithTimesMutation>(CREATE_DAY_WITH_TIMES_MUTATION, {
   //     onCompleted: (event) => {
@@ -44,6 +54,8 @@ const AddTimesPage = ({ id }: { id: number }) => {
     //   },
     // })
   }
+
+  console.log('times: ', selectedTimeRanges)
 
   return (
     <>
