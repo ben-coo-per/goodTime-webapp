@@ -23,9 +23,9 @@ import CalendarSelectionInput from 'src/components/CalendarSelectionInput/Calend
 //   }
 // `
 
-type SelectedTimeRange = {
-  startTime: string
-  endTime: string
+export type SelectedTimeRange = {
+  startTime: number
+  endTime: number
 }
 
 const AddTimesPage = ({ id }: { id: number }) => {
@@ -69,7 +69,10 @@ const AddTimesPage = ({ id }: { id: number }) => {
             Let’s add some times that work for you.
           </h3>
           {/* <DayFormInput /> */}
-          <CalendarSelectionInput />
+          <CalendarSelectionInput
+            setTimeRanges={setSelectedTimeRanges}
+            timeRanges={selectedTimeRanges}
+          />
 
           <Button size="lg" additionalClasses="self-end" type="submit">
             Next

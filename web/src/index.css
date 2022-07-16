@@ -56,15 +56,7 @@
 }
 
 .calendar-table-cell {
-  @apply text-center;
-
-  /* Remove text-highlighting default behavior */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  @apply text-center select-none;
 }
 
 td.calendar-table-cell {
@@ -73,4 +65,4 @@ td.calendar-table-cell {
 
 th {
   @apply p-2
-  }
+}

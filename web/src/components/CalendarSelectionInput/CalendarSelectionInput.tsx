@@ -1,14 +1,28 @@
-import { useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
+import { SetStateAction } from 'react'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment from 'moment'
-type TimeIncrement = 15 | 30 | 60
+
+import { SelectedTimeRange } from 'src/pages/AddTimesPage/AddTimesPage'
+
+import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
+
+export type TimeIncrement = 15 | 30 | 60
 interface TimeCellProps {
   time: string
   colNum: number
 }
 
-const CalendarSelectionInput = () => {
+type CalendarSelectionInputProps = {
+  timeRanges: SelectedTimeRange[]
+  setTimeRanges: Dispatch<SetStateAction<SelectedTimeRange[]>>
+}
+
+const CalendarSelectionInput = ({
+  timeRanges,
+  setTimeRanges,
+}: CalendarSelectionInputProps) => {
   const maxDaysShown = 4
   const oneDay = 1000 * 60 * 60 * 24
   const now = moment().unix()
@@ -16,8 +30,8 @@ const CalendarSelectionInput = () => {
   today.setHours(0, 0, 0, 0)
 
   const [dateOffset, setDateOffset] = useState<number>(0)
-  const [selectedTimes, setSelectedTimes] = useState<number[]>([])
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
+  const scrollableDiv = useRef(null)
 
   const daysShown = () => {
     const firstDay = new Date(today.getTime() + dateOffset * oneDay)
@@ -40,12 +54,81 @@ const CalendarSelectionInput = () => {
     return times
   }
 
+  useEffect(() => {
+    if (scrollableDiv.current) {
+      scrollableDiv.current.scrollIntoView({
+        block: 'nearest',
+      })
+    }
+  }, [timeIncrement])
+
   function handleSelectTime(time: number) {
-    setSelectedTimes([...selectedTimes, time])
+    const updatedTimeRanges = timeRanges
+    const startMatchIndex = timeRanges.findIndex(
+      (tr) => tr.startTime - timeIncrement * 60 == time
+    )
+    const endMatchIndex = timeRanges.findIndex((tr) => tr.endTime == time)
+
+    if (startMatchIndex != -1 && endMatchIndex != -1) {
+      // Bridging the gap between two timeRanges, need to combine them...
+      const startTime = timeRanges[endMatchIndex].startTime
+      const endTime = timeRanges[startMatchIndex].endTime
+      updatedTimeRanges.splice(startMatchIndex, 1)
+      updatedTimeRanges.splice(endMatchIndex, 1)
+      setTimeRanges([...updatedTimeRanges, { startTime, endTime }])
+    } else if (startMatchIndex != -1) {
+      // At the starting bound of an existing timeRange
+      updatedTimeRanges[startMatchIndex].startTime = time
+
+      setTimeRanges([...updatedTimeRanges])
+    } else if (endMatchIndex != -1) {
+      // At the ending bound of an existing timeRange
+      updatedTimeRanges[endMatchIndex].endTime = time + timeIncrement * 60
+      setTimeRanges([...updatedTimeRanges])
+    } else {
+      // No timeRange created for this time yet
+      setTimeRanges([
+        ...timeRanges,
+        { startTime: time, endTime: time + timeIncrement * 60 },
+      ])
+    }
   }
 
   function handleDeselectTime(time: number) {
-    setSelectedTimes(selectedTimes.filter((t) => t != time))
+    const updatedTimeRanges = timeRanges
+    const startMatchIndex = timeRanges.findIndex((tr) => tr.startTime == time)
+    const endMatchIndex = timeRanges.findIndex(
+      (tr) => tr.endTime == time + timeIncrement * 60
+    )
+
+    if (startMatchIndex != -1 && endMatchIndex != -1) {
+      updatedTimeRanges.splice(startMatchIndex, 1)
+      setTimeRanges([...updatedTimeRanges])
+    } else if (startMatchIndex != -1) {
+      // At the starting bound of an existing timeRange
+      updatedTimeRanges[startMatchIndex].startTime = time + timeIncrement * 60
+
+      setTimeRanges([...updatedTimeRanges])
+    } else if (endMatchIndex != -1) {
+      // At the ending bound of an existing timeRange
+      updatedTimeRanges[endMatchIndex].endTime = time
+      setTimeRanges([...updatedTimeRanges])
+    } else {
+      // Opening a gap between two timeRanges, need to separate them...
+      const index = timeRanges.findIndex(
+        (tr) => tr.startTime < time && tr.endTime > time
+      )
+      const tr1 = {
+        startTime: timeRanges[index].startTime,
+        endTime: time,
+      }
+      const tr2 = {
+        startTime: time + timeIncrement * 60,
+        endTime: timeRanges[index].endTime,
+      }
+      updatedTimeRanges.splice(index, 1)
+      setTimeRanges([...updatedTimeRanges, tr1, tr2])
+    }
   }
 
   const TimeCell = ({ time, colNum }: TimeCellProps) => {
@@ -54,6 +137,17 @@ const CalendarSelectionInput = () => {
       `${day[2]} ${day[3]} ${time}`,
       'MMM DD YYYY h:mma'
     ).unix()
+
+    const isSelected = () => {
+      if (
+        timeRanges.findIndex(
+          (tr) => tr.startTime <= thisTime && tr.endTime > thisTime
+        ) == -1
+      ) {
+        return false
+      }
+      return true
+    }
 
     if (thisTime < now) {
       return (
@@ -64,7 +158,8 @@ const CalendarSelectionInput = () => {
         </td>
       )
     }
-    if (selectedTimes.includes(thisTime)) {
+
+    if (isSelected()) {
       return (
         <td className="calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
           <button
@@ -112,7 +207,11 @@ const CalendarSelectionInput = () => {
           <tbody className="h-64 overflow-auto">
             {timesShown().map((time, i) => {
               return (
-                <tr key={i} id={`${time}-row`}>
+                <tr
+                  key={i}
+                  id={`${time}-row`}
+                  ref={time === '4:00pm' ? scrollableDiv : null} // Sets scoll position to middle of day
+                >
                   {Array.from(Array(maxDaysShown)).map((x, i) => (
                     <TimeCell key={i} time={time} colNum={i} />
                   ))}
@@ -122,14 +221,14 @@ const CalendarSelectionInput = () => {
           </tbody>
         </table>
         <div className="flex flex-row justify-between sticky bottom-0 p-2 bg-background border-dark-gray border-t">
-          <div>
-            <p className="text-xs">Time Increment:</p>
-            <p className="text-sm">{timeIncrement}min</p>
-          </div>
+          <TimeIntervalSelector
+            timeIncrement={timeIncrement}
+            setTimeIncrement={setTimeIncrement}
+          />
           <div className="flex flex-row gap-3">
             {dateOffset !== 0 && (
               <button type="button" onClick={() => setDateOffset(0)}>
-                reset
+                back to today
               </button>
             )}
             <button
