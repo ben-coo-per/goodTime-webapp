@@ -16,6 +16,9 @@ module.exports = {
       '3xl': ['4.8rem', '5.8rem'],
     },
     extend: {
+      screens: {
+        betterhover: { raw: '(hover: hover)' },
+      },
       colors: {
         background: '#F6F6F6',
         transparent: 'rgba(0,0,0,0)',

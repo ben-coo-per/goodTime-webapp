@@ -1,5 +1,6 @@
 import { UserCircleIcon } from '@heroicons/react/solid'
 
+import { useAuth } from '@redwoodjs/auth'
 import { Toaster } from '@redwoodjs/web/dist/toast'
 
 type WebAppLayoutProps = {
@@ -7,13 +8,15 @@ type WebAppLayoutProps = {
 }
 
 const WebAppLayout = ({ children }: WebAppLayoutProps) => {
+  const { isAuthenticated, userMetadata, logOut } = useAuth()
+
   return (
     <>
       <div className="bg-background h-screen">
         <Toaster toastOptions={{ className: 'toast', duration: 6000 }} />
         <header className="w-full mx-auto p-4 flex justify-between ">
           <div>Logo</div>
-          <UserCircleIcon className="h-10 " />
+          <UserCircleIcon className="h-10 " onClick={() => logOut()} />
         </header>
         <div className="container max-w-3xl mx-auto grid h-full">
           <div className="p-4 h-5/6 sm:p-0 sm:h-3/4 overflow-y-auto hidden-scrollbar">
