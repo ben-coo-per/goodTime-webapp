@@ -27,15 +27,15 @@ const TimeIntervalSelector = ({
   }
 
   const animationXPos =
-    timeIncrement === 60 ? 0 : timeIncrement === 30 ? 40 : 80
+    timeIncrement === 60 ? 0 : timeIncrement === 30 ? 37.5 : 75
 
   return (
-    <div className="w-48 relative" aria-label="time increment selector">
+    <div className="w-40 relative" aria-label="time increment selector">
       <p className="text-xs mb-1">Time Increment:</p>
       <motion.div
-        className="bg-turquoise-400 h-10 w-10 rounded absolute bottom-0 left-0"
+        className="border border-turquoise-700 h-10 w-10 rounded absolute bottom-0 left-0"
         animate={{ x: animationXPos }}
-        transition={{ ease: 'easeInOut', duration: 1 }}
+        transition={{ ease: 'easeInOut', duration: 0.67 }}
       />
       <div className="flex flex-row w-full justify-between text-sm relative z-10">
         <span

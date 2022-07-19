@@ -68,5 +68,5 @@ th {
 }
 
 .time-increment-selector{
-@apply hover:font-bold flex-1 p-2 rounded transition-all duration-300 ease-in-out
+@apply hover:font-bold flex-initial p-2 rounded transition-all duration-300 ease-in-out w-10 mb-0.5 text-center
 }

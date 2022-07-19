@@ -18,6 +18,11 @@ export const schema = gql`
     userId: String!
   }
 
+  input CreateTimeRangeInputForEvent {
+    startTime: Int!
+    endTime: Int!
+  }
+
   input UpdateEventInput {
     name: String
     userId: String
@@ -25,7 +30,11 @@ export const schema = gql`
 
   type Mutation {
     createEvent(input: CreateEventInput!): Event! @requireAuth
+    createEventWithTimes(
+      eventInput: CreateEventInput!
+      timeInput: [CreateTimeRangeInputForEvent!]!
+    ): Event! @requireAuth
     updateEvent(id: Int!, input: UpdateEventInput!): Event! @requireAuth
     deleteEvent(id: Int!): Event! @requireAuth
   }
-`;
+`
