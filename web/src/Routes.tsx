@@ -22,6 +22,7 @@ const Routes = () => {
         <Route path="/" page={HomePage} name="home" />
         <Private unauthenticated="login">
           <Route path="/create-event" page={CreateEventPage} name="createEvent" />
+          <Route path="/share-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
         </Private>
       </WebAppLayout>
       <Route notfound page={NotFoundPage} />

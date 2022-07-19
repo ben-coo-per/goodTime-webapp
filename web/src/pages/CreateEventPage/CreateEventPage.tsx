@@ -27,7 +27,7 @@ export type SelectedTimeRange = {
 }
 
 const EventCreatePage = () => {
-  const { isAuthenticated, currentUser } = useAuth()
+  const { currentUser } = useAuth()
   const [formStep, setFormStep] = useState<number>(0)
   const [selectedTimeRanges, setSelectedTimeRanges] = useState<
     SelectedTimeRange[]
@@ -37,7 +37,7 @@ const EventCreatePage = () => {
     useMutation<CreateEventWithTimesMutation>(CREATE_EVENT_MUTATION, {
       onCompleted: (event) => {
         toast.success('Event created!')
-        // navigate(routes.addTimes({ id: event.createEventWithTimes.id }))
+        navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
       },
       onError: (error) => {
         toast.error(error.message)
@@ -45,7 +45,7 @@ const EventCreatePage = () => {
     })
 
   function onSubmit(data) {
-    if (isAuthenticated) {
+    if (selectedTimeRanges.length > 0) {
       createEventWithTimes({
         variables: {
           eventInput: { name: data.eventName, userId: currentUser.id },
@@ -53,13 +53,16 @@ const EventCreatePage = () => {
         },
       })
     } else {
-      // TODO: Reroute to login page
+      toast.error('You must select at least one time')
     }
   }
 
   return (
     <>
-      <MetaTags title="EventCreate" description="EventCreate page" />
+      <MetaTags
+        title="Event Create"
+        description="Create an event to find out what times your friends are available"
+      />
       <div className="h-full flex flex-col">
         <Form
           onSubmit={onSubmit}
@@ -67,9 +70,9 @@ const EventCreatePage = () => {
         >
           {formStep === 0 && (
             <>
-              <h3 className="text-2xl font-display lowercase mb-2">
+              <h1 className="text-2xl font-display lowercase mb-2">
                 What’s the name of your event?
-              </h3>
+              </h1>
               <TextField
                 name="eventName"
                 className="input"
@@ -80,9 +83,9 @@ const EventCreatePage = () => {
           )}
           {formStep === 1 && (
             <>
-              <h3 className="text-2xl font-display lowercase mb-2">
+              <h1 className="text-2xl font-display lowercase mb-2">
                 Let’s add some times that work for you.
-              </h3>
+              </h1>
               <CalendarSelectionInput
                 setTimeRanges={setSelectedTimeRanges}
                 timeRanges={selectedTimeRanges}
@@ -110,10 +113,10 @@ const EventCreatePage = () => {
             )}
             <Button
               size="lg"
-              type={formStep < 2 ? 'button' : 'submit'}
+              type={formStep < 1 ? 'button' : 'submit'}
               disabled={loading}
               additionalClasses="mt-2"
-              onClick={formStep < 2 ? () => setFormStep(formStep + 1) : null}
+              onClick={formStep < 1 ? () => setFormStep(formStep + 1) : null}
             >
               Next
             </Button>
