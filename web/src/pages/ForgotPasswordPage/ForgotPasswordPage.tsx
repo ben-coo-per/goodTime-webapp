@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react'
+
 import { useAuth } from '@redwoodjs/auth'
+import { Form, Label, TextField, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
-import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
+
+import Button from 'src/components/Button/Button'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
@@ -28,7 +31,9 @@ const ForgotPasswordPage = () => {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
       // password (sent in email, perhaps?)
-      toast.success('A link to reset your password was sent to ' + response.email)
+      toast.success(
+        'A link to reset your password was sent to ' + response.email
+      )
       navigate(routes.login())
     }
   }
@@ -36,47 +41,40 @@ const ForgotPasswordPage = () => {
   return (
     <>
       <MetaTags title="Forgot Password" />
+      <main>
+        <Toaster toastOptions={{ duration: 6000 }} />
+        <div>
+          <header>
+            <h2 className="text-3xl text-center font-display lowercase">
+              Forgot Password
+            </h2>
+          </header>
 
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Forgot Password
-              </h2>
-            </header>
+          <div className="p-8 bg-white rounded-lg my-4 shadow">
+            <Form onSubmit={onSubmit} className="flex flex-col">
+              <Label
+                name="username"
+                className="label mb-2"
+                errorClassName="label mb-2 error"
+              >
+                Phone Number
+              </Label>
+              <TextField
+                name="username"
+                className="input mb-8"
+                errorClassName="input error mb-1"
+                ref={usernameRef}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Phone Number is required',
+                  },
+                }}
+              />
+              <FieldError name="username" className="field-error mb-8" />
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="text-left">
-                    <Label
-                      name="username"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      Username
-                    </Label>
-                    <TextField
-                      name="username"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      ref={usernameRef}
-                      validation={{
-                        required: true,
-                      }}
-                    />
-
-                    <FieldError name="username" className="rw-field-error" />
-                  </div>
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Submit</Submit>
-                  </div>
-                </Form>
-              </div>
-            </div>
+              <Button type="submit">Submit</Button>
+            </Form>
           </div>
         </div>
       </main>

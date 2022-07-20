@@ -9,20 +9,23 @@
 
 import { Router, Route, Private } from '@redwoodjs/router'
 
+import AuthPageLayout from './layouts/AuthPageLayout/AuthPageLayout'
 import WebAppLayout from './layouts/WebAppLayout/WebAppLayout'
 
 const Routes = () => {
   return (
     <Router>
-      <Route path="/login" page={LoginPage} name="login" />
-      <Route path="/signup" page={SignupPage} name="signup" />
-      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+      <AuthPageLayout>
+        <Route path="/login" page={LoginPage} name="login" />
+        <Route path="/signup" page={SignupPage} name="signup" />
+        <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+        <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+      </AuthPageLayout>
       <WebAppLayout>
         <Route path="/" page={HomePage} name="home" />
         <Private unauthenticated="login">
           <Route path="/create-event" page={CreateEventPage} name="createEvent" />
-          <Route path="/share-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
+          <Route path="/create-event/share-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
         </Private>
       </WebAppLayout>
       <Route notfound page={NotFoundPage} />
