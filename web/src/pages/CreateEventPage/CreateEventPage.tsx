@@ -33,8 +33,9 @@ const EventCreatePage = () => {
     SelectedTimeRange[]
   >([])
 
-  const [createEventWithTimes, { loading }] =
-    useMutation<CreateEventWithTimesMutation>(CREATE_EVENT_MUTATION, {
+  const [createEventWithTimes, { loading }] = useMutation(
+    CREATE_EVENT_MUTATION,
+    {
       onCompleted: (event) => {
         toast.success('Event created!')
         navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
@@ -42,7 +43,8 @@ const EventCreatePage = () => {
       onError: (error) => {
         toast.error(error.message)
       },
-    })
+    }
+  )
 
   function onSubmit(data) {
     if (selectedTimeRanges.length > 0) {

@@ -9,6 +9,8 @@ export const schema = gql`
     resetTokenExpiresAt: DateTime
     eventsOwned: [Event]!
     userAvailabilities: [UserAvailability]!
+    createdAt: DateTime
+    updatedAt: DateTime
   }
 
   type Query {
