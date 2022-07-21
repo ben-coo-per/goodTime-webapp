@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
-import { Form, TextField } from '@redwoodjs/forms'
+import { FieldError, Form, TextField } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -47,15 +47,19 @@ const EventCreatePage = () => {
   )
 
   function onSubmit(data) {
-    if (selectedTimeRanges.length > 0) {
-      createEventWithTimes({
-        variables: {
-          eventInput: { name: data.eventName, userId: currentUser.id },
-          timeInput: selectedTimeRanges,
-        },
-      })
+    if (formStep < 1) {
+      setFormStep(formStep + 1)
     } else {
-      toast.error('You must select at least one time')
+      if (selectedTimeRanges.length > 0) {
+        createEventWithTimes({
+          variables: {
+            eventInput: { name: data.eventName, userId: currentUser.id },
+            timeInput: selectedTimeRanges,
+          },
+        })
+      } else {
+        toast.error('You must select at least one time')
+      }
     }
   }
 
@@ -79,8 +83,9 @@ const EventCreatePage = () => {
                 name="eventName"
                 className="input"
                 errorClassName="input error"
-                validation={{ required: true }}
+                validation={{ required: 'You must give your event a name' }}
               />
+              <FieldError name="eventName" className="field-error" />
             </>
           )}
           {formStep === 1 && (
@@ -115,10 +120,9 @@ const EventCreatePage = () => {
             )}
             <Button
               size="lg"
-              type={formStep < 1 ? 'button' : 'submit'}
+              type="submit"
               disabled={loading}
               additionalClasses="mt-2"
-              onClick={formStep < 1 ? () => setFormStep(formStep + 1) : null}
             >
               Next
             </Button>
