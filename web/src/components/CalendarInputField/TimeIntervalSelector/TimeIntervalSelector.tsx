@@ -15,17 +15,6 @@ const TimeIntervalSelector = ({
   timeIncrement,
   setTimeIncrement,
 }: TimeIntervalSelectorProps) => {
-  function timeIncToRange(time) {
-    switch (time) {
-      case 60:
-        return '1'
-      case 30:
-        return '2'
-      case 15:
-        return '3'
-    }
-  }
-
   const animationXPos =
     timeIncrement === 60 ? 0 : timeIncrement === 30 ? 37.5 : 75
 

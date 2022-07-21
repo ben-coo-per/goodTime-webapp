@@ -4,7 +4,7 @@ import { SetStateAction } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment from 'moment'
 
-import { SelectedTimeRange } from 'src/pages/AddTimesPage/AddTimesPage'
+import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
 
 import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
 
