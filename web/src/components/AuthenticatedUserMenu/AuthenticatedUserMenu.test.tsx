@@ -1,4 +1,5 @@
-import { render } from '@redwoodjs/testing/web'
+import { useAuth } from '@redwoodjs/auth'
+import { render, renderHook } from '@redwoodjs/testing/web'
 
 import AuthenticatedUserMenu from './AuthenticatedUserMenu'
 
@@ -7,8 +8,14 @@ import AuthenticatedUserMenu from './AuthenticatedUserMenu'
 
 describe('AuthenticatedUserMenu', () => {
   it('renders successfully', () => {
+    const { result } = renderHook(() => useAuth())
     expect(() => {
-      render(<AuthenticatedUserMenu phoneNumber="7132546843" />)
+      render(
+        <AuthenticatedUserMenu
+          phoneNumber="7132546843"
+          logOut={result.current.logOut()}
+        />
+      )
     }).not.toThrow()
   })
 })
