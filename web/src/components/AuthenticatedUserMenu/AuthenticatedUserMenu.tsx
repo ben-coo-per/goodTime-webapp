@@ -84,7 +84,7 @@ const AuthenticatedUserMenu = ({
             tabIndex={-1}
             id="menu-item-1"
           >
-            Logout
+            Log out
           </button>
         </div>
       </motion.div>

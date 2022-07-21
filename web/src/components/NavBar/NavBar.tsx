@@ -2,22 +2,10 @@ import { UserCircleIcon } from '@heroicons/react/solid'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
-import { useQuery } from '@redwoodjs/web'
 
 import AuthenticatedUserMenu, {
   AuthenticatedUserMenuDisplayProps,
 } from '../AuthenticatedUserMenu/AuthenticatedUserMenu'
-
-export const QUERY = gql`
-  query GetUser($id: String!) {
-    user(id: $id) {
-      id
-      displayName
-      phoneNumber
-      createdAt
-    }
-  }
-`
 
 const NavBar = () => {
   return (
@@ -33,19 +21,18 @@ const NavBar = () => {
 export default NavBar
 
 const UserElement = () => {
-  const { isAuthenticated, userMetadata, logOut } = useAuth()
-  const { loading, data } = useQuery(QUERY, {
-    variables: { id: userMetadata },
-  })
+  const { isAuthenticated, loading, currentUser, logOut } = useAuth()
 
   if (loading) {
     return (
       <div className="rounded-full h-12 w-12 bg-dark-gray animate-pulse"></div>
     )
   }
-  if (data) {
-    const { displayName, phoneNumber }: AuthenticatedUserMenuDisplayProps =
-      data.user
+  if (currentUser) {
+    const {
+      displayName,
+      phoneNumber,
+    }: Partial<AuthenticatedUserMenuDisplayProps> = currentUser
 
     return (
       <AuthenticatedUserMenu
