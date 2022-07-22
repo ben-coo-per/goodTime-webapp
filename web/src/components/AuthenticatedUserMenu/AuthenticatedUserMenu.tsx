@@ -43,6 +43,7 @@ const AuthenticatedUserMenu = ({
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [ref, dropdownExpanded])
+
   return (
     <div className="relative" ref={ref}>
       <button
@@ -58,6 +59,7 @@ const AuthenticatedUserMenu = ({
         </p>
       </button>
       <motion.div
+        hidden={dropdownExpanded ? false : true}
         animate={dropdownExpanded ? 'open' : 'closed'}
         variants={variants}
         transition={{ ease: 'easeOut', duration: 0.25 }}
