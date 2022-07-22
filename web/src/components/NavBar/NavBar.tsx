@@ -7,13 +7,15 @@ import AuthenticatedUserMenu, {
   AuthenticatedUserMenuDisplayProps,
 } from '../AuthenticatedUserMenu/AuthenticatedUserMenu'
 
-const NavBar = () => {
+const NavBar = ({ hasLogo = true }: { hasLogo?: boolean }) => {
   return (
-    <header className="w-full mx-auto p-8 flex justify-between items-center">
-      <Link className="cursor-pointer" to={routes.home()}>
-        <img src="./text-logo.svg" alt="Text Logo" />
-      </Link>
+    <header className="w-full mx-auto h-40 p-8 flex flex-row-reverse justify-between items-center">
       <UserElement />
+      {hasLogo && (
+        <Link className="cursor-pointer" to={routes.home()}>
+          <img src="./text-logo.svg" alt="Text Logo" />
+        </Link>
+      )}
     </header>
   )
 }
