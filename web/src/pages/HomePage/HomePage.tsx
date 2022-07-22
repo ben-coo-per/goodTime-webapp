@@ -15,7 +15,7 @@ const HomePage = () => {
         <NavBar hasLogo={false} />
         <div className="container max-w-3xl mx-auto grid h-full">
           <div className="p-4 h-5/6 sm:p-0 sm:h-3/4 overflow-y-auto hidden-scrollbar flex flex-col gap-8 text-center pt-10">
-            <img src="./text-logo-large.svg" alt="Text Logo" />
+            <img src="/text-logo-large.svg" alt="Text Logo" />
             <div>
               <h1 className="text-2xl font-display lowercase mb-2">
                 Meeting times made simple

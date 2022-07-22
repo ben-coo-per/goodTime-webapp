@@ -13,7 +13,7 @@ const NavBar = ({ hasLogo = true }: { hasLogo?: boolean }) => {
       <UserElement />
       {hasLogo && (
         <Link className="cursor-pointer" to={routes.home()}>
-          <img src="./text-logo.svg" alt="Text Logo" />
+          <img src="/text-logo.svg" alt="Text Logo" />
         </Link>
       )}
     </header>
