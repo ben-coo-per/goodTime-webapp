@@ -124,7 +124,7 @@ const EventCreatePage = () => {
               disabled={loading}
               additionalClasses="mt-2"
             >
-              Next
+              {formStep > 0 ? 'Create' : 'Next'}
             </Button>
           </div>
         </Form>
