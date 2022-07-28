@@ -29,25 +29,27 @@ describe("timeRanges", () => {
   scenario("creates a timeRange", async (scenario: StandardScenario) => {
     const result = await createTimeRange({
       input: {
-        startTime: 8306353,
-        endTime: 9704685,
+        startTime: 9683887,
+        endTime: 6396070,
         eventId: scenario.timeRange.two.eventId,
+        userId: scenario.timeRange.two.userId,
       },
     });
 
-    expect(result.startTime).toEqual(8306353);
-    expect(result.endTime).toEqual(9704685);
+    expect(result.startTime).toEqual(9683887);
+    expect(result.endTime).toEqual(6396070);
     expect(result.eventId).toEqual(scenario.timeRange.two.eventId);
+    expect(result.userId).toEqual(scenario.timeRange.two.userId);
   });
 
   scenario("updates a timeRange", async (scenario: StandardScenario) => {
     const original = await timeRange({ id: scenario.timeRange.one.id });
     const result = await updateTimeRange({
       id: original.id,
-      input: { startTime: 3421115 },
+      input: { startTime: 6718162 },
     });
 
-    expect(result.startTime).toEqual(3421115);
+    expect(result.startTime).toEqual(6718162);
   });
 
   scenario("deletes a timeRange", async (scenario: StandardScenario) => {

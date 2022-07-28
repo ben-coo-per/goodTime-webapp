@@ -53,7 +53,7 @@ const EventCreatePage = () => {
       if (selectedTimeRanges.length > 0) {
         createEventWithTimes({
           variables: {
-            eventInput: { name: data.eventName, userId: currentUser.id },
+            eventInput: { name: data.eventName, ownerId: currentUser.id },
             timeInput: selectedTimeRanges,
           },
         })
@@ -69,14 +69,14 @@ const EventCreatePage = () => {
         title="Event Create"
         description="Create an event to find out what times your friends are available"
       />
-      <div className="h-full flex flex-col">
+      <div className="flex h-full flex-col">
         <Form
           onSubmit={onSubmit}
-          className="flex-1 flex flex-col h-full rounded sm:px-20 py-8"
+          className="flex h-full flex-1 flex-col rounded py-8 sm:px-20"
         >
           {formStep === 0 && (
             <>
-              <h1 className="text-2xl font-display lowercase mb-2">
+              <h1 className="mb-2 font-display text-2xl lowercase">
                 What’s the name of your event?
               </h1>
               <TextField
@@ -90,7 +90,7 @@ const EventCreatePage = () => {
           )}
           {formStep === 1 && (
             <>
-              <h1 className="text-2xl font-display lowercase mb-2">
+              <h1 className="mb-2 font-display text-2xl lowercase">
                 Let’s add some times that work for you.
               </h1>
               <CalendarSelectionInput

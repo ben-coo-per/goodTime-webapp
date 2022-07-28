@@ -45,6 +45,6 @@ export const deleteTimeRange: MutationResolvers["deleteTimeRange"] = ({
 export const TimeRange: TimeRangeResolvers = {
   event: (_obj, { root }) =>
     db.timeRange.findUnique({ where: { id: root.id } }).event(),
-  userAvailabilities: (_obj, { root }) =>
-    db.timeRange.findUnique({ where: { id: root.id } }).userAvailabilities(),
+  user: (_obj, { root }) =>
+    db.timeRange.findUnique({ where: { id: root.id } }).user(),
 };

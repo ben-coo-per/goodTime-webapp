@@ -22,20 +22,20 @@ describe("events", () => {
 
   scenario("creates a event", async (scenario: StandardScenario) => {
     const result = await createEvent({
-      input: { userId: scenario.event.two.userId },
+      input: { ownerId: scenario.event.two.ownerId },
     });
 
-    expect(result.userId).toEqual(scenario.event.two.userId);
+    expect(result.ownerId).toEqual(scenario.event.two.ownerId);
   });
 
   scenario("updates a event", async (scenario: StandardScenario) => {
     const original = await event({ id: scenario.event.one.id });
     const result = await updateEvent({
       id: original.id,
-      input: { userId: scenario.event.two.userId },
+      input: { ownerId: scenario.event.two.ownerId },
     });
 
-    expect(result.userId).toEqual(scenario.event.two.userId);
+    expect(result.ownerId).toEqual(scenario.event.two.ownerId);
   });
 
   scenario("deletes a event", async (scenario: StandardScenario) => {

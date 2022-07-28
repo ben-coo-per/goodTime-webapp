@@ -4,9 +4,9 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
   event: {
     one: {
       data: {
-        user: {
+        owner: {
           create: {
-            phoneNumber: "String6691225",
+            phoneNumber: "String759720",
             hashedPassword: "String",
             salt: "String",
           },
@@ -15,9 +15,9 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
     },
     two: {
       data: {
-        user: {
+        owner: {
           create: {
-            phoneNumber: "String9234019",
+            phoneNumber: "String6405916",
             hashedPassword: "String",
             salt: "String",
           },

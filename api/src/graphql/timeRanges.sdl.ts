@@ -6,7 +6,8 @@ export const schema = gql`
     createdAt: DateTime!
     event: Event!
     eventId: Int!
-    userAvailabilities: [UserAvailability]!
+    user: User!
+    userId: String!
   }
 
   type Query {
@@ -18,12 +19,14 @@ export const schema = gql`
     startTime: Int!
     endTime: Int!
     eventId: Int!
+    userId: String!
   }
 
   input UpdateTimeRangeInput {
     startTime: Int
     endTime: Int
     eventId: Int
+    userId: String
   }
 
   type Mutation {

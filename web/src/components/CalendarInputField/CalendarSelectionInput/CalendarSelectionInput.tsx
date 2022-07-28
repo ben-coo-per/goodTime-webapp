@@ -151,8 +151,8 @@ const CalendarSelectionInput = ({
 
     if (thisTime < now) {
       return (
-        <td className="calendar-table-cell bg-light-gray cursor-not-allowed">
-          <button disabled className="w-full h-full p-2 text-text-subtle">
+        <td className="calendar-table-cell cursor-not-allowed bg-light-gray">
+          <button disabled className="h-full w-full p-2 text-text-subtle">
             {time}
           </button>
         </td>
@@ -163,7 +163,7 @@ const CalendarSelectionInput = ({
       return (
         <td className="calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
           <button
-            className="w-full h-full p-2 font-medium"
+            className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
           >
             {time}
@@ -174,7 +174,7 @@ const CalendarSelectionInput = ({
     return (
       <td className="calendar-table-cell hover:bg-turquoise-200 ">
         <button
-          className="w-full h-full p-2"
+          className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}
         >
           {time}
@@ -185,17 +185,17 @@ const CalendarSelectionInput = ({
 
   return (
     <>
-      <div className="w-full h-full border border-dark-gray rounded-lg my-2 overflow-y-auto hidden-scrollbar">
-        <table className="table-auto w-full border-separate border-spacing-1 sticky top-0 bg-background border-dark-gray border-b">
+      <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
+        <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background">
           <thead className="">
             <tr>
               {daysShown().map((day, i) => (
                 <th className="calendar-table-cell" key={i}>
-                  <p className="text-text-subtle text-sm font-normal leading-3">
+                  <p className="text-sm font-normal leading-3 text-text-subtle">
                     {day[1]}
                   </p>
                   <p>{day[2]}</p>
-                  <p className="text-text-subtle text-sm font-normal leading-3">
+                  <p className="text-sm font-normal leading-3 text-text-subtle">
                     {day[3]}
                   </p>
                 </th>
@@ -203,7 +203,7 @@ const CalendarSelectionInput = ({
             </tr>
           </thead>
         </table>
-        <table className="table-auto w-full border-separate border-spacing-1 ">
+        <table className="w-full table-auto border-separate border-spacing-1 ">
           <tbody className="h-64 overflow-auto">
             {timesShown().map((time, i) => {
               return (
@@ -220,7 +220,7 @@ const CalendarSelectionInput = ({
             })}
           </tbody>
         </table>
-        <div className="flex flex-row justify-between sticky bottom-0 p-2 bg-background border-dark-gray border-t">
+        <div className="sticky bottom-0 flex flex-row justify-between border-t border-dark-gray bg-background p-2">
           <TimeIntervalSelector
             timeIncrement={timeIncrement}
             setTimeIncrement={setTimeIncrement}

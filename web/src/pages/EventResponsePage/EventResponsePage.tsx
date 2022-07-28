@@ -6,14 +6,13 @@ import EventCell from 'src/components/EventCell'
 
 const EventResponsePage = () => {
   const { id } = useParams()
-  // const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   return (
-    <>
+    <div className='sm:px-20 py-8'>
       <MetaTags title="Event Response" description="Event Response page" />
-      <h1>{id}</h1>
       <EventCell id={parseInt(id)} />
-    </>
+    </div>
   )
 }
 

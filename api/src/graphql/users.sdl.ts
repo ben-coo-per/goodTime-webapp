@@ -7,10 +7,10 @@ export const schema = gql`
     salt: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
+    createdAt: DateTime!
+    updatedAt: DateTime!
     eventsOwned: [Event]!
-    userAvailabilities: [UserAvailability]!
-    createdAt: DateTime
-    updatedAt: DateTime
+    timeRanges: [TimeRange]!
   }
 
   type Query {
@@ -41,4 +41,4 @@ export const schema = gql`
     updateUser(id: String!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: String!): User! @requireAuth
   }
-`
+`;

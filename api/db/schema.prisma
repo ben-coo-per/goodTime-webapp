@@ -8,12 +8,14 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
+
+
+/// The user model
 model User {
   id                    String    @id @default(cuid())
   displayName           String?
-  phoneNumber           String    @unique
+  phoneNumber           String    @unique  /// We're using this as the 'username' field
+
   hashedPassword        String
   salt                  String
   resetToken            String?
@@ -22,35 +24,35 @@ model User {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt @default(now())
 
-  eventsOwned           Event[]
-  userAvailabilities    UserAvailability[]
+  eventsOwned           Event[]       /// Collection of all of the events this person owns
+  timeRanges            TimeRange[]   /// Collection of all of the timeranges this person says they are available for
 }
 
-
+/// Events are what the app is built around.
+/// Each event is populated with a collection of time ranges to show when people are available.
 model Event {
   id          Int         @id @default(autoincrement())
   name        String?
   createdAt   DateTime    @default(now())
-  times       TimeRange[]
-  user        User        @relation(fields: [userId], references: [id])
-  userId      String
+  times       TimeRange[] /// The array of timeranges holds all both the original selections (by the owner) and all availabilities associated with this event
+  owner       User        @relation(fields: [ownerId], references: [id]) /// The owner is whoever creates the event
+  ownerId     String
 }
 
+/// Time Ranges are windows of time assigned to both a user and event.
+/// They show the times that the user is available for that specific event.
 model TimeRange {
   id          Int         @id @default(autoincrement())
-  startTime   Int
-  endTime     Int
+
+  startTime   Int         /// The beginning of the time range in UNIX time
+  endTime     Int         /// The end of the time range in UNIX time
   createdAt   DateTime    @default(now())
-  event       Event       @relation(fields: [eventId], references: [id])
-  eventId       Int
 
-  userAvailabilities    UserAvailability[]
+  event       Event       @relation(fields: [eventId], references: [id])  /// Each timerange needs to be attached to an event
+  eventId     Int
+
+  user        User        @relation(fields: [userId], references: [id])   /// Each timerange needs to be attached to a user
+  userId      String
+
 }
 
-model UserAvailability {
-  id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  timeRange TimeRange    @relation(fields: [timeId], references: [id])
-  timeId    Int
-}

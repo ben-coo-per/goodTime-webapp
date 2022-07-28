@@ -4,8 +4,8 @@ export const schema = gql`
     name: String
     createdAt: DateTime!
     times: [TimeRange]!
-    user: User!
-    userId: String!
+    owner: User!
+    ownerId: String!
   }
 
   type Query {
@@ -14,8 +14,8 @@ export const schema = gql`
   }
 
   input CreateEventInput {
-    name: String
-    userId: String!
+    ownerId: String!
+    name: String!
   }
 
   input CreateTimeRangeInputForEvent {
@@ -25,7 +25,7 @@ export const schema = gql`
 
   input UpdateEventInput {
     name: String
-    userId: String
+    ownerId: String
   }
 
   type Mutation {
@@ -37,4 +37,4 @@ export const schema = gql`
     updateEvent(id: Int!, input: UpdateEventInput!): Event! @requireAuth
     deleteEvent(id: Int!): Event! @requireAuth
   }
-`
+`;
