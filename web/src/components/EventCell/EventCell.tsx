@@ -1,9 +1,8 @@
 import type { FindEventQuery, FindEventQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import CalendarSelectionInput from '../CalendarInputField/CalendarSelectionInput/CalendarSelectionInput'
 import { useState } from 'react'
-import ResponseCalendarInput from '../ResponseCalendarInput/ResponseCalendarInput'
+import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 
 export const QUERY = gql`
   query FindEventQuery($id: Int!) {
@@ -38,14 +37,18 @@ export const Success = ({
   event,
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
   const [timeRanges, setTimeRanges] = useState([])
+  console.log(timeRanges)
   return (
     <div className="flex h-full flex-1 flex-col">
       <h1 className="mb-2 font-display text-2xl lowercase">
         What times work for you?
       </h1>
       <div className=" h-full overflow-auto">
-        <ResponseCalendarInput times={event.times} />
-        {/* <CalendarSelectionInput timeRanges={event.times} setTimeRanges={setTimeRanges}/> */}
+        <ResponseCalendarInput
+          times={event.times}
+          setTimeRanges={setTimeRanges}
+          timeRanges={timeRanges}
+        />
       </div>
     </div>
   )

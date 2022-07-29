@@ -1,66 +1,71 @@
-import { Dispatch, useEffect, useRef, useState } from 'react'
-import { SetStateAction } from 'react'
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-import moment from 'moment'
-
-import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
-
+import moment, { Moment } from 'moment'
+import { useRef, useState } from 'react'
+import { TimeRange, User } from 'types/graphql'
+import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
 import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
 
-export type TimeIncrement = 15 | 30 | 60
-interface TimeCellProps {
-  time: string
-  colNum: number
+interface ProvidedTimes
+  extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
+  user: Pick<User, 'displayName' | 'phoneNumber'>
 }
 
-type CalendarSelectionInputProps = {
-  timeRanges: SelectedTimeRange[]
-  setTimeRanges: Dispatch<SetStateAction<SelectedTimeRange[]>>
+interface ResponseCalendarInputProps {
+  times: ProvidedTimes[]
+  setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
+  timeRanges: any[]
 }
 
-const CalendarSelectionInput = ({
-  timeRanges,
+const ResponseCalendarInput = ({
+  times,
   setTimeRanges,
-}: CalendarSelectionInputProps) => {
-  const maxDaysShown = 4
-  const oneDay = 1000 * 60 * 60 * 24
+  timeRanges,
+}: ResponseCalendarInputProps) => {
+  // Update times array to use moments rather than unix timestamps
   const now = moment().unix()
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
 
-  const [dateOffset, setDateOffset] = useState<number>(0)
+  const maxDaysShown = 4
+
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
-  const scrollableDiv = useRef(null)
 
-  const daysShown = () => {
-    const firstDay = new Date(today.getTime() + dateOffset * oneDay)
-    let days: string[][] = []
-    for (let i = 0; i < maxDaysShown; i++) {
-      const day = new Date(firstDay.getTime() + i * oneDay)
-      const pattern = /(\w{3}) (\w{3} \d{2}) (\d{4})/
-      days = [...days, day.toDateString().match(pattern)]
+  let days: Moment[] = []
+  times.forEach((t) => {
+    const start = moment.unix(t.startTime)
+    const end = moment.unix(t.endTime)
+    if (start != end) {
+      days = [...days, start, end]
+    } else {
+      days = [...days, start]
     }
-    return days
-  }
+  })
 
-  const timesShown = () => {
-    const baseIncrement = 1000 * 60 * timeIncrement //set incriment to minutes
-    const tomorrow = new Date(today.getTime() + oneDay).getTime()
-    let times: string[] = []
-    for (let t = today.getTime(); t < tomorrow; t += baseIncrement) {
-      times = [...times, moment(t).format(`h:mma`)]
-    }
-    return times
-  }
+  // Dedups the array by converting to strings then converts back to moment array
+  const daysToRender = [
+    ...new Set(
+      days.sort((a, b) => a.diff(b)).map((d) => d.format('YYYY-MM-DD'))
+    ),
+  ].map((d) => moment(d))
 
-  useEffect(() => {
-    if (scrollableDiv.current) {
-      scrollableDiv.current.scrollIntoView({
-        block: 'nearest',
+  const getTimesToRender = (day: Moment) => {
+    const baseIncrement = 60 * timeIncrement //set incriment to minutes
+    let timeBlocks: Moment[] = []
+    const startOfDay = day.set('hour', 0).set('minute', 0).set('second', 0)
+    times
+      .filter((time) => {
+        const startOfDayForThisTime = moment
+          .unix(time.startTime)
+          .set('hour', 0)
+          .set('minute', 0)
+          .set('second', 0)
+        return startOfDayForThisTime.isSame(startOfDay)
       })
-    }
-  }, [timeIncrement])
+      .forEach((time) => {
+        for (let t = time.startTime; t < time.endTime; t += baseIncrement) {
+          timeBlocks = [...timeBlocks, moment.unix(t)]
+        }
+      })
+    return timeBlocks
+  }
 
   function handleSelectTime(time: number) {
     const updatedTimeRanges = timeRanges
@@ -131,12 +136,8 @@ const CalendarSelectionInput = ({
     }
   }
 
-  const TimeCell = ({ time, colNum }: TimeCellProps) => {
-    const day = daysShown()[colNum]
-    const thisTime = moment(
-      `${day[2]} ${day[3]} ${time}`,
-      'MMM DD YYYY h:mma'
-    ).unix()
+  const TimeCell = ({ time }: { time: Moment }) => {
+    const thisTime = time.unix()
 
     const isSelected = () => {
       if (
@@ -151,103 +152,97 @@ const CalendarSelectionInput = ({
 
     if (thisTime < now) {
       return (
-        <td className="calendar-table-cell cursor-not-allowed bg-light-gray">
+        <div className="cell calendar-table-cell cursor-not-allowed bg-light-gray">
           <button disabled className="h-full w-full p-2 text-text-subtle">
-            {time}
+            {time.format('hh:mma')}
           </button>
-        </td>
+        </div>
       )
     }
 
     if (isSelected()) {
       return (
-        <td className="calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
+        <div className="cell calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
           <button
             className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
           >
-            {time}
+            {time.format('hh:mma')}
           </button>
-        </td>
+        </div>
       )
     }
     return (
-      <td className="calendar-table-cell hover:bg-turquoise-200 ">
+      <div className="cell calendar-table-cell hover:bg-turquoise-200 ">
         <button
           className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}
         >
-          {time}
+          {time.format('hh:mma')}
         </button>
-      </td>
+      </div>
     )
   }
 
   return (
-    <>
+    <div className="flex flex-row gap-12 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
         <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background">
-          <thead className="">
+          <thead>
             <tr>
-              {daysShown().map((day, i) => (
-                <th className="calendar-table-cell" key={i}>
-                  <p className="text-sm font-normal leading-3 text-text-subtle">
-                    {day[1]}
-                  </p>
-                  <p>{day[2]}</p>
-                  <p className="text-sm font-normal leading-3 text-text-subtle">
-                    {day[3]}
-                  </p>
-                </th>
-              ))}
+              {daysToRender.map((day: Moment, i: number) => {
+                const d = day.format('ddd-MMM DD-YYYY').split('-')
+                return (
+                  <th className="calendar-table-cell" key={i}>
+                    <p className="text-sm font-normal leading-3 text-text-subtle">
+                      {d[0]}
+                    </p>
+                    <p>{d[1]}</p>
+                    <p className="text-sm font-normal leading-3 text-text-subtle">
+                      {d[2]}
+                    </p>
+                  </th>
+                )
+              })}
             </tr>
           </thead>
         </table>
-        <table className="w-full table-auto border-separate border-spacing-1 ">
-          <tbody className="h-64 overflow-auto">
-            {timesShown().map((time, i) => {
-              return (
-                <tr
-                  key={i}
-                  id={`${time}-row`}
-                  ref={time === '4:00pm' ? scrollableDiv : null} // Sets scoll position to middle of day
-                >
-                  {Array.from(Array(maxDaysShown)).map((x, i) => (
-                    <TimeCell key={i} time={time} colNum={i} />
-                  ))}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <div className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto">
+          {daysToRender.map((day: Moment, di: number) => {
+            return (
+              <div className="col" key={`${di}`}>
+                {getTimesToRender(day).map((time, ti) => {
+                  return <TimeCell time={time} key={`${di}-${ti}`} />
+                })}
+              </div>
+            )
+          })}
+        </div>
         <div className="sticky bottom-0 flex flex-row justify-between border-t border-dark-gray bg-background p-2">
           <TimeIntervalSelector
             timeIncrement={timeIncrement}
             setTimeIncrement={setTimeIncrement}
           />
-          <div className="flex flex-row gap-3">
-            {dateOffset !== 0 && (
-              <button type="button" onClick={() => setDateOffset(0)}>
-                back to today
+          {daysToRender.length > maxDaysShown && (
+            <div className="flex flex-row gap-3">
+              <button
+                onClick={() => console.log('backward pagination')}
+                type="button"
+              >
+                <ChevronLeftIcon className="h-10" />
               </button>
-            )}
-            <button
-              onClick={() => setDateOffset(dateOffset - maxDaysShown)}
-              type="button"
-            >
-              <ChevronLeftIcon className="h-10" />
-            </button>
-            <button
-              onClick={() => setDateOffset(dateOffset + maxDaysShown)}
-              type="button"
-            >
-              <ChevronRightIcon className="h-10" />
-            </button>
-          </div>
+              <button
+                onClick={() => console.log('forward pagination')}
+                type="button"
+              >
+                <ChevronRightIcon className="h-10" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
-export default CalendarSelectionInput
+export default ResponseCalendarInput

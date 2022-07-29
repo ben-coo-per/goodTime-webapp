@@ -12,3 +12,10 @@ describe('ResponseCalendarInput', () => {
     }).not.toThrow()
   })
 })
+
+/*
+TODO:
+1. renders normally
+2. correctly handles time ranges that overlap 12:00am (splitting into two days)
+3. ...
+*/

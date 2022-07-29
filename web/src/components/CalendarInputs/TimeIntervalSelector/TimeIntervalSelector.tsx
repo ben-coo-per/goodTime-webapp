@@ -19,31 +19,31 @@ const TimeIntervalSelector = ({
     timeIncrement === 60 ? 0 : timeIncrement === 30 ? 37.5 : 75
 
   return (
-    <div className="w-40 relative" aria-label="time increment selector">
-      <p className="text-xs mb-1">Time Increment:</p>
+    <div className="relative w-40" aria-label="time increment selector">
+      <p className="mb-1 text-xs">Time Increment:</p>
       <motion.div
-        className="border border-turquoise-700 h-10 w-10 rounded absolute bottom-0 left-0"
+        className="absolute bottom-0 left-0 h-10 w-10 rounded border border-turquoise-700"
         animate={{ x: animationXPos }}
-        transition={{ ease: 'easeInOut', duration: 0.67 }}
+        transition={{ ease: 'easeInOut', duration: 0.25 }}
       />
-      <div className="flex flex-row w-full justify-between text-sm relative z-10">
+      <div className="relative z-10 flex w-full flex-row justify-between text-sm">
         <span
           onClick={() => setTimeIncrement(60)}
-          className="time-increment-selector cursor-pointer"
+          className="time-increment-selector"
           aria-label="60 minute increment"
         >
           60
         </span>
         <span
           onClick={() => setTimeIncrement(30)}
-          className="time-increment-selector cursor-pointer"
+          className="time-increment-selector"
           aria-label="30 minute increment"
         >
           30
         </span>
         <span
           onClick={() => setTimeIncrement(15)}
-          className="time-increment-selector cursor-pointer"
+          className="time-increment-selector"
           aria-label="15 minute increment"
         >
           15

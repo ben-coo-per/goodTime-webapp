@@ -5,68 +5,77 @@
  * to inject Tailwind's styles into your CSS.
  * For more information, see: https://tailwindcss.com/docs/installation#include-tailwind-in-your-css
  */
- @import 'tailwindcss/base';
- @import 'tailwindcss/components';
- @import 'tailwindcss/utilities';
- /**
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/**
   * END --- SETUP TAILWINDCSS EDIT
   */
 
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Chicle&display=swap');
 
-  @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Chicle&display=swap');
+html {
+  background-color: #f6f6f6;
+  font-size: 62.5%; /* 62.5% of the base size of 16px = 10px.*/
+  @apply text-text-default;
+}
+body {
+  font-size: 1.6rem; /* reset 10*1.6 = 16px, to make sure you do not get any 10px around */
+}
 
-  html {
-   background-color: #F6F6F6;
-   font-size: 62.5%; /* 62.5% of the base size of 16px = 10px.*/
-   @apply text-text-default;
- }
- body {
-   font-size: 1.6rem; /* reset 10*1.6 = 16px, to make sure you do not get any 10px around */
- }
+.label {
+  @apply text-text-subtle;
+  @apply text-sm uppercase;
+}
 
- .label {
-   @apply text-text-subtle;
-   @apply uppercase text-sm
- }
+.input {
+  @apply p-3;
+  @apply rounded-lg border border-dark-gray;
+}
 
- .input {
-   @apply p-3;
-   @apply border border-dark-gray rounded-lg;
+.error {
+  @apply border-maroon-700 text-maroon-700;
+}
 
- }
+.field-error {
+  @apply mt-0 border-maroon-700 text-sm text-maroon-700;
+}
 
- .error {
-   @apply text-maroon-700 border-maroon-700
- }
-
- .field-error {
-  @apply text-maroon-700 border-maroon-700 text-sm mt-0
- }
-
-
- /* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar for Chrome, Safari and Opera */
 .hidden-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .hidden-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .calendar-table-cell {
-  @apply text-center ;
-}
-
-td.calendar-table-cell {
-  @apply cursor-pointer border border-dark-gray rounded;
+  @apply h-16 text-center;
 }
 
 th {
-  @apply p-2
+  @apply p-2;
 }
 
-.time-increment-selector{
-@apply hover:font-bold flex-initial p-2 rounded transition-all duration-300 ease-in-out w-10 mb-0.5 text-center
+td.calendar-table-cell {
+  @apply cursor-pointer rounded border border-dark-gray;
+}
+
+.time-increment-selector {
+  @apply mb-0.5 w-10 flex-initial cursor-pointer select-none rounded p-2 text-center transition-all duration-300 ease-in-out hover:font-bold;
+}
+
+.flexbox-table {
+  @apply flex flex-row;
+}
+
+.flexbox-table .col {
+  @apply m-1 flex flex-1 flex-col items-stretch gap-1;
+}
+
+.flexbox-table .col .cell {
+  @apply flex-none cursor-pointer rounded border border-dark-gray text-center;
 }
