@@ -1,6 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
 import { useRef, useState } from 'react'
+import Button from 'src/components/Button/Button'
 import { TimeRange, User } from 'types/graphql'
 import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
 import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
@@ -25,7 +26,7 @@ const ResponseCalendarInput = ({
   const now = moment().unix()
 
   const maxDaysShown = 4
-
+  const [dayOffset, setDayOffset] = useState<number>(0)
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
 
   let days: Moment[] = []
@@ -40,11 +41,12 @@ const ResponseCalendarInput = ({
   })
 
   // Dedups the array by converting to strings then converts back to moment array
-  const daysToRender = [
+  const daysList = [
     ...new Set(
       days.sort((a, b) => a.diff(b)).map((d) => d.format('YYYY-MM-DD'))
     ),
   ].map((d) => moment(d))
+  const daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
 
   const getTimesToRender = (day: Moment) => {
     const baseIncrement = 60 * timeIncrement //set incriment to minutes
@@ -153,7 +155,11 @@ const ResponseCalendarInput = ({
     if (thisTime < now) {
       return (
         <div className="cell calendar-table-cell cursor-not-allowed bg-light-gray">
-          <button disabled className="h-full w-full p-2 text-text-subtle">
+          <button
+            disabled
+            className="h-full w-full p-2 text-text-subtle"
+            aria-label={`${time.format('MM/DD hh:mm')} - disabled`}
+          >
             {time.format('hh:mma')}
           </button>
         </div>
@@ -166,6 +172,7 @@ const ResponseCalendarInput = ({
           <button
             className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
+            aria-label={time.format('MM/DD hh:mm')}
           >
             {time.format('hh:mma')}
           </button>
@@ -177,6 +184,7 @@ const ResponseCalendarInput = ({
         <button
           className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}
+          aria-label={`${time.format('MM/DD hh:mm')} - selected`}
         >
           {time.format('hh:mma')}
         </button>
@@ -185,7 +193,7 @@ const ResponseCalendarInput = ({
   }
 
   return (
-    <div className="flex flex-row gap-12 p-2">
+    <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
         <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background">
           <thead>
@@ -223,23 +231,42 @@ const ResponseCalendarInput = ({
             timeIncrement={timeIncrement}
             setTimeIncrement={setTimeIncrement}
           />
-          {daysToRender.length > maxDaysShown && (
+          {daysList.length > maxDaysShown && (
             <div className="flex flex-row gap-3">
               <button
-                onClick={() => console.log('backward pagination')}
+                onClick={() => setDayOffset(dayOffset - maxDaysShown)}
                 type="button"
+                disabled={daysList[0].isSameOrAfter(daysToRender[0])}
+                className={
+                  daysList[0].isSameOrAfter(daysToRender[0])
+                    ? 'cursor-not-allowed text-dark-gray'
+                    : ''
+                }
               >
                 <ChevronLeftIcon className="h-10" />
               </button>
               <button
-                onClick={() => console.log('forward pagination')}
+                onClick={() => setDayOffset(dayOffset + maxDaysShown)}
                 type="button"
+                disabled={daysList[daysList.length - 1].isSameOrBefore(
+                  daysToRender[daysToRender.length - 1]
+                )}
+                className={
+                  daysList[daysList.length - 1].isSameOrBefore(
+                    daysToRender[daysToRender.length - 1]
+                  )
+                    ? 'cursor-not-allowed text-dark-gray'
+                    : ''
+                }
               >
                 <ChevronRightIcon className="h-10" />
               </button>
             </div>
           )}
         </div>
+      </div>
+      <div className="flex flex-row-reverse justify-between">
+        <Button type="submit">Submit</Button>
       </div>
     </div>
   )
