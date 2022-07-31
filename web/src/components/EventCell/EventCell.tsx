@@ -5,6 +5,7 @@ import { useState } from 'react'
 import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 import { useAuth } from '@redwoodjs/auth'
 import EventResponseForm from '../EventResponseForm/EventResponseForm'
+import moment from 'moment'
 
 export const QUERY = gql`
   query FindEventQuery($id: Int!) {
@@ -20,6 +21,7 @@ export const QUERY = gql`
         startTime
         endTime
         user {
+          id
           displayName
           phoneNumber
         }
@@ -42,15 +44,21 @@ export const Success = ({
   event,
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
   const { isAuthenticated, loading, currentUser } = useAuth()
-
+  const ownerSelectedTimes = event.times.filter(
+    (time) => time.user.id === event.owner.id
+  )
   // todo: handle permissions view
   // --> if user is event owner, show summary of responses.
   // --> if user is event guest who hasn't voted, show response table.
   // --> if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
 
-  if (event.owner.id === currentUser.id) {
+  if (event.owner.id === currentUser?.id) {
     // return <div>Summary</div>
   }
+
+  console.log(
+    event.times.map((t) => moment.unix(t.startTime).format('MM/DD hh:mm'))
+  )
 
   return (
     <div className="flex h-full flex-1 flex-col">
@@ -58,7 +66,7 @@ export const Success = ({
         What times work for you?
       </h1>
       <div className=" h-full overflow-auto">
-        <EventResponseForm times={event.times} />
+        <EventResponseForm times={ownerSelectedTimes} />
       </div>
     </div>
   )

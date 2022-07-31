@@ -38,13 +38,13 @@ export const createEventWithTimes: MutationResolvers['createEventWithTimes'] =
     })
   }
 
-export const addTimesToEvent: MutationResolvers['addEventTimes'] = ({
+export const addTimesToEvent: MutationResolvers['addTimesToEvent'] = ({
   id,
   input,
 }) => {
   const timeRanges = input.map((tr) => ({
     ...tr,
-    userId: context.currentUser.id,
+    userId: context?.currentUser?.id,
   }))
   return db.event.update({
     data: {

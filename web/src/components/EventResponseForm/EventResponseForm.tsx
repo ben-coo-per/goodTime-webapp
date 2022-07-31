@@ -4,6 +4,7 @@ import { navigate, routes, useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { useState } from 'react'
+import { TimeRange, User } from 'types/graphql'
 import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 
 export interface ProvidedTimes
@@ -12,10 +13,17 @@ export interface ProvidedTimes
 }
 
 const CREATE_TIME_RANGES = gql`
-  mutation CreateTimeRange($id: Int!, $input: [CreateTimeRangeInput!]!) {
+  mutation CreateTimeRangeForEvent(
+    $id: Int!
+    $input: [CreateTimeRangeInputForEvent!]!
+  ) {
     addTimesToEvent(id: $id, input: $input) {
       id
-      userId
+      times {
+        id
+        startTime
+        endTime
+      }
     }
   }
 `
@@ -36,14 +44,10 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
   })
 
   function onSubmit() {
-    const data = timeRanges.map((d) => ({
-      ...d,
-      eventId: id,
-      userId: currentUser.id,
-    }))
     createTimeRanges({
       variables: {
-        input: data,
+        id: id,
+        input: timeRanges,
       },
     })
   }
