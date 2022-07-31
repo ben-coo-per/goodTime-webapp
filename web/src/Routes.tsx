@@ -23,8 +23,8 @@ const Routes = () => {
       </AuthPageLayout>
       <Route path="/" page={HomePage} name="home" />
       <WebAppLayout>
-        <Route path="/respond/{id:Int}" page={EventResponsePage} name="eventResponse" />
         <Private unauthenticated="login">
+          <Route path="/respond/{id:Int}" page={EventResponsePage} name="eventResponse" />
           <Route path="/create-event" page={CreateEventPage} name="createEvent" />
           <Route path="/create-event/share-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
         </Private>

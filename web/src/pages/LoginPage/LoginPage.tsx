@@ -9,7 +9,13 @@ import {
   PasswordField,
   FieldError,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import {
+  Link,
+  navigate,
+  routes,
+  useLocation,
+  useParams,
+} from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -17,10 +23,16 @@ import Button from 'src/components/Button/Button'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
+  const { search } = useLocation()
+  const continueYourJourney = search.replace('?redirectTo=', '')
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      if (/redirectTo/.test(search)) {
+        navigate(continueYourJourney)
+      } else {
+        navigate(routes.home())
+      }
     }
   }, [isAuthenticated])
 
@@ -49,12 +61,12 @@ const LoginPage = () => {
         <div>
           <div>
             <header>
-              <h2 className="text-3xl text-center font-display lowercase">
+              <h2 className="text-center font-display text-3xl lowercase">
                 Log In
               </h2>
             </header>
 
-            <div className="p-8 bg-white rounded-lg my-4 shadow">
+            <div className="my-4 rounded-lg bg-white p-8 shadow">
               <Form onSubmit={onSubmit} className="flex flex-col">
                 <Label
                   name="username"
@@ -100,7 +112,7 @@ const LoginPage = () => {
                 <div className="mb-8 w-full text-end">
                   <Link
                     to={routes.forgotPassword()}
-                    className="text-text-subtle text-sm hover:text-turquoise-700"
+                    className="text-sm text-text-subtle hover:text-turquoise-700"
                   >
                     Forgot Password?
                   </Link>
@@ -112,7 +124,10 @@ const LoginPage = () => {
           </div>
           <div className="text-center">
             <span>{`Don't have an account?`}</span>{' '}
-            <Link to={routes.signup()} className="underline text-blue-700">
+            <Link
+              to={routes.signup({ redirectTo: continueYourJourney })}
+              className="text-blue-700 underline"
+            >
               Sign up!
             </Link>
           </div>

@@ -9,7 +9,7 @@ import {
   PasswordField,
   FieldError,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -17,10 +17,16 @@ import Button from 'src/components/Button/Button'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const { search } = useLocation()
+  const continueYourJourney = search.replace('?redirectTo=', '')
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      if (/redirectTo/.test(search)) {
+        navigate(continueYourJourney)
+      } else {
+        navigate(routes.home())
+      }
     }
   }, [isAuthenticated])
 
@@ -52,12 +58,12 @@ const SignupPage = () => {
         <div>
           <div>
             <header>
-              <h2 className="text-3xl text-center font-display lowercase">
+              <h2 className="text-center font-display text-3xl lowercase">
                 Signup
               </h2>
             </header>
 
-            <div className="p-8 bg-white rounded-lg my-4 shadow">
+            <div className="my-4 rounded-lg bg-white p-8 shadow">
               <Form onSubmit={onSubmit} className="flex flex-col">
                 <Label
                   name="username"
@@ -116,7 +122,7 @@ const SignupPage = () => {
           </div>
           <div className="text-center">
             <span>Already have an account?</span>{' '}
-            <Link to={routes.login()} className="underline text-blue-700">
+            <Link to={routes.login()} className="text-blue-700 underline">
               Log in!
             </Link>
           </div>

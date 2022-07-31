@@ -35,7 +35,7 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
 
   const [createTimeRanges, { loading }] = useMutation(CREATE_TIME_RANGES, {
     onCompleted: (event) => {
-      toast.success('Available times saved!!')
+      toast.success('Your available times have been saved!')
       // navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
     },
     onError: (error) => {
