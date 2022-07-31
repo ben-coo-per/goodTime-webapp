@@ -47,11 +47,14 @@ export const Success = ({
   const ownerSelectedTimes = event.times.filter(
     (time) => time.user.id === event.owner.id
   )
-  // todo: handle permissions view
-  // --> if user is event owner, show summary of responses.
-  // --> if user is event guest who hasn't voted, show response table.
-  // --> if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
+
+  if (event.owner.id === currentUser?.id) {
+    // if user is event owner, redirect to summary page.
+    // return <div>Summary</div>
+  }
+
   if (event.times.map((t) => t.user.id).includes(currentUser.id)) {
+    // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
       <div className="flex h-full flex-1 flex-col">
         <h1 className="mb-2 font-display text-2xl lowercase">
@@ -64,11 +67,8 @@ export const Success = ({
     )
   }
 
-  if (event.owner.id === currentUser?.id) {
-    // return <div>Summary</div>
-  }
-
   return (
+    // if user is event guest who hasn't voted, show response input.
     <div className="flex h-full flex-1 flex-col">
       <h1 className="mb-2 font-display text-2xl lowercase">
         What times work for you?

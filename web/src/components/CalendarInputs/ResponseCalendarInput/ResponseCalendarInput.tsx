@@ -1,9 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Button from 'src/components/Button/Button'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
-import { TimeRange, User } from 'types/graphql'
 import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
 import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
 
@@ -19,10 +18,10 @@ const ResponseCalendarInput = ({
   timeRanges,
 }: ResponseCalendarInputProps) => {
   // Update times array to use moments rather than unix timestamps
-  const now = moment().unix()
+  const now = moment()
 
   const maxDaysShown = 4
-  const [dayOffset, setDayOffset] = useState<number>(0)
+
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
 
   let days: Moment[] = []
@@ -35,13 +34,16 @@ const ResponseCalendarInput = ({
       days = [...days, start]
     }
   })
-
   // Dedups the array by converting to strings then converts back to moment array
   const daysList = [
     ...new Set(
       days.sort((a, b) => a.diff(b)).map((d) => d.format('YYYY-MM-DD'))
     ),
   ].map((d) => moment(d))
+  const [dayOffset, setDayOffset] = useState<number>(
+    daysList.filter((d) => d.isBefore(now)).length
+  )
+
   const daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
 
   const getTimesToRender = (day: Moment) => {
@@ -148,7 +150,7 @@ const ResponseCalendarInput = ({
       return true
     }
 
-    if (thisTime < now) {
+    if (thisTime < now.unix()) {
       return (
         <div className="cell calendar-table-cell cursor-not-allowed bg-light-gray">
           <button
@@ -230,7 +232,7 @@ const ResponseCalendarInput = ({
           {daysList.length > maxDaysShown && (
             <div className="flex flex-row gap-3">
               <button
-                onClick={() => setDayOffset(dayOffset - maxDaysShown)}
+                onClick={() => setDayOffset(dayOffset - 1)}
                 type="button"
                 disabled={daysList[0].isSameOrAfter(daysToRender[0])}
                 className={
@@ -242,7 +244,7 @@ const ResponseCalendarInput = ({
                 <ChevronLeftIcon className="h-10" />
               </button>
               <button
-                onClick={() => setDayOffset(dayOffset + maxDaysShown)}
+                onClick={() => setDayOffset(dayOffset + 1)}
                 type="button"
                 disabled={daysList[daysList.length - 1].isSameOrBefore(
                   daysToRender[daysToRender.length - 1]
