@@ -2,14 +2,10 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
 import { useRef, useState } from 'react'
 import Button from 'src/components/Button/Button'
+import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { TimeRange, User } from 'types/graphql'
 import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
 import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
-
-interface ProvidedTimes
-  extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
-  user: Pick<User, 'displayName' | 'phoneNumber'>
-}
 
 interface ResponseCalendarInputProps {
   times: ProvidedTimes[]

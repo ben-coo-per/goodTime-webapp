@@ -4,6 +4,7 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useState } from 'react'
 import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 import { useAuth } from '@redwoodjs/auth'
+import EventResponseForm from '../EventResponseForm/EventResponseForm'
 
 export const QUERY = gql`
   query FindEventQuery($id: Int!) {
@@ -40,7 +41,6 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
-  const [timeRanges, setTimeRanges] = useState([])
   const { isAuthenticated, loading, currentUser } = useAuth()
 
   // todo: handle permissions view
@@ -58,11 +58,7 @@ export const Success = ({
         What times work for you?
       </h1>
       <div className=" h-full overflow-auto">
-        <ResponseCalendarInput
-          times={event.times}
-          setTimeRanges={setTimeRanges}
-          timeRanges={timeRanges}
-        />
+        <EventResponseForm times={event.times} />
       </div>
     </div>
   )
