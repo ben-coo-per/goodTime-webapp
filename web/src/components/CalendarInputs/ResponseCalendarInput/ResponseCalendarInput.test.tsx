@@ -1,14 +1,18 @@
 import { render } from '@redwoodjs/testing/web'
-
+import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import ResponseCalendarInput from './ResponseCalendarInput'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
 describe('ResponseCalendarInput', () => {
+  beforeEach(() => {
+    const times: ProvidedTimes[] = []
+  })
+
   it('renders successfully', () => {
     expect(() => {
-      render(<ResponseCalendarInput />)
+      render(<ResponseCalendarInput times={times} />)
     }).not.toThrow()
   })
 })

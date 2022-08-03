@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+import { useState } from 'react'
 
 import EventResponseForm from './EventResponseForm'
 
@@ -6,9 +7,14 @@ import EventResponseForm from './EventResponseForm'
 //    https://redwoodjs.com/docs/testing#testing-components
 
 describe('EventResponseForm', () => {
+  beforeEach(() => {})
+
   it('renders successfully', () => {
     expect(() => {
-      render(<EventResponseForm />)
+      render(<EventResponseForm times={[]} />)
     }).not.toThrow()
   })
 })
+function renderHook(arg0: () => any): { result: any } {
+  throw new Error('Function not implemented.')
+}

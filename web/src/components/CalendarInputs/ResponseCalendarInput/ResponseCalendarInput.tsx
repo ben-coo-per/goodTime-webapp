@@ -10,18 +10,21 @@ interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
   setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
   timeRanges: any[]
+  isActive?: boolean
+  isSummary?: boolean
+  isDisabled?: boolean
 }
 
 const ResponseCalendarInput = ({
   times,
   setTimeRanges,
   timeRanges,
+  isActive = true,
+  isSummary = false,
+  isDisabled = false,
 }: ResponseCalendarInputProps) => {
-  // Update times array to use moments rather than unix timestamps
   const now = moment()
-
   const maxDaysShown = 4
-
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
 
   let days: Moment[] = []
@@ -151,8 +154,14 @@ const ResponseCalendarInput = ({
     }
 
     if (thisTime < now.unix()) {
+      const getClassName = () => {
+        if (isSelected()) {
+          return 'cell calendar-table-cell cursor-not-allowed bg-turquoise-200'
+        }
+        return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
+      }
       return (
-        <div className="cell calendar-table-cell cursor-not-allowed bg-light-gray">
+        <div className={getClassName()}>
           <button
             disabled
             className="h-full w-full p-2 text-text-subtle"
@@ -264,7 +273,9 @@ const ResponseCalendarInput = ({
         </div>
       </div>
       <div className="flex flex-row-reverse justify-between">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isDisabled}>
+          {isSummary ? 'Update' : 'Submit'}
+        </Button>
       </div>
     </div>
   )

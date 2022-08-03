@@ -1,11 +1,10 @@
 import type { FindEventQuery, FindEventQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { useState } from 'react'
-import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 import { useAuth } from '@redwoodjs/auth'
 import EventResponseForm from '../EventResponseForm/EventResponseForm'
-import moment from 'moment'
+import EventResponseSummary from '../EventResponseSummary/EventResponseSummary'
+import EventOwnerSummary from '../EventOwnerSummary/EventOwnerSummary'
 
 export const QUERY = gql`
   query FindEventQuery($id: Int!) {
@@ -15,6 +14,7 @@ export const QUERY = gql`
       name
       owner {
         id
+        displayName
       }
       times {
         id
@@ -50,32 +50,21 @@ export const Success = ({
 
   if (event.owner.id === currentUser?.id) {
     // if user is event owner, redirect to summary page.
-    // return <div>Summary</div>
+    return <EventOwnerSummary times={event.times} />
   }
 
   if (event.times.map((t) => t.user.id).includes(currentUser.id)) {
     // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
-      <div className="flex h-full flex-1 flex-col">
-        <h1 className="mb-2 font-display text-2xl lowercase">
-          Here are the times you said you're available:
-        </h1>
-        <div className=" h-full overflow-auto">
-          <EventResponseForm times={ownerSelectedTimes} />
-        </div>
-      </div>
+      <EventResponseSummary
+        times={event.times}
+        selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
+      />
     )
   }
 
   return (
     // if user is event guest who hasn't voted, show response input.
-    <div className="flex h-full flex-1 flex-col">
-      <h1 className="mb-2 font-display text-2xl lowercase">
-        What times work for you?
-      </h1>
-      <div className=" h-full overflow-auto">
-        <EventResponseForm times={ownerSelectedTimes} />
-      </div>
-    </div>
+    <EventResponseForm times={ownerSelectedTimes} />
   )
 }

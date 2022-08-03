@@ -34,5 +34,6 @@ export const schema = gql`
     updateTimeRange(id: Int!, input: UpdateTimeRangeInput!): TimeRange!
       @requireAuth
     deleteTimeRange(id: Int!): TimeRange! @requireAuth
+    deleteTimeRanges(userId: String!, eventId: Int!): Boolean! @requireAuth
   }
-`;
+`
