@@ -57,7 +57,7 @@ export const Success = ({
     // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
       <EventResponseSummary
-        times={event.times}
+        times={ownerSelectedTimes}
         selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
       />
     )

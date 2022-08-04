@@ -3,7 +3,7 @@ import { Form } from '@redwoodjs/forms'
 import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 
@@ -36,8 +36,7 @@ const EventResponseSummary = ({
   times: ProvidedTimes[]
   selectedTimes: ProvidedTimes[]
 }) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-  const [hasChanged, setHasChanged] = useState<boolean>(true)
+  const [hasChanged, setHasChanged] = useState<boolean | undefined>()
   const [timeRanges, setTimeRanges] = useState(selectedTimes)
   const { id } = useParams()
   const { userMetadata } = useAuth()
@@ -62,6 +61,14 @@ const EventResponseSummary = ({
 
   const loading: boolean = createLoading || deleteLoading
 
+  useEffect(() => {
+    if (hasChanged == undefined) {
+      setHasChanged(false)
+    } else {
+      setHasChanged(true)
+    }
+  }, [timeRanges])
+
   async function onSubmit() {
     if (hasChanged) {
       // destroy exisitng records and recreate with new times
@@ -74,7 +81,10 @@ const EventResponseSummary = ({
       createTimeRanges({
         variables: {
           id: id,
-          input: timeRanges,
+          input: timeRanges.map((tr) => ({
+            startTime: tr.startTime,
+            endTime: tr.endTime,
+          })),
         },
       })
     }
@@ -90,9 +100,8 @@ const EventResponseSummary = ({
           times={times}
           setTimeRanges={setTimeRanges}
           timeRanges={timeRanges}
-          isActive={isEditing}
           isSummary={true}
-          isDisabled={loading || hasChanged}
+          isDisabled={loading || !hasChanged}
         />
       </Form>
     </div>

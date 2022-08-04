@@ -39,26 +39,26 @@ const Button = ({
         switch (color) {
           case 'maroon':
             if (variant == 'outline') {
-              return `border border-maroon-600 text-maroon-700 hover:border-maroon-700 `
+              return `border border-maroon-600 text-maroon-700 enabled:hover:border-maroon-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-maroon-700  hover:bg-maroon-200 hover:text-maroon-800`
+              return `text-maroon-700  enabled:hover:bg-maroon-200 enabled:hover:text-maroon-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-maroon-700 hover:text-maroon-800 undeline`
+              return `text-maroon-700 enabled:hover:text-maroon-800 undeline disabled:opacity-75`
             }
-            return `bg-maroon-700 hover:bg-maroon-800 text-white`
+            return `bg-maroon-700 enabled:hover:bg-maroon-800 text-white disabled:opacity-75`
           default:
             if (variant == 'outline') {
-              return `border border-turquoise-600 text-turquoise-700  hover:border-turquoise-700`
+              return `border border-turquoise-600 text-turquoise-700  enabled:hover:border-turquoise-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-turquoise-700  hover:bg-turquoise-200 hover:text-turquoise-800`
+              return `text-turquoise-700 enabled:hover:bg-turquoise-200 enabled:hover:text-turquoise-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-turquoise-700 hover:text-turquoise-800 underline`
+              return `text-turquoise-700 enabled:hover:text-turquoise-800 underline disabled:opacity-75`
             }
-            return `bg-turquoise-700 hover:bg-turquoise-800 text-white`
+            return `bg-turquoise-700 enabled:hover:bg-turquoise-800 text-white disabled:opacity-75`
         }
       }
     }

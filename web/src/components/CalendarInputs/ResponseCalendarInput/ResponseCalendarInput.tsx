@@ -10,7 +10,6 @@ interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
   setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
   timeRanges: any[]
-  isActive?: boolean
   isSummary?: boolean
   isDisabled?: boolean
 }
@@ -19,10 +18,14 @@ const ResponseCalendarInput = ({
   times,
   setTimeRanges,
   timeRanges,
-  isActive = true,
   isSummary = false,
   isDisabled = false,
 }: ResponseCalendarInputProps) => {
+  // ensures timeranges are in a non-readonly format
+  timeRanges = timeRanges.map((tr) => ({
+    startTime: tr.startTime,
+    endTime: tr.endTime,
+  }))
   const now = moment()
   const maxDaysShown = 4
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
@@ -166,6 +169,7 @@ const ResponseCalendarInput = ({
             disabled
             className="h-full w-full p-2 text-text-subtle"
             aria-label={`${time.format('MM/DD hh:mm')} - disabled`}
+            type="button"
           >
             {time.format('hh:mma')}
           </button>
@@ -180,6 +184,7 @@ const ResponseCalendarInput = ({
             className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
             aria-label={time.format('MM/DD hh:mm')}
+            type="button"
           >
             {time.format('hh:mma')}
           </button>
@@ -192,6 +197,7 @@ const ResponseCalendarInput = ({
           className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}
           aria-label={`${time.format('MM/DD hh:mm')} - selected`}
+          type="button"
         >
           {time.format('hh:mma')}
         </button>

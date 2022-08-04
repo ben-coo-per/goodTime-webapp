@@ -30,14 +30,14 @@ const CREATE_TIME_RANGES = gql`
 
 const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
   const [timeRanges, setTimeRanges] = useState([])
-  const hasChangedRef: { current?: boolean } = useRef()
+  const [hasChanged, setHasChanged] = useState<boolean | undefined>()
   const { id } = useParams()
 
   useEffect(() => {
-    if (hasChangedRef.current == undefined) {
-      hasChangedRef.current = false
+    if (hasChanged == undefined) {
+      setHasChanged(false)
     } else {
-      hasChangedRef.current = true
+      setHasChanged(true)
     }
   }, [timeRanges])
 
@@ -52,7 +52,7 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
   })
 
   function onSubmit() {
-    if (hasChangedRef.current) {
+    if (hasChanged) {
       createTimeRanges({
         variables: {
           id: id,
@@ -72,7 +72,7 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
           times={times}
           setTimeRanges={setTimeRanges}
           timeRanges={timeRanges}
-          isDisabled={hasChangedRef.current || loading}
+          isDisabled={!hasChanged || loading}
         />
       </Form>
     </div>
