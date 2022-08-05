@@ -5533,6 +5533,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/user-event@npm:^14.4.2":
+  version: 14.4.2
+  resolution: "@testing-library/user-event@npm:14.4.2"
+  peerDependencies:
+    "@testing-library/dom": ">=7.21.4"
+  checksum: 020dc0b8692e35a3008836f1848be914cb3d3167ca3e8fb78eface7e8da4e1f3fa40e19d2b49246dc3ed7bb861500735906c8183a82a3adbc3d9238477e7eef7
+  languageName: node
+  linkType: hard
+
 "@timsuchanek/copy@npm:1.4.5":
   version: 1.4.5
   resolution: "@timsuchanek/copy@npm:1.4.5"
@@ -24358,6 +24367,7 @@ __metadata:
     "@redwoodjs/forms": 2.0.0
     "@redwoodjs/router": 2.0.0
     "@redwoodjs/web": 2.0.0
+    "@testing-library/user-event": ^14.4.2
     autoprefixer: ^10.4.7
     framer-motion: ^6.4.3
     heroicons: ^1.0.6

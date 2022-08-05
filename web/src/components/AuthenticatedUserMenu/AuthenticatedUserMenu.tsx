@@ -47,23 +47,21 @@ const AuthenticatedUserMenu = ({
   return (
     <div className="relative" ref={ref}>
       <button
-        className="rounded-3xl rounded-r-lg h-12 bg-turquoise-900 text-light-gray flex flex-row items-center pr-4 cursor-pointer z-20"
+        className="z-20 flex h-12 cursor-pointer flex-row items-center rounded-3xl rounded-r-lg bg-turquoise-900 pr-4 text-light-gray"
         aria-expanded="false"
         aria-haspopup="true"
         id="menu-button"
         onClick={() => setDropdownExpanded(!dropdownExpanded)}
       >
-        <UserCircleIcon className="h-12 mr-1" />
-        <p>
-          {displayName != null ? displayName : phoneNumberStyling(phoneNumber)}
-        </p>
+        <UserCircleIcon className="mr-1 h-12" />
+        {displayName ? displayName : phoneNumberStyling(phoneNumber)}
       </button>
       <motion.div
         hidden={dropdownExpanded ? false : true}
         animate={dropdownExpanded ? 'open' : 'closed'}
         variants={variants}
         transition={{ ease: 'easeOut', duration: 0.25 }}
-        className="origin-top-right absolute right-0 mt-1 w-56 z-10 rounded-lg shadow-lg bg-turquoise-900 text-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-lg bg-turquoise-900 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
