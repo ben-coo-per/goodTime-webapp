@@ -164,7 +164,7 @@ const ResponseCalendarInput = ({
         return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
       }
       return (
-        <div className={getClassName()}>
+        <div className={getClassName()} role="time-cell">
           <button
             disabled
             className="h-full w-full p-2 text-text-subtle"
@@ -179,7 +179,10 @@ const ResponseCalendarInput = ({
 
     if (isSelected()) {
       return (
-        <div className="cell calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
+        <div
+          className="cell calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600"
+          role="time-cell"
+        >
           <button
             className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
@@ -192,7 +195,10 @@ const ResponseCalendarInput = ({
       )
     }
     return (
-      <div className="cell calendar-table-cell hover:bg-turquoise-200 ">
+      <div
+        className="cell calendar-table-cell hover:bg-turquoise-200"
+        role="time-cell"
+      >
         <button
           className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}
@@ -228,10 +234,13 @@ const ResponseCalendarInput = ({
             </tr>
           </thead>
         </table>
-        <div className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto">
+        <div
+          role="calendar-table"
+          className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto"
+        >
           {daysToRender.map((day: Moment, di: number) => {
             return (
-              <div className="col" key={`${di}`}>
+              <div role="calendar-table-column" className="col" key={`${di}`}>
                 {getTimesToRender(day).map((time, ti) => {
                   return <TimeCell time={time} key={`${di}-${ti}`} />
                 })}

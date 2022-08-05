@@ -31,6 +31,7 @@ const TimeIntervalSelector = ({
           onClick={() => setTimeIncrement(60)}
           className="time-increment-selector"
           aria-label="60 minute increment"
+          role="button"
         >
           60
         </span>
@@ -38,6 +39,7 @@ const TimeIntervalSelector = ({
           onClick={() => setTimeIncrement(30)}
           className="time-increment-selector"
           aria-label="30 minute increment"
+          role="button"
         >
           30
         </span>
@@ -45,6 +47,7 @@ const TimeIntervalSelector = ({
           onClick={() => setTimeIncrement(15)}
           className="time-increment-selector"
           aria-label="15 minute increment"
+          role="button"
         >
           15
         </span>
