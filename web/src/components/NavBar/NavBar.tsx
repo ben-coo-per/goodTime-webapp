@@ -9,7 +9,7 @@ import AuthenticatedUserMenu, {
 
 const NavBar = ({ hasLogo = true }: { hasLogo?: boolean }) => {
   return (
-    <header className="w-full mx-auto h-40 p-8 flex flex-row-reverse justify-between items-center">
+    <header className="mx-auto flex h-40 w-full flex-row-reverse items-center justify-between p-8">
       <UserElement />
       {hasLogo && (
         <Link className="cursor-pointer" to={routes.home()}>
@@ -27,7 +27,7 @@ const UserElement = () => {
 
   if (loading) {
     return (
-      <div className="rounded-full h-12 w-12 bg-dark-gray animate-pulse"></div>
+      <div className="h-12 w-12 animate-pulse rounded-full bg-dark-gray"></div>
     )
   }
   if (currentUser) {
@@ -48,16 +48,16 @@ const UserElement = () => {
     return (
       <Link
         to={routes.login()}
-        className="rounded-3xl rounded-r-lg h-12 bg-light-gray text-text-subtle flex flex-row items-center pr-4 cursor-pointer"
+        className="flex h-12 cursor-pointer flex-row items-center rounded-3xl rounded-r-lg bg-light-gray pr-4 text-text-subtle"
       >
-        <UserCircleIcon className="h-12 mr-1" />
-        <p>Log in</p>
+        <UserCircleIcon className="mr-1 h-12" />
+        Log in
       </Link>
     )
   }
 
   return (
-    <div className="rounded-full h-12">
+    <div className="h-12 rounded-full">
       <UserCircleIcon className="h-12 " />
     </div>
   )

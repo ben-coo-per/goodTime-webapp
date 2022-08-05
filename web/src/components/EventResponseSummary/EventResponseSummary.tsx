@@ -51,7 +51,7 @@ const EventResponseSummary = ({
     {
       onCompleted: (event) => {
         toast.success('Your times have been updated!')
-        // navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
+        setHasChanged(false)
       },
       onError: (error) => {
         toast.error(error.message)

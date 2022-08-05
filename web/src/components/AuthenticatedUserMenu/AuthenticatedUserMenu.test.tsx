@@ -14,11 +14,12 @@ describe('AuthenticatedUserMenu', () => {
       phoneNumber: '7132546843',
     })
     const { result } = renderHook(() => useAuth())
+
     expect(() => {
       render(
         <AuthenticatedUserMenu
-          phoneNumber={}
-          logOut={result.current.logOut()}
+          phoneNumber={result.current.currentUser.phoneNumber}
+          logOut={() => result.current.logOut()}
         />
       )
     }).not.toThrow()
