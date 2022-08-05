@@ -1,10 +1,4 @@
-import {
-  render,
-  screen,
-  within,
-  waitFor,
-  renderHook,
-} from '@redwoodjs/testing/web'
+import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import ResponseCalendarInput from './ResponseCalendarInput'
 import userEvent from '@testing-library/user-event'

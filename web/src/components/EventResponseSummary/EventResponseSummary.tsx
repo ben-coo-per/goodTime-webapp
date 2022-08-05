@@ -3,7 +3,7 @@ import { Form } from '@redwoodjs/forms'
 import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 
