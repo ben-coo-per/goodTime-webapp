@@ -22,7 +22,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (/redirectTo/.test(search)) {
+      if (/redirectTo=.+$/.test(search)) {
         navigate(continueYourJourney)
       } else {
         navigate(routes.home())
