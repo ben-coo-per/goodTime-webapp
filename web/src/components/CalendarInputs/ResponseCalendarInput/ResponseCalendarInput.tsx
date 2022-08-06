@@ -50,7 +50,10 @@ const ResponseCalendarInput = ({
     daysList.filter((d) => d.isBefore(now)).length
   )
 
-  const daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
+  let daysToRender = [daysList[0]]
+  if (daysList.length > 1) {
+    daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
+  }
 
   const getTimesToRender = (day: Moment) => {
     const baseIncrement = 60 * timeIncrement //set incriment to minutes
@@ -220,7 +223,11 @@ const ResponseCalendarInput = ({
               {daysToRender.map((day: Moment, i: number) => {
                 const d = day.format('ddd-MMM DD-YYYY').split('-')
                 return (
-                  <th className="calendar-table-cell" key={i}>
+                  <th
+                    className="calendar-table-cell"
+                    key={i}
+                    role="column-header"
+                  >
                     <p className="text-sm font-normal leading-3 text-text-subtle">
                       {d[0]}
                     </p>

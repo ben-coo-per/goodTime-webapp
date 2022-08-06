@@ -3,19 +3,26 @@ import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseFor
 import ResponseCalendarInput from './ResponseCalendarInput'
 import userEvent from '@testing-library/user-event'
 
-const times: ProvidedTimes[] = [
-  {
-    id: 1,
-    endTime: 1659722400,
-    startTime: 1659708000,
-    user: {
-      displayName: 'Ben',
-      phoneNumber: '7132546843',
-    },
-  },
-]
-
 describe('ResponseCalendarInput', () => {
+  let times: ProvidedTimes[] = [
+    {
+      id: 1,
+      endTime: 1817600090,
+      startTime: 1817589290,
+      user: {
+        displayName: 'Ben',
+        phoneNumber: '7132546843',
+      },
+    },
+  ]
+
+  let timeRanges = [
+    {
+      endTime: 1817600090,
+      startTime: 1817589290,
+    },
+  ]
+
   it('renders table header successfully', async () => {
     render(
       <ResponseCalendarInput
@@ -25,22 +32,17 @@ describe('ResponseCalendarInput', () => {
       />
     )
 
-    const tableHeader = await screen.findByRole('columnheader')
+    const tableHeader = await screen.findByRole('column-header')
     expect(await within(tableHeader).findByText('Fri')).toBeInTheDocument
-    expect(await within(tableHeader).findByText('Aug 05')).toBeInTheDocument
-    expect(await within(tableHeader).findByText('2022')).toBeInTheDocument
+    expect(await within(tableHeader).findByText('Aug 06')).toBeInTheDocument
+    expect(await within(tableHeader).findByText('2027')).toBeInTheDocument
   })
 
   it('displays selected times', async () => {
     render(
       <ResponseCalendarInput
         times={times}
-        timeRanges={[
-          {
-            endTime: 1659722400,
-            startTime: 1659708000,
-          },
-        ]}
+        timeRanges={timeRanges}
         setTimeRanges={jest.fn()}
       />
     )
@@ -54,25 +56,36 @@ describe('ResponseCalendarInput', () => {
     render(
       <ResponseCalendarInput
         times={times}
-        timeRanges={[]}
+        timeRanges={timeRanges}
         setTimeRanges={jest.fn()}
       />
     )
 
-    const timeIncrementSixtyMin = screen.getByLabelText('60 minute increment')
-    const timeIncrementThirtyMin = screen.getByLabelText('30 minute increment')
-    const timeIncrementFifteenMin = screen.getByLabelText('15 minute increment')
+    const timeIncrementSixtyMin = await screen.findByLabelText(
+      '60 minute increment'
+    )
+
+    const timeIncrementThirtyMin = await screen.findByLabelText(
+      '30 minute increment'
+    )
+
+    const timeIncrementFifteenMin = await screen.findByLabelText(
+      '15 minute increment'
+    )
 
     let timeCells = await screen.findAllByRole('time-cell')
-    expect(timeCells.length).toBe(4)
+    waitFor(async () => {
+      timeCells
+    })
+    expect(timeCells.length).toBe(3)
     await waitFor(() => userEvent.click(timeIncrementThirtyMin))
     timeCells = await screen.findAllByRole('time-cell')
-    expect(timeCells.length).toBe(8)
+    expect(timeCells.length).toBe(6)
     await waitFor(() => userEvent.click(timeIncrementFifteenMin))
     timeCells = await screen.findAllByRole('time-cell')
-    expect(timeCells.length).toBe(16)
+    expect(timeCells.length).toBe(12)
     await waitFor(() => userEvent.click(timeIncrementSixtyMin))
     timeCells = await screen.findAllByRole('time-cell')
-    expect(timeCells.length).toBe(4)
+    expect(timeCells.length).toBe(3)
   })
 })
