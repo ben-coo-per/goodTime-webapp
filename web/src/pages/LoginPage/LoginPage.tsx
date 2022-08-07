@@ -22,7 +22,7 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 import Button from 'src/components/Button/Button'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn } = useAuth()
+  const { isAuthenticated, logIn, loading } = useAuth()
   const { search } = useLocation()
   const continueYourJourney = search.replace('?redirectTo=', '')
 
@@ -118,7 +118,9 @@ const LoginPage = () => {
                   </Link>
                 </div>
 
-                <Button type="submit">Log In</Button>
+                <Button type="submit" disabled={loading}>
+                  Log In
+                </Button>
               </Form>
             </div>
           </div>

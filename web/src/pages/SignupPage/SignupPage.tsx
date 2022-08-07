@@ -16,7 +16,7 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 import Button from 'src/components/Button/Button'
 
 const SignupPage = () => {
-  const { isAuthenticated, signUp } = useAuth()
+  const { isAuthenticated, signUp, loading } = useAuth()
   const { search } = useLocation()
   const continueYourJourney = search.replace('?redirectTo=', '')
 
@@ -116,7 +116,9 @@ const SignupPage = () => {
                 />
                 <FieldError name="password" className="field-error mb-8" />
 
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit" disabled={loading}>
+                  Sign Up
+                </Button>
               </Form>
             </div>
           </div>
