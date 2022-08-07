@@ -1,7 +1,7 @@
 import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 import userEvent from '@testing-library/user-event'
-import EventResponseSummary from './EventResponseSummary'
+import EventResponseReview from './EventResponseReview'
 
 const times: ProvidedTimes[] = [
   {
@@ -31,7 +31,7 @@ describe('EventResponseSummary', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
-        <EventResponseSummary times={times} selectedTimes={selectedTimes} />
+        <EventResponseReview times={times} selectedTimes={selectedTimes} />
       )
     }).not.toThrow()
   })

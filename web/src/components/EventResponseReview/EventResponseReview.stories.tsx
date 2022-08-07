@@ -1,7 +1,7 @@
-import EventResponseSummary from './EventResponseSummary'
+import EventResponseReview from './EventResponseReview'
 
 export const generated = () => {
-  return <EventResponseSummary />
+  return <EventResponseReview />
 }
 
 export default { title: 'Components/EventResponseSummary' }

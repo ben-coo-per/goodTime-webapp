@@ -3,7 +3,7 @@ import type { FindEventQuery, FindEventQueryVariables } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useAuth } from '@redwoodjs/auth'
 import EventResponseForm from '../EventResponseForm/EventResponseForm'
-import EventResponseSummary from '../EventResponseSummary/EventResponseSummary'
+import EventResponseReview from '../EventResponseReview/EventResponseReview'
 import EventOwnerSummary from '../EventOwnerSummary/EventOwnerSummary'
 
 export const QUERY = gql`
@@ -43,7 +43,7 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
-  const { isAuthenticated, loading, currentUser } = useAuth()
+  const { currentUser } = useAuth()
   const ownerSelectedTimes = event.times.filter(
     (time) => time.user.id === event.owner.id
   )
@@ -56,7 +56,7 @@ export const Success = ({
   if (event.times.map((t) => t.user.id).includes(currentUser.id)) {
     // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
-      <EventResponseSummary
+      <EventResponseReview
         times={ownerSelectedTimes}
         selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
       />

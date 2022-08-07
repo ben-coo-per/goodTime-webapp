@@ -29,7 +29,7 @@ const CREATE_TIME_RANGES = gql`
   }
 `
 
-const EventResponseSummary = ({
+const EventResponseReview = ({
   times,
   selectedTimes,
 }: {
@@ -108,4 +108,4 @@ const EventResponseSummary = ({
   )
 }
 
-export default EventResponseSummary
+export default EventResponseReview
