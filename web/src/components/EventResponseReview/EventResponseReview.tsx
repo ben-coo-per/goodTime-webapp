@@ -95,7 +95,7 @@ const EventResponseReview = ({
       <h1 className="mb-2 font-display text-2xl lowercase">
         Here are the times you said you're available:
       </h1>
-      <Form onSubmit={onSubmit} className=" h-full overflow-auto">
+      <Form onSubmit={onSubmit} className="h-full overflow-auto">
         <ResponseCalendarInput
           times={times}
           setTimeRanges={setTimeRanges}

@@ -50,7 +50,12 @@ export const Success = ({
 
   if (event.owner.id === currentUser?.id) {
     // if user is event owner, redirect to summary page.
-    return <EventOwnerSummary times={event.times} />
+    return (
+      <EventOwnerSummary
+        times={event.times.filter((time) => time.user.id != event.owner.id)}
+        baseTimes={ownerSelectedTimes}
+      />
+    )
   }
 
   if (event.times.map((t) => t.user.id).includes(currentUser.id)) {

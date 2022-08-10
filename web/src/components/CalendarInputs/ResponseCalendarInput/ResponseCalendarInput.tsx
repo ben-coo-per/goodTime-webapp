@@ -40,6 +40,7 @@ const ResponseCalendarInput = ({
       days = [...days, start]
     }
   })
+
   // Dedups the array by converting to strings then converts back to moment array
   const daysList = [
     ...new Set(
@@ -50,8 +51,8 @@ const ResponseCalendarInput = ({
     daysList.filter((d) => d.isBefore(now)).length
   )
 
-  let daysToRender = [daysList[0]]
-  if (daysList.length > 1) {
+  let daysToRender = daysList
+  if (daysList.length > 1 && dayOffset < daysList.length) {
     daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
   }
 

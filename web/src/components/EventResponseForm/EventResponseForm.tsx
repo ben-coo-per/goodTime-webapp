@@ -9,7 +9,7 @@ import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/Respo
 
 export interface ProvidedTimes
   extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
-  user: Pick<User, 'displayName' | 'phoneNumber'>
+  user: Pick<User, 'displayName' | 'phoneNumber' | 'id'>
 }
 
 const CREATE_TIME_RANGES = gql`
