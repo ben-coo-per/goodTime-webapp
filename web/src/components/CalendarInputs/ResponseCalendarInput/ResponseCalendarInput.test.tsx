@@ -48,7 +48,7 @@ describe('ResponseCalendarInput', () => {
     )
     const timeCells = await screen.findAllByRole('time-cell')
     timeCells.forEach((timeCell) => {
-      expect(timeCell).toHaveClass('bg-turquoise-500')
+      expect(timeCell).toHaveClass('bg-primary-500')
     })
   })
 

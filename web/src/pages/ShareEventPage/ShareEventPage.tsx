@@ -48,7 +48,7 @@ const ShareEventPage = () => {
           </span>{' '}
           <Button
             variant="icon"
-            additionalClasses="border border-turquoise-600 text-turquoise-700 hover:bg-turquoise-200 hover:text-turquoise-800 hover:border-turquoise-700"
+            additionalClasses="border border-primary-600 text-primary-700 hover:bg-primary-200 hover:text-primary-800 hover:border-primary-700"
             onClick={handleCopy}
           >
             <ClipboardIcon className="h-10 w-10" />

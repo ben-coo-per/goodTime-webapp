@@ -112,7 +112,7 @@ const LoginPage = () => {
                 <div className="mb-8 w-full text-end">
                   <Link
                     to={routes.forgotPassword()}
-                    className="text-sm text-text-subtle hover:text-turquoise-700"
+                    className="hover:text-primary-700 text-sm text-text-subtle"
                   >
                     Forgot Password?
                   </Link>

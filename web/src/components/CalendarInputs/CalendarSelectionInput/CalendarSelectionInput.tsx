@@ -161,7 +161,7 @@ const CalendarSelectionInput = ({
 
     if (isSelected()) {
       return (
-        <td className="calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600">
+        <td className="calendar-table-cell bg-primary-500 hover:bg-primary-600">
           <button
             className="h-full w-full p-2 font-medium"
             onClick={() => handleDeselectTime(thisTime)}
@@ -172,7 +172,7 @@ const CalendarSelectionInput = ({
       )
     }
     return (
-      <td className="calendar-table-cell hover:bg-turquoise-200 ">
+      <td className="calendar-table-cell hover:bg-primary-200 ">
         <button
           className="h-full w-full p-2"
           onClick={() => handleSelectTime(thisTime)}

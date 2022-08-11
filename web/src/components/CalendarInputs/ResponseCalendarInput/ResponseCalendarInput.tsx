@@ -163,7 +163,7 @@ const ResponseCalendarInput = ({
     if (thisTime < now.unix()) {
       const getClassName = () => {
         if (isSelected()) {
-          return 'cell calendar-table-cell cursor-not-allowed bg-turquoise-200'
+          return 'cell calendar-table-cell cursor-not-allowed bg-primary-200'
         }
         return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
       }
@@ -184,7 +184,7 @@ const ResponseCalendarInput = ({
     if (isSelected()) {
       return (
         <div
-          className="cell calendar-table-cell bg-turquoise-500 hover:bg-turquoise-600"
+          className="cell calendar-table-cell bg-primary-500 hover:bg-primary-600"
           role="time-cell"
         >
           <button
@@ -200,7 +200,7 @@ const ResponseCalendarInput = ({
     }
     return (
       <div
-        className="cell calendar-table-cell hover:bg-turquoise-200"
+        className="cell calendar-table-cell hover:bg-primary-200"
         role="time-cell"
       >
         <button

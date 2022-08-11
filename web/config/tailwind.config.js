@@ -30,7 +30,7 @@ module.exports = {
           default: '#433E3E',
           subtle: '#7E7E73',
         },
-        turquoise: {
+        primary: {
           100: '#EFF8F7',
           200: '#CFEAE8',
           300: '#AFDBD8',
@@ -41,7 +41,7 @@ module.exports = {
           800: '#32706C',
           900: '#24504D',
         },
-        maroon: {
+        secondary: {
           100: '#FBF0EC',
           200: '#F3D2C5',
           300: '#ECB49E',

@@ -1,6 +1,6 @@
 type ButtonProps = {
   children: React.ReactNode
-  color?: 'turquoise' | 'maroon'
+  color?: 'primary' | 'secondary'
   variant?: 'default' | 'outline' | 'link' | 'ghost' | 'icon'
   size?: 'sm' | 'md' | 'lg'
   icon_position?: 'left' | 'right'
@@ -13,7 +13,7 @@ type ButtonProps = {
 const Button = ({
   children,
   variant = 'default',
-  color = 'turquoise',
+  color = 'primary',
   size = 'md',
   icon_position = 'left',
   disabled = false,
@@ -37,28 +37,28 @@ const Button = ({
     const buttonColor = () => {
       if (variant !== 'icon') {
         switch (color) {
-          case 'maroon':
+          case 'secondary':
             if (variant == 'outline') {
-              return `border border-maroon-600 text-maroon-700 enabled:hover:border-maroon-700 disabled:opacity-75`
+              return `border border-secondary-600 text-secondary-700 enabled:hover:border-secondary-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-maroon-700  enabled:hover:bg-maroon-200 enabled:hover:text-maroon-800 disabled:opacity-75`
+              return `text-secondary-700  enabled:hover:bg-secondary-200 enabled:hover:text-secondary-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-maroon-700 enabled:hover:text-maroon-800 undeline disabled:opacity-75`
+              return `text-secondary-700 enabled:hover:text-secondary-800 undeline disabled:opacity-75`
             }
-            return `bg-maroon-700 enabled:hover:bg-maroon-800 text-white disabled:opacity-75`
+            return `bg-secondary-700 enabled:hover:bg-secondary-800 text-white disabled:opacity-75`
           default:
             if (variant == 'outline') {
-              return `border border-turquoise-600 text-turquoise-700  enabled:hover:border-turquoise-700 disabled:opacity-75`
+              return `border border-primary-600 text-primary-700  enabled:hover:border-primary-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-turquoise-700 enabled:hover:bg-turquoise-200 enabled:hover:text-turquoise-800 disabled:opacity-75`
+              return `text-primary-700 enabled:hover:bg-primary-200 enabled:hover:text-primary-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-turquoise-700 enabled:hover:text-turquoise-800 underline disabled:opacity-75`
+              return `text-primary-700 enabled:hover:text-primary-800 underline disabled:opacity-75`
             }
-            return `bg-turquoise-700 enabled:hover:bg-turquoise-800 text-white disabled:opacity-75`
+            return `bg-primary-700 enabled:hover:bg-primary-800 text-white disabled:opacity-75`
         }
       }
     }
