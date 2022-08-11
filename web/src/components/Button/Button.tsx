@@ -39,26 +39,26 @@ const Button = ({
         switch (color) {
           case 'secondary':
             if (variant == 'outline') {
-              return `border border-secondary-600 text-secondary-700 enabled:hover:border-secondary-700 disabled:opacity-75`
+              return `border border-brand-secondary-600 text-brand-secondary-600 enabled:hover:border-brand-secondary-600 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-secondary-700  enabled:hover:bg-secondary-200 enabled:hover:text-secondary-800 disabled:opacity-75`
+              return `text-brand-secondary-600  enabled:hover:bg-brand-secondary-200 enabled:hover:text-brand-secondary-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-secondary-700 enabled:hover:text-secondary-800 undeline disabled:opacity-75`
+              return `text-brand-secondary-600 enabled:hover:text-brand-secondary-800 undeline disabled:opacity-75`
             }
-            return `bg-secondary-700 enabled:hover:bg-secondary-800 text-white disabled:opacity-75`
+            return `bg-brand-secondary-600 enabled:hover:bg-brand-secondary-800 text-white disabled:opacity-75`
           default:
             if (variant == 'outline') {
-              return `border border-primary-600 text-primary-700  enabled:hover:border-primary-700 disabled:opacity-75`
+              return `border border-brand-primary-600 text-brand-primary-600  enabled:hover:border-brand-primary-600 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-primary-700 enabled:hover:bg-primary-200 enabled:hover:text-primary-800 disabled:opacity-75`
+              return `text-brand-primary-600 enabled:hover:bg-brand-primary-200 enabled:hover:text-brand-primary-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-primary-700 enabled:hover:text-primary-800 underline disabled:opacity-75`
+              return `text-brand-primary-600 enabled:hover:text-brand-primary-800 underline disabled:opacity-75`
             }
-            return `bg-primary-700 enabled:hover:bg-primary-800 text-white disabled:opacity-75`
+            return `bg-brand-primary-600 enabled:hover:bg-brand-primary-800 text-white disabled:opacity-75`
         }
       }
     }

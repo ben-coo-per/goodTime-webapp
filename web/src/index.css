@@ -34,11 +34,11 @@ body {
 }
 
 .error {
-  @apply border-secondary-700 text-secondary-700;
+  @apply border-brand-secondary-700 text-brand-secondary-700;
 }
 
 .field-error {
-  @apply mt-0 border-secondary-700 text-sm text-secondary-700;
+  @apply mt-0 border-brand-secondary-700 text-sm text-brand-secondary-700;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

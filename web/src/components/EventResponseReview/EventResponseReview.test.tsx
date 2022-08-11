@@ -41,11 +41,11 @@ describe('EventResponseSummary', () => {
   //   render(component)
 
   //   let timeCells = await screen.findAllByRole('time-cell')
-  //   expect(timeCells[0]).not.toHaveClass('bg-primary-500')
+  //   expect(timeCells[0]).not.toHaveClass('bg-brand-primary-500')
   //   const button = await within(timeCells[0]).findByRole('button')
   //   await waitFor(() => userEvent.click(button))
   //   timeCells = await screen.findAllByRole('time-cell')
 
-  //   expect(timeCells[0]).toHaveClass('bg-primary-500')
+  //   expect(timeCells[0]).toHaveClass('bg-brand-primary-500')
   // })
 })

@@ -22,7 +22,7 @@ const TimeIntervalSelector = ({
     <div className="relative w-40" aria-label="time increment selector">
       <p className="mb-1 text-xs">Time Increment:</p>
       <motion.div
-        className="border-primary-700 absolute bottom-0 left-0 h-10 w-10 rounded border"
+        className="absolute bottom-0 left-0 h-10 w-10 rounded border border-brand-primary-700"
         animate={{ x: animationXPos }}
         transition={{ ease: 'easeInOut', duration: 0.25 }}
       />

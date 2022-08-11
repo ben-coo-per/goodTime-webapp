@@ -12,7 +12,8 @@ import {
 } from '@redwoodjs/forms'
 
 const ResetPasswordPage = ({ resetToken }) => {
-  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } = useAuth()
+  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
+    useAuth()
   const [enabled, setEnabled] = useState(true)
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const ResetPasswordPage = ({ resetToken }) => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
+              <h2 className="rw-heading rw-heading-brand-secondary">
                 Reset Password
               </h2>
             </header>
