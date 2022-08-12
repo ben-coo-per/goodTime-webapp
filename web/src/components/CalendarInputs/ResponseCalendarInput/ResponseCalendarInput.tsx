@@ -127,6 +127,21 @@ const ResponseCalendarInput = ({
     }
   }
 
+  console.log(
+    JSON.stringify(
+      times.map((t) => ({
+        id: t.id,
+        startTime: t.startTime,
+        endTime: t.endTime,
+        user: {
+          id: t.user.id,
+          displayName: t.user.displayName,
+          phoneNumber: t.user.phoneNumber,
+        },
+      }))
+    )
+  )
+
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">

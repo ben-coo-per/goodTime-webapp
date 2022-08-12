@@ -1,7 +1,33 @@
 import Button from './Button'
 
-export const generated = () => {
-  return <Button />
+export default {
+  title: 'Components/Button',
+  component: Button,
+  argTypes: {
+    type: {
+      table: {
+        disable: true,
+      },
+    },
+    onClick: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 }
 
-export default { title: 'Components/Button' }
+const Template = (args) => (
+  <div className="grid h-screen place-items-center">
+    <Button {...args} />
+  </div>
+)
+
+export const textOnly = Template.bind({})
+textOnly.args = {
+  children: 'button',
+  color: 'primary',
+  variant: 'default',
+  disabled: false,
+  size: 'md',
+}

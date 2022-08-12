@@ -1,4 +1,5 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen, waitFor } from '@redwoodjs/testing/web'
+import userEvent from '@testing-library/user-event'
 
 import TimeIntervalSelector from './TimeIntervalSelector'
 
@@ -7,8 +8,30 @@ import TimeIntervalSelector from './TimeIntervalSelector'
 
 describe('TimeIntervalSelector', () => {
   it('renders successfully', () => {
-    expect(() => {
-      render(<TimeIntervalSelector />)
-    }).not.toThrow()
+    render(
+      <TimeIntervalSelector timeIncrement={60} setTimeIncrement={jest.fn()} />
+    )
+
+    expect(screen.getByText('60')).toBeInTheDocument()
+    expect(screen.getByText('30')).toBeInTheDocument()
+    expect(screen.getByText('15')).toBeInTheDocument()
+
+    const incrementIndicator = screen.getByTestId('animatedIndicator')
+    expect(incrementIndicator).toBeInTheDocument()
+  })
+
+  it('calls setTimeIncrement', async () => {
+    const setTimeIncrement = jest.fn()
+    render(
+      <TimeIntervalSelector
+        timeIncrement={60}
+        setTimeIncrement={setTimeIncrement}
+      />
+    )
+
+    const unselectedIncrement = screen.getByText('30')
+    await waitFor(() => userEvent.click(unselectedIncrement))
+
+    expect(setTimeIncrement).toBeCalled
   })
 })

@@ -1,14 +1,13 @@
 import { render } from '@redwoodjs/testing/web'
+import moment from 'moment'
 
 import CalendarHeaderCell from './CalendarHeaderCell'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
-
 describe('CalendarHeaderCell', () => {
   it('renders successfully', () => {
+    const today = moment()
     expect(() => {
-      render(<CalendarHeaderCell day={['day', 'is', 'working']} />)
+      render(<CalendarHeaderCell day={today} />)
     }).not.toThrow()
   })
 })

@@ -54,7 +54,9 @@ const AuthenticatedUserMenu = ({
         onClick={() => setDropdownExpanded(!dropdownExpanded)}
       >
         <UserCircleIcon className="mr-1 h-12" />
-        {displayName ? displayName : phoneNumberStyling(phoneNumber)}
+        {displayName != undefined && displayName != ''
+          ? displayName
+          : phoneNumberStyling(phoneNumber)}
       </button>
       <motion.div
         hidden={dropdownExpanded ? false : true}
