@@ -2,12 +2,11 @@ import { Dispatch, useEffect, useRef, useState } from 'react'
 import { SetStateAction } from 'react'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-import moment, { max, Moment } from 'moment'
+import { Moment } from 'moment'
 
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
 
 import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
-// import TimeCell from '../components/TimeCell/TimeCell'
 import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
 import CalendarHeaderCell from '../components/CalendarHeaderCell/CalendarHeaderCell'
 import TimeCell from '../components/TimeCell/TimeCell'
@@ -130,16 +129,25 @@ const CreationCalendarInput = ({
         >
           {daysToRender.map((day: Moment, di: number) => {
             return (
-              <div role="calendar-table-column" className="col" key={`${di}`}>
+              <div
+                role="calendar-table-column"
+                className="col"
+                key={`${di}`}
+                ref={scrollableDiv}
+              >
                 {getTimesToRender({ day, timeIncrement }).map((time, ti) => {
                   return (
-                    <TimeCell
-                      time={time}
+                    <div
                       key={`${di}-${ti}`}
-                      timeRanges={timeRanges}
-                      handleDeselectTime={handleDeselectTime}
-                      handleSelectTime={handleSelectTime}
-                    />
+                      ref={time.hour() == 16 ? scrollableDiv : null}
+                    >
+                      <TimeCell
+                        time={time}
+                        timeRanges={timeRanges}
+                        handleDeselectTime={handleDeselectTime}
+                        handleSelectTime={handleSelectTime}
+                      />
+                    </div>
                   )
                 })}
               </div>
