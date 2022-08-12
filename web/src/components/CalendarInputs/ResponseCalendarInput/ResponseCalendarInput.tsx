@@ -3,8 +3,10 @@ import moment, { Moment } from 'moment'
 import { useState } from 'react'
 import Button from 'src/components/Button/Button'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
-import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
-import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
+import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
+import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
+import TimeCell from '../components/TimeCell/TimeCell'
+import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 
 interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
@@ -47,34 +49,13 @@ const ResponseCalendarInput = ({
       days.sort((a, b) => a.diff(b)).map((d) => d.format('YYYY-MM-DD'))
     ),
   ].map((d) => moment(d))
-  const [dayOffset, setDayOffset] = useState<number>(
+  const [dateOffset, setDateOffset] = useState<number>(
     daysList.filter((d) => d.isBefore(now)).length
   )
 
   let daysToRender = daysList
-  if (daysList.length > 1 && dayOffset < daysList.length) {
-    daysToRender = daysList.slice(dayOffset, dayOffset + maxDaysShown)
-  }
-
-  const getTimesToRender = (day: Moment) => {
-    const baseIncrement = 60 * timeIncrement //set incriment to minutes
-    let timeBlocks: Moment[] = []
-    const startOfDay = day.set('hour', 0).set('minute', 0).set('second', 0)
-    times
-      .filter((time) => {
-        const startOfDayForThisTime = moment
-          .unix(time.startTime)
-          .set('hour', 0)
-          .set('minute', 0)
-          .set('second', 0)
-        return startOfDayForThisTime.isSame(startOfDay)
-      })
-      .forEach((time) => {
-        for (let t = time.startTime; t < time.endTime; t += baseIncrement) {
-          timeBlocks = [...timeBlocks, moment.unix(t)]
-        }
-      })
-    return timeBlocks
+  if (daysList.length > 1 && dateOffset < daysList.length) {
+    daysToRender = daysList.slice(dateOffset, dateOffset + maxDaysShown)
   }
 
   function handleSelectTime(time: number) {
@@ -146,75 +127,6 @@ const ResponseCalendarInput = ({
     }
   }
 
-  const TimeCell = ({ time }: { time: Moment }) => {
-    const thisTime = time.unix()
-
-    const isSelected = () => {
-      if (
-        timeRanges.findIndex(
-          (tr) => tr.startTime <= thisTime && tr.endTime > thisTime
-        ) == -1
-      ) {
-        return false
-      }
-      return true
-    }
-
-    if (thisTime < now.unix()) {
-      const getClassName = () => {
-        if (isSelected()) {
-          return 'cell calendar-table-cell cursor-not-allowed bg-brand-primary-50 opacity-80'
-        }
-        return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
-      }
-      return (
-        <div className={getClassName()} role="time-cell">
-          <button
-            disabled
-            className="h-full w-full p-2 text-text-subtle"
-            aria-label={`${time.format('MM/DD hh:mm')} - disabled`}
-            type="button"
-          >
-            {time.format('hh:mma')}
-          </button>
-        </div>
-      )
-    }
-
-    if (isSelected()) {
-      return (
-        <div
-          className="cell calendar-table-cell bg-brand-primary-500 hover:bg-brand-primary-600"
-          role="time-cell"
-        >
-          <button
-            className="h-full w-full p-2 font-medium"
-            onClick={() => handleDeselectTime(thisTime)}
-            aria-label={time.format('MM/DD hh:mm')}
-            type="button"
-          >
-            {time.format('hh:mma')}
-          </button>
-        </div>
-      )
-    }
-    return (
-      <div
-        className="cell calendar-table-cell hover:bg-brand-primary-200"
-        role="time-cell"
-      >
-        <button
-          className="h-full w-full p-2"
-          onClick={() => handleSelectTime(thisTime)}
-          aria-label={`${time.format('MM/DD hh:mm')} - selected`}
-          type="button"
-        >
-          {time.format('hh:mma')}
-        </button>
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
@@ -249,9 +161,19 @@ const ResponseCalendarInput = ({
           {daysToRender.map((day: Moment, di: number) => {
             return (
               <div role="calendar-table-column" className="col" key={`${di}`}>
-                {getTimesToRender(day).map((time, ti) => {
-                  return <TimeCell time={time} key={`${di}-${ti}`} />
-                })}
+                {getTimesToRender({ day, timeIncrement, times }).map(
+                  (time, ti) => {
+                    return (
+                      <TimeCell
+                        time={time}
+                        key={`${di}-${ti}`}
+                        timeRanges={timeRanges}
+                        handleDeselectTime={handleDeselectTime}
+                        handleSelectTime={handleSelectTime}
+                      />
+                    )
+                  }
+                )}
               </div>
             )
           })}
@@ -264,7 +186,7 @@ const ResponseCalendarInput = ({
           {daysList.length > maxDaysShown && (
             <div className="flex flex-row gap-3">
               <button
-                onClick={() => setDayOffset(dayOffset - 1)}
+                onClick={() => setDateOffset(dateOffset - 1)}
                 type="button"
                 disabled={daysList[0].isSameOrAfter(daysToRender[0])}
                 className={
@@ -276,7 +198,7 @@ const ResponseCalendarInput = ({
                 <ChevronLeftIcon className="h-10" />
               </button>
               <button
-                onClick={() => setDayOffset(dayOffset + 1)}
+                onClick={() => setDateOffset(dateOffset + 1)}
                 type="button"
                 disabled={daysList[daysList.length - 1].isSameOrBefore(
                   daysToRender[daysToRender.length - 1]

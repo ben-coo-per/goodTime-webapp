@@ -1,4 +1,4 @@
-import CalendarSelectionInput from './CalendarSelectionInput'
+import CalendarSelectionInput from './CreationCalendarInput'
 
 export const generated = () => {
   return <CalendarSelectionInput />

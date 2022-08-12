@@ -10,6 +10,7 @@ describe('ResponseCalendarInput', () => {
       endTime: 1817600090,
       startTime: 1817589290,
       user: {
+        id: '134',
         displayName: 'Ben',
         phoneNumber: '7132546843',
       },

@@ -3,8 +3,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { motion } from 'framer-motion'
-
-import { TimeIncrement } from '../CalendarSelectionInput/CalendarSelectionInput'
+import { TimeIncrement } from '../../CreationCalendarInput/CreationCalendarInput'
 
 interface TimeIntervalSelectorProps {
   timeIncrement: number

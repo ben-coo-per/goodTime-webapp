@@ -2,11 +2,15 @@ import { Dispatch, useEffect, useRef, useState } from 'react'
 import { SetStateAction } from 'react'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-import moment from 'moment'
+import moment, { max, Moment } from 'moment'
 
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
 
-import TimeIntervalSelector from '../TimeIntervalSelector/TimeIntervalSelector'
+import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
+// import TimeCell from '../components/TimeCell/TimeCell'
+import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
+import CalendarHeaderCell from '../components/CalendarHeaderCell/CalendarHeaderCell'
+import TimeCell from '../components/TimeCell/TimeCell'
 
 export type TimeIncrement = 15 | 30 | 60
 interface TimeCellProps {
@@ -19,40 +23,15 @@ type CalendarSelectionInputProps = {
   setTimeRanges: Dispatch<SetStateAction<SelectedTimeRange[]>>
 }
 
-const CalendarSelectionInput = ({
+const CreationCalendarInput = ({
   timeRanges,
   setTimeRanges,
 }: CalendarSelectionInputProps) => {
   const maxDaysShown = 4
-  const oneDay = 1000 * 60 * 60 * 24
-  const now = moment().unix()
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
 
   const [dateOffset, setDateOffset] = useState<number>(0)
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
   const scrollableDiv = useRef(null)
-
-  const daysShown = () => {
-    const firstDay = new Date(today.getTime() + dateOffset * oneDay)
-    let days: string[][] = []
-    for (let i = 0; i < maxDaysShown; i++) {
-      const day = new Date(firstDay.getTime() + i * oneDay)
-      const pattern = /(\w{3}) (\w{3} \d{2}) (\d{4})/
-      days = [...days, day.toDateString().match(pattern)]
-    }
-    return days
-  }
-
-  const timesShown = () => {
-    const baseIncrement = 1000 * 60 * timeIncrement //set incriment to minutes
-    const tomorrow = new Date(today.getTime() + oneDay).getTime()
-    let times: string[] = []
-    for (let t = today.getTime(); t < tomorrow; t += baseIncrement) {
-      times = [...times, moment(t).format(`h:mma`)]
-    }
-    return times
-  }
 
   useEffect(() => {
     if (scrollableDiv.current) {
@@ -131,95 +110,42 @@ const CalendarSelectionInput = ({
     }
   }
 
-  const TimeCell = ({ time, colNum }: TimeCellProps) => {
-    const day = daysShown()[colNum]
-    const thisTime = moment(
-      `${day[2]} ${day[3]} ${time}`,
-      'MMM DD YYYY h:mma'
-    ).unix()
-
-    const isSelected = () => {
-      if (
-        timeRanges.findIndex(
-          (tr) => tr.startTime <= thisTime && tr.endTime > thisTime
-        ) == -1
-      ) {
-        return false
-      }
-      return true
-    }
-
-    if (thisTime < now) {
-      return (
-        <td className="calendar-table-cell cursor-not-allowed bg-light-gray">
-          <button disabled className="h-full w-full p-2 text-text-subtle">
-            {time}
-          </button>
-        </td>
-      )
-    }
-
-    if (isSelected()) {
-      return (
-        <td className="calendar-table-cell bg-brand-primary-500 hover:bg-brand-primary-600">
-          <button
-            className="h-full w-full p-2 font-medium"
-            onClick={() => handleDeselectTime(thisTime)}
-          >
-            {time}
-          </button>
-        </td>
-      )
-    }
-    return (
-      <td className="calendar-table-cell hover:bg-brand-primary-200 ">
-        <button
-          className="h-full w-full p-2"
-          onClick={() => handleSelectTime(thisTime)}
-        >
-          {time}
-        </button>
-      </td>
-    )
-  }
+  const daysToRender = getDaysToRender({ maxDaysShown, dateOffset })
 
   return (
-    <>
+    <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
         <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background">
           <thead>
             <tr>
-              {daysShown().map((day, i) => (
-                <th className="calendar-table-cell" key={i}>
-                  <p className="text-sm font-normal leading-3 text-text-subtle">
-                    {day[1]}
-                  </p>
-                  <p>{day[2]}</p>
-                  <p className="text-sm font-normal leading-3 text-text-subtle">
-                    {day[3]}
-                  </p>
-                </th>
+              {daysToRender.map((day, i) => (
+                <CalendarHeaderCell day={day} key={i} />
               ))}
             </tr>
           </thead>
         </table>
-        <table className="w-full table-auto border-separate border-spacing-1 ">
-          <tbody className="h-64 overflow-auto">
-            {timesShown().map((time, i) => {
-              return (
-                <tr
-                  key={i}
-                  id={`${time}-row`}
-                  ref={time === '4:00pm' ? scrollableDiv : null} // Sets scoll position to middle of day
-                >
-                  {Array.from(Array(maxDaysShown)).map((x, i) => (
-                    <TimeCell key={i} time={time} colNum={i} />
-                  ))}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <div
+          role="calendar-table"
+          className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto"
+        >
+          {daysToRender.map((day: Moment, di: number) => {
+            return (
+              <div role="calendar-table-column" className="col" key={`${di}`}>
+                {getTimesToRender({ day, timeIncrement }).map((time, ti) => {
+                  return (
+                    <TimeCell
+                      time={time}
+                      key={`${di}-${ti}`}
+                      timeRanges={timeRanges}
+                      handleDeselectTime={handleDeselectTime}
+                      handleSelectTime={handleSelectTime}
+                    />
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
         <div className="sticky bottom-0 flex flex-row justify-between border-t border-dark-gray bg-background p-2">
           <TimeIntervalSelector
             timeIncrement={timeIncrement}
@@ -246,8 +172,8 @@ const CalendarSelectionInput = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
-export default CalendarSelectionInput
+export default CreationCalendarInput

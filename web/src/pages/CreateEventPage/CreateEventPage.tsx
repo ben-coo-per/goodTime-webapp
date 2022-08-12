@@ -7,7 +7,8 @@ import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
 import Button from 'src/components/Button/Button'
-import CalendarSelectionInput from 'src/components/CalendarInputs/CalendarSelectionInput/CalendarSelectionInput'
+import CreationCalendarInput from 'src/components/CalendarInputs/CreationCalendarInput/CreationCalendarInput'
+import ResponseCalendarInput from 'src/components/CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation createEventWithTimes(
@@ -93,7 +94,7 @@ const EventCreatePage = () => {
               <h1 className="mb-2 font-display text-2xl lowercase">
                 Let’s add some times that work for you.
               </h1>
-              <CalendarSelectionInput
+              <CreationCalendarInput
                 setTimeRanges={setSelectedTimeRanges}
                 timeRanges={selectedTimeRanges}
               />

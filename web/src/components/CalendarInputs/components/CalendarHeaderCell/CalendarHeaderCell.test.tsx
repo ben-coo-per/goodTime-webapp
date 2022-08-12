@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import TimeSelectionTablecell from './TimeSelectionTablecell'
+import CalendarHeaderCell from './CalendarHeaderCell'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('TimeSelectionTablecell', () => {
+describe('CalendarHeaderCell', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<TimeSelectionTablecell />)
+      render(<CalendarHeaderCell day={['day', 'is', 'working']} />)
     }).not.toThrow()
   })
 })
