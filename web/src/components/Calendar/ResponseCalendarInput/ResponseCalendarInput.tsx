@@ -12,7 +12,6 @@ interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
   setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
   timeRanges: any[]
-  isSummary?: boolean
   isDisabled?: boolean
 }
 
@@ -20,7 +19,6 @@ const ResponseCalendarInput = ({
   times,
   setTimeRanges,
   timeRanges,
-  isSummary = false,
   isDisabled = false,
 }: ResponseCalendarInputProps) => {
   // ensures timeranges are in a non-readonly format
@@ -127,21 +125,6 @@ const ResponseCalendarInput = ({
     }
   }
 
-  console.log(
-    JSON.stringify(
-      times.map((t) => ({
-        id: t.id,
-        startTime: t.startTime,
-        endTime: t.endTime,
-        user: {
-          id: t.user.id,
-          displayName: t.user.displayName,
-          phoneNumber: t.user.phoneNumber,
-        },
-      }))
-    )
-  )
-
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
@@ -234,7 +217,7 @@ const ResponseCalendarInput = ({
       </div>
       <div className="flex flex-row-reverse justify-between">
         <Button type="submit" disabled={isDisabled}>
-          {isSummary ? 'Update' : 'Submit'}
+          Update
         </Button>
       </div>
     </div>

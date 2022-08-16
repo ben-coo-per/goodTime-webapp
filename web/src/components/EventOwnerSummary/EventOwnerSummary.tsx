@@ -1,4 +1,5 @@
 import { useAuth } from '@redwoodjs/auth'
+import GroupAvailabilityCalendar from '../Calendar/GroupAvailabilityCalendar/GroupAvailabilityCalendar'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 
 const EventOwnerSummary = ({
@@ -14,7 +15,7 @@ const EventOwnerSummary = ({
         Your group's available times
       </h1>
       <div className=" h-full overflow-auto">
-        {/* <EventResponseForm times={ownerSelectedTimes} /> */}
+        <GroupAvailabilityCalendar baseTimes={baseTimes} allTimes={times} />
       </div>
     </div>
   )

@@ -7,8 +7,8 @@ import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
 import Button from 'src/components/Button/Button'
-import CreationCalendarInput from 'src/components/CalendarInputs/CreationCalendarInput/CreationCalendarInput'
-import ResponseCalendarInput from 'src/components/CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
+import CreationCalendarInput from 'src/components/Calendar/CreationCalendarInput/CreationCalendarInput'
+import ResponseCalendarInput from 'src/components/Calendar/ResponseCalendarInput/ResponseCalendarInput'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation createEventWithTimes(

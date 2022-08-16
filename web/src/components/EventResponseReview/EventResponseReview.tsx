@@ -4,7 +4,7 @@ import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { useEffect, useState } from 'react'
-import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
+import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCalendarInput'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 
 const CLEAR_TIMES = gql`
@@ -100,7 +100,6 @@ const EventResponseReview = ({
           times={times}
           setTimeRanges={setTimeRanges}
           timeRanges={timeRanges}
-          isSummary={true}
           isDisabled={loading || !hasChanged}
         />
       </Form>

@@ -5,7 +5,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { useEffect, useRef, useState } from 'react'
 import { TimeRange, User } from 'types/graphql'
-import ResponseCalendarInput from '../CalendarInputs/ResponseCalendarInput/ResponseCalendarInput'
+import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCalendarInput'
 
 export interface ProvidedTimes
   extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
