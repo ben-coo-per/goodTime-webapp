@@ -6,7 +6,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
-import Button from 'src/components/Button/Button'
+import Button from 'src/components/input/Button/Button'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
@@ -45,12 +45,12 @@ const ForgotPasswordPage = () => {
         <Toaster toastOptions={{ duration: 6000 }} />
         <div>
           <header>
-            <h2 className="text-3xl text-center font-display lowercase">
+            <h2 className="text-center font-display text-3xl lowercase">
               Forgot Password
             </h2>
           </header>
 
-          <div className="p-8 bg-white rounded-lg my-4 shadow">
+          <div className="my-4 rounded-lg bg-white p-8 shadow">
             <Form onSubmit={onSubmit} className="flex flex-col">
               <Label
                 name="username"

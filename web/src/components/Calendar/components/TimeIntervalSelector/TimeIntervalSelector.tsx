@@ -22,7 +22,7 @@ const TimeIntervalSelector = ({
       <p className="mb-1 text-xs">Time Increment:</p>
       <motion.div
         data-testid="animatedIndicator"
-        className="absolute bottom-0 left-0 h-10 w-10 rounded border border-brand-primary-700"
+        className="absolute bottom-0 left-0 h-10 w-10 rounded border border-teal-700"
         animate={{ x: animationXPos }}
         transition={{ ease: 'easeInOut', duration: 0.25 }}
       />

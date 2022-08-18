@@ -19,7 +19,7 @@ import {
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
-import Button from 'src/components/Button/Button'
+import Button from 'src/components/input/Button/Button'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn, loading } = useAuth()
@@ -112,7 +112,7 @@ const LoginPage = () => {
                 <div className="mb-8 w-full text-end">
                   <Link
                     to={routes.forgotPassword()}
-                    className="text-sm text-text-subtle hover:text-brand-primary-700"
+                    className="text-sm text-text-subtle hover:text-teal-700"
                   >
                     Forgot Password?
                   </Link>

@@ -30,7 +30,7 @@ const TimeCell = ({
   if (thisTime < now.unix()) {
     const getClassName = () => {
       if (isSelected()) {
-        return 'cell calendar-table-cell cursor-not-allowed bg-brand-primary-200'
+        return 'cell calendar-table-cell cursor-not-allowed bg-teal-200'
       }
       return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
     }
@@ -51,7 +51,7 @@ const TimeCell = ({
   if (isSelected()) {
     return (
       <div
-        className="cell calendar-table-cell bg-brand-primary-500 hover:bg-brand-primary-600"
+        className="cell calendar-table-cell bg-violet-300 hover:bg-violet-400"
         role="time-cell"
       >
         <button
@@ -67,7 +67,7 @@ const TimeCell = ({
   }
   return (
     <div
-      className="cell calendar-table-cell hover:bg-brand-primary-200"
+      className="cell calendar-table-cell hover:bg-violet-100"
       role="time-cell"
     >
       <button

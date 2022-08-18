@@ -39,26 +39,26 @@ const Button = ({
         switch (color) {
           case 'secondary':
             if (variant == 'outline') {
-              return `border border-brand-secondary-600 text-brand-secondary-600 enabled:hover:border-brand-secondary-600 disabled:opacity-75`
+              return `border border-amber-600 text-amber-600 enabled:hover:border-amber-600 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-brand-secondary-600  enabled:hover:bg-brand-secondary-200 enabled:hover:text-brand-secondary-800 disabled:opacity-75`
+              return `text-amber-600  enabled:hover:bg-amber-200 enabled:hover:text-amber-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-brand-secondary-600 enabled:hover:text-brand-secondary-800 undeline disabled:opacity-75`
+              return `text-amber-600 enabled:hover:text-amber-800 undeline disabled:opacity-75`
             }
-            return `bg-brand-secondary-600 enabled:hover:bg-brand-secondary-800 text-white disabled:opacity-75`
+            return `bg-amber-700 enabled:hover:bg-amber-800 text-white disabled:opacity-75`
           default:
             if (variant == 'outline') {
-              return `border border-brand-primary-600 text-brand-primary-600  enabled:hover:border-brand-primary-600 disabled:opacity-75`
+              return `border border-teal-600 text-teal-600  enabled:hover:border-teal-600 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-brand-primary-600 enabled:hover:bg-brand-primary-200 enabled:hover:text-brand-primary-800 disabled:opacity-75`
+              return `text-teal-600 enabled:hover:bg-teal-200 enabled:hover:text-teal-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-brand-primary-600 enabled:hover:text-brand-primary-800 underline disabled:opacity-75`
+              return `text-teal-600 enabled:hover:text-teal-800 underline disabled:opacity-75`
             }
-            return `bg-brand-primary-600 enabled:hover:bg-brand-primary-800 text-white disabled:opacity-75`
+            return `bg-teal-700 enabled:hover:bg-teal-800 text-white disabled:opacity-75`
         }
       }
     }

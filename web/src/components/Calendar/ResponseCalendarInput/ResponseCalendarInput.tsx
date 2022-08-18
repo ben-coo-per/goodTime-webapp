@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
 import { useState } from 'react'
-import Button from 'src/components/Button/Button'
+import Button from 'src/components/input/Button/Button'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
 import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
@@ -12,6 +12,7 @@ interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
   setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
   timeRanges: any[]
+  isSummary?: boolean
   isDisabled?: boolean
 }
 
@@ -19,6 +20,7 @@ const ResponseCalendarInput = ({
   times,
   setTimeRanges,
   timeRanges,
+  isSummary = false,
   isDisabled = false,
 }: ResponseCalendarInputProps) => {
   // ensures timeranges are in a non-readonly format
@@ -217,7 +219,7 @@ const ResponseCalendarInput = ({
       </div>
       <div className="flex flex-row-reverse justify-between">
         <Button type="submit" disabled={isDisabled}>
-          Update
+          {isSummary ? 'Update' : 'Submit'}
         </Button>
       </div>
     </div>

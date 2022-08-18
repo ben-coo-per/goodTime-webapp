@@ -47,7 +47,7 @@ const AuthenticatedUserMenu = ({
   return (
     <div className="relative" ref={ref}>
       <button
-        className="z-20 flex h-12 cursor-pointer flex-row items-center rounded-3xl rounded-r-lg bg-brand-primary-800 pr-4 text-light-gray"
+        className="z-20 flex h-12 cursor-pointer flex-row items-center rounded-3xl rounded-r-lg bg-teal-800 pr-4 text-light-gray"
         aria-expanded="false"
         aria-haspopup="true"
         id="menu-button"
@@ -63,7 +63,7 @@ const AuthenticatedUserMenu = ({
         animate={dropdownExpanded ? 'open' : 'closed'}
         variants={variants}
         transition={{ ease: 'easeOut', duration: 0.25 }}
-        className="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-lg bg-brand-primary-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-lg bg-teal-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"

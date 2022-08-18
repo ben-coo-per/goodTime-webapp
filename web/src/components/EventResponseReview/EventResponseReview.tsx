@@ -101,6 +101,7 @@ const EventResponseReview = ({
           setTimeRanges={setTimeRanges}
           timeRanges={timeRanges}
           isDisabled={loading || !hasChanged}
+          isSummary={true}
         />
       </Form>
     </div>

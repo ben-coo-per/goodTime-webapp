@@ -3,6 +3,8 @@ import moment, { Moment } from 'moment'
 import { useState } from 'react'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { getTimesToRender } from 'src/utils/calendarFactory'
+import { colorGenerator } from 'src/utils/colorGenerator'
+import SummaryTimeCell from '../components/SummaryTimeCell/SummaryTimeCell'
 import TimeCell from '../components/TimeCell/TimeCell'
 import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
@@ -10,15 +12,18 @@ import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
 interface GroupAvailabilityCalendarProps {
   baseTimes: ProvidedTimes[]
   allTimes: ProvidedTimes[]
+  numberOfUsers: number
 }
 
 const GroupAvailabilityCalendar = ({
   baseTimes,
   allTimes,
+  numberOfUsers,
 }: GroupAvailabilityCalendarProps) => {
   const now = moment()
   const maxDaysShown = 4
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
+  const [showNames, setShowNames] = useState<boolean>(false)
 
   let days: Moment[] = []
   baseTimes.forEach((t) => {
@@ -30,6 +35,21 @@ const GroupAvailabilityCalendar = ({
       days = [...days, start]
     }
   })
+
+  // function onlyUnique(value, index, self) {
+  //   return self.indexOf(value) === index
+  // }
+  // const listOfUsers = allTimes.map((t) => t.user).filter(onlyUnique)
+
+  // // Assign a color to each user
+  // const listOfColors = colorGenerator({
+  //   numColors: listOfUsers.length,
+  //   prefix: 'bg',
+  // })
+  // allTimes = allTimes.map((time) => ({
+  //   ...time,
+  //   user: { ...time.user, color: listOfColors[listOfUsers.indexOf(time.user)] },
+  // }))
 
   // Dedups the array by converting to strings then converts back to moment array
   const daysList = [
@@ -79,19 +99,27 @@ const GroupAvailabilityCalendar = ({
         {daysToRender.map((day: Moment, di: number) => {
           return (
             <div role="calendar-table-column" className="col" key={`${di}`}>
-              {/* {getTimesToRender({ day, timeIncrement, baseTimes }).map(
-            (time, ti) => {
-              return (
-                <TimeCell
-                  time={time}
-                  key={`${di}-${ti}`}
-                  timeRanges={timeRanges}
-                  handleDeselectTime={handleDeselectTime}
-                  handleSelectTime={handleSelectTime}
-                />
-              )
-            }
-          )} */}
+              {getTimesToRender({ day, timeIncrement, times: baseTimes }).map(
+                (time, ti) => {
+                  const availableUsers = allTimes
+                    .filter((t) => {
+                      const start = moment.unix(t.startTime)
+                      const end = moment.unix(t.endTime)
+
+                      return time.isSameOrAfter(start) && time.isBefore(end)
+                    })
+                    .map((t) => t.user)
+                  return (
+                    <SummaryTimeCell
+                      time={time}
+                      key={`${di}-${ti}`}
+                      availableUsers={availableUsers}
+                      totalNumRespondents={numberOfUsers}
+                      isCollapsed={showNames}
+                    />
+                  )
+                }
+              )}
             </div>
           )
         })}

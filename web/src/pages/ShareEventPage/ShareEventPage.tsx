@@ -5,7 +5,7 @@ import { MetaTags } from '@redwoodjs/web'
 // import { MetaTags, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
-import Button from 'src/components/Button/Button'
+import Button from 'src/components/input/Button/Button'
 
 export const QUERY = gql`
   query GetEvent($id: Int!) {
@@ -48,7 +48,7 @@ const ShareEventPage = () => {
           </span>{' '}
           <Button
             variant="icon"
-            additionalClasses="border border-brand-primary-600 text-brand-primary-700 hover:bg-brand-primary-200 hover:text-brand-primary-800 hover:border-brand-primary-700"
+            additionalClasses="border border-teal-600 text-teal-700 hover:bg-teal-200 hover:text-teal-800 hover:border-teal-700"
             onClick={handleCopy}
           >
             <ClipboardIcon className="h-10 w-10" />
