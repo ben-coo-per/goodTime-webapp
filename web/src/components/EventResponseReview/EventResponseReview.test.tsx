@@ -9,6 +9,7 @@ const times: ProvidedTimes[] = [
     endTime: 1659722400,
     startTime: 1659708000,
     user: {
+      id: '1',
       displayName: 'Ben',
       phoneNumber: '7132546843',
     },
@@ -21,6 +22,7 @@ const selectedTimes: ProvidedTimes[] = [
     endTime: 1659722400,
     startTime: 1659708000,
     user: {
+      id: '2',
       displayName: 'Kirby',
       phoneNumber: '7132546843',
     },

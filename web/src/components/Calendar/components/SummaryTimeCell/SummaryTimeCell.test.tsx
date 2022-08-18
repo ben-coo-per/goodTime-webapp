@@ -1,14 +1,35 @@
-import { render } from '@redwoodjs/testing/web'
-
+import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
+import userEvent from '@testing-library/user-event'
+import moment from 'moment'
 import SummaryTimeCell from './SummaryTimeCell'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+})
 
 describe('SummaryTimeCell', () => {
-  it('renders successfully', () => {
-    expect(() => {
-      render(<SummaryTimeCell />)
-    }).not.toThrow()
+  const now = moment()
+
+  // it('it renders a "disabled" looking cell when there are no available users', () => {
+  //   render(
+  //     <SummaryTimeCell time={now} availableUsers={[]} totalNumRespondents={0} />
+  //   )
+
+  //   expect()
+  // })
+
+  it('calls setTimeRanges when user clicks a timeCell', async () => {
+    const copyToClipboard = jest.spyOn(navigator.clipboard, 'writeText')
+    render(
+      <SummaryTimeCell time={now} availableUsers={[]} totalNumRespondents={0} />
+    )
+    const timeCells = await screen.findAllByRole('time-cell')
+
+    const button = within(timeCells[timeCells.length - 1]).getByRole('button')
+    await waitFor(() => userEvent.click(button))
+
+    expect(copyToClipboard).toBeCalled()
   })
 })

@@ -36,20 +36,16 @@ const GroupAvailabilityCalendar = ({
     }
   })
 
-  // function onlyUnique(value, index, self) {
-  //   return self.indexOf(value) === index
-  // }
-  // const listOfUsers = allTimes.map((t) => t.user).filter(onlyUnique)
-
-  // // Assign a color to each user
-  // const listOfColors = colorGenerator({
-  //   numColors: listOfUsers.length,
-  //   prefix: 'bg',
-  // })
-  // allTimes = allTimes.map((time) => ({
-  //   ...time,
-  //   user: { ...time.user, color: listOfColors[listOfUsers.indexOf(time.user)] },
-  // }))
+  // console.log(
+  //   JSON.stringify(
+  //     baseTimes.map((i) => ({
+  //       id: i.id,
+  //       startTime: i.startTime,
+  //       endtime: i.endTime,
+  //       user: { id: i.user.id, phoneNumber: i.user.phoneNumber },
+  //     }))
+  //   )
+  // )
 
   // Dedups the array by converting to strings then converts back to moment array
   const daysList = [

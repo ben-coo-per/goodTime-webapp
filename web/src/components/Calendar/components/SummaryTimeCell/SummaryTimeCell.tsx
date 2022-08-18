@@ -33,6 +33,7 @@ const SummaryTimeCell = ({
         ? 'hover:bg-violet-100 border-dark-gray'
         : 'bg-light-gray text-text-subtle border-light-gray',
       availableUsers.length == totalNumRespondents &&
+        availableUsers.length > 0 &&
         'border-2 border-dashed border-violet-500',
     ]
     return classes.join(' ')
@@ -65,7 +66,6 @@ const UserDotIndicator = ({ user }: { user: UserDisplay }) => {
     const classes = ['h-4 w-4 rounded-full', user.color]
     return classes.join(' ')
   }
-  console.log(dotClasses())
 
   return (
     <div className="flex flex-row gap-2">
