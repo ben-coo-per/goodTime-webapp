@@ -66,7 +66,7 @@ const LoginPage = () => {
               </h2>
             </header>
 
-            <div className="my-4 rounded-lg bg-white p-8 shadow">
+            <div className="my-4 rounded-lg bg-white p-8 shadow dark:bg-indigo-800">
               <Form onSubmit={onSubmit} className="flex flex-col">
                 <Label
                   name="username"
@@ -112,7 +112,7 @@ const LoginPage = () => {
                 <div className="mb-8 w-full text-end">
                   <Link
                     to={routes.forgotPassword()}
-                    className="text-sm text-text-subtle hover:text-teal-700"
+                    className="text-sm text-text-subtle hover:text-teal-700 dark:text-light-gray"
                   >
                     Forgot Password?
                   </Link>
@@ -128,7 +128,7 @@ const LoginPage = () => {
             <span>{`Don't have an account?`}</span>{' '}
             <Link
               to={routes.signup({ redirectTo: continueYourJourney })}
-              className="text-blue-700 underline"
+              className="text-blue-700 underline dark:text-blue-400"
             >
               Sign up!
             </Link>

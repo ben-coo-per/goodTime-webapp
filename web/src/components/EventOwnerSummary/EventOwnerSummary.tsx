@@ -27,7 +27,7 @@ const EventOwnerSummary = ({
 
   return (
     <div className="flex h-full flex-1 flex-col">
-      <h1 className="mb-2 font-display text-2xl lowercase">
+      <h1 className="mb-2 font-display text-2xl lowercase dark:text-light-gray">
         Your group's available times
       </h1>
       <div className=" h-full overflow-auto">

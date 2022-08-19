@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     fontFamily: {
@@ -20,7 +21,10 @@ module.exports = {
         betterhover: { raw: '(hover: hover)' },
       },
       colors: {
-        background: '#F6F6F6',
+        background: {
+          light: '#F6F6F6',
+          dark: '#312e81',
+        },
         transparent: 'rgba(0,0,0,0)',
         'light-gray': '#E6E8E9',
         'dark-gray': '#ADB3B6',

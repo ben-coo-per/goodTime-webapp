@@ -32,13 +32,13 @@ const TimeCell = ({
       if (isSelected()) {
         return 'cell calendar-table-cell cursor-not-allowed bg-teal-200'
       }
-      return 'cell calendar-table-cell cursor-not-allowed bg-light-gray'
+      return 'cell calendar-table-cell cursor-not-allowed bg-light-gray dark:bg-transparent dark:opacity-70'
     }
     return (
       <div className={getClassName()} role="time-cell">
         <button
           disabled
-          className="h-full w-full p-2 text-text-subtle"
+          className="h-full w-full p-2 text-text-subtle dark:text-dark-gray"
           aria-label={`${time.format('MM/DD hh:mm')} - disabled`}
           type="button"
         >
@@ -51,7 +51,7 @@ const TimeCell = ({
   if (isSelected()) {
     return (
       <div
-        className="cell calendar-table-cell bg-violet-300 hover:bg-violet-400"
+        className="cell calendar-table-cell bg-indigo-300 hover:bg-indigo-500 dark:bg-indigo-600 hover:dark:bg-indigo-700"
         role="time-cell"
       >
         <button
@@ -67,7 +67,7 @@ const TimeCell = ({
   }
   return (
     <div
-      className="cell calendar-table-cell hover:bg-violet-100"
+      className="cell calendar-table-cell hover:bg-indigo-100 hover:dark:bg-indigo-700"
       role="time-cell"
     >
       <button

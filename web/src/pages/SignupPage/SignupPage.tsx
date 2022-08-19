@@ -63,7 +63,7 @@ const SignupPage = () => {
               </h2>
             </header>
 
-            <div className="my-4 rounded-lg bg-white p-8 shadow">
+            <div className="my-4 rounded-lg bg-white p-8 shadow dark:bg-indigo-800">
               <Form onSubmit={onSubmit} className="flex flex-col">
                 <Label
                   name="username"
@@ -124,7 +124,10 @@ const SignupPage = () => {
           </div>
           <div className="text-center">
             <span>Already have an account?</span>{' '}
-            <Link to={routes.login()} className="text-blue-700 underline">
+            <Link
+              to={routes.login()}
+              className="text-blue-700 underline dark:text-blue-400"
+            >
               Log in!
             </Link>
           </div>

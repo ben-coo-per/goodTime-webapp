@@ -11,7 +11,7 @@ const HomePage = () => {
     <>
       <MetaTags title="Home" description="Home page" />
 
-      <div className="h-screen bg-background">
+      <div className="h-screen bg-background-light dark:bg-background-dark dark:text-light-gray">
         <Toaster toastOptions={{ className: 'toast', duration: 6000 }} />
         <NavBar hasLogo={false} />
         <div className="container mx-auto grid h-full max-w-3xl">

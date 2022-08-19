@@ -10,7 +10,7 @@ type WebAppLayoutProps = {
 const WebAppLayout = ({ children }: WebAppLayoutProps) => {
   return (
     <>
-      <div className="h-screen bg-background">
+      <div className="h-screen bg-background-light text-text-default dark:bg-background-dark dark:text-light-gray">
         <Toaster toastOptions={{ className: 'toast', duration: 6000 }} />
         <NavBar />
         <div className="container mx-auto grid h-full max-w-3xl">

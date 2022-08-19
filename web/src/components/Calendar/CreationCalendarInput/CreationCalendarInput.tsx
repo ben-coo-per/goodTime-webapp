@@ -114,7 +114,7 @@ const CreationCalendarInput = ({
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="hidden-scrollbar my-2 h-full w-full overflow-y-auto rounded-lg border border-dark-gray">
-        <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background">
+        <table className="sticky top-0 w-full table-auto border-separate border-spacing-1 border-b border-dark-gray bg-background-light dark:bg-background-dark">
           <thead>
             <tr>
               {daysToRender.map((day, i) => (
@@ -154,7 +154,7 @@ const CreationCalendarInput = ({
             )
           })}
         </div>
-        <div className="sticky bottom-0 flex flex-row justify-between border-t border-dark-gray bg-background p-2">
+        <div className="sticky bottom-0 flex flex-row justify-between border-t border-dark-gray bg-background-light p-2 dark:bg-background-dark">
           <TimeIntervalSelector
             timeIncrement={timeIncrement}
             setTimeIncrement={setTimeIncrement}

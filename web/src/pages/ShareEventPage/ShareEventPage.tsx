@@ -39,11 +39,10 @@ const ShareEventPage = () => {
       />
       <div className="flex h-full flex-col rounded py-8 sm:px-20">
         <h3 className="mb-10 font-display text-2xl lowercase">
-          {`Let's share your event with the people you're inviting!`}
+          Let's share your event with the people you're inviting!
         </h3>
-        {/* <EventSummary /> */}
-        <div className="flex flex-row items-center justify-between rounded-lg border border-dark-gray bg-light-gray p-2 pl-4">
-          <span className=" w-fullmr-2 select-all text-text-default">
+        <div className="flex flex-row items-center justify-between rounded-lg border border-dark-gray bg-light-gray p-2 pl-4 dark:bg-indigo-800">
+          <span className=" mr-2 w-full select-all text-text-default dark:text-light-gray ">
             {textToCopy}
           </span>{' '}
           <Button

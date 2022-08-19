@@ -50,7 +50,7 @@ const ForgotPasswordPage = () => {
             </h2>
           </header>
 
-          <div className="my-4 rounded-lg bg-white p-8 shadow">
+          <div className="my-4 rounded-lg bg-white p-8 shadow dark:bg-indigo-800">
             <Form onSubmit={onSubmit} className="flex flex-col">
               <Label
                 name="username"

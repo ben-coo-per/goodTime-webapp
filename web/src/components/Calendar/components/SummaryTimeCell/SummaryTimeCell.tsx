@@ -30,11 +30,11 @@ const SummaryTimeCell = ({
     const classes = [
       'flex-none cursor-pointer rounded border text-center',
       availableUsers.length > 0
-        ? 'hover:bg-violet-100 border-dark-gray'
-        : 'bg-light-gray text-text-subtle border-light-gray',
+        ? 'hover:bg-indigo-100 hover:dark:bg-indigo-800 border-dark-gray text-text-default dark:text-light-gray'
+        : 'bg-light-gray dark:bg-transparent dark:opacity-70 text-text-subtle dark:text-light-gray dark:text-light-gray border-light-gray',
       availableUsers.length == totalNumRespondents &&
         availableUsers.length > 0 &&
-        'border-2 border-dashed border-violet-500',
+        'border-2 border-dashed border-indigo-500 dark:border-teal-500',
     ]
     return classes.join(' ')
   }
@@ -48,7 +48,7 @@ const SummaryTimeCell = ({
       >
         {time.format('hh:mma')}
         {availableUsers.length > 0 && (
-          <div className="flex w-full flex-col gap-1 rounded-md bg-light-gray p-1">
+          <div className="flex w-full flex-col gap-1 rounded-md bg-light-gray p-1 dark:bg-indigo-700">
             {availableUsers.map((user, i) => (
               <UserDotIndicator user={user} key={i} />
             ))}

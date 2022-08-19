@@ -17,7 +17,7 @@
 html {
   background-color: #f6f6f6;
   font-size: 62.5%; /* 62.5% of the base size of 16px = 10px.*/
-  @apply text-text-default;
+  @apply text-text-default dark:text-white;
 }
 body {
   font-size: 1.6rem; /* reset 10*1.6 = 16px, to make sure you do not get any 10px around */
@@ -31,6 +31,7 @@ body {
 .input {
   @apply p-3;
   @apply rounded-lg border border-dark-gray;
+  @apply dark:bg-indigo-900;
 }
 
 .error {
