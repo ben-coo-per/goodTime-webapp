@@ -8,18 +8,13 @@ import Routes from 'src/Routes'
 
 import './scaffold.css'
 import './index.css'
+import { useEffect } from 'react'
+import { setDefaultTheme, setThemeClass } from './utils/theme'
 
 const App = () => {
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
+  useEffect(() => {
+    setDefaultTheme()
+  }, [])
 
   return (
     <FatalErrorBoundary page={FatalErrorPage}>
