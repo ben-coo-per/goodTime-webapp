@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { Link } from '@redwoodjs/router'
 
 import { phoneNumberStyling } from 'src/utils/textFormatting'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 export type AuthenticatedUserMenuDisplayProps = {
   phoneNumber: string
@@ -63,16 +64,17 @@ const AuthenticatedUserMenu = ({
         animate={dropdownExpanded ? 'open' : 'closed'}
         variants={variants}
         transition={{ ease: 'easeOut', duration: 0.25 }}
-        className="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-lg bg-teal-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-lg bg-teal-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
         tabIndex={-1}
       >
-        <div className="py-1" role="none">
+        <div className="flex flex-col items-end py-1" role="none">
+          <ThemeToggle className="w-5/6 px-4 text-sm" />
           <Link
             to="/"
-            className="block px-4 py-2 text-sm"
+            className="px-4 py-2 text-sm"
             role="menuitem"
             tabIndex={-1}
             id="menu-item-0"
@@ -81,7 +83,7 @@ const AuthenticatedUserMenu = ({
           </Link>
           <button
             onClick={() => logOut()}
-            className="block px-4 py-2 text-sm"
+            className="px-4 py-2 text-sm"
             role="menuitem"
             tabIndex={-1}
             id="menu-item-1"

@@ -1,14 +1,31 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen, waitFor } from '@redwoodjs/testing/web'
+import * as themeUtils from 'src/utils/theme'
+import userEvent from '@testing-library/user-event'
 
 import ThemeToggle from './ThemeToggle'
-
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
 
 describe('ThemeToggle', () => {
   it('renders successfully', () => {
     expect(() => {
       render(<ThemeToggle />)
     }).not.toThrow()
+  })
+
+  it('calls switchTheme to light when the light-mode button is clicked', async () => {
+    const switchTheme = jest.spyOn(themeUtils, 'switchTheme')
+    render(<ThemeToggle />)
+
+    const lightThemeButton = screen.getByLabelText('light-theme')
+    await waitFor(() => userEvent.click(lightThemeButton))
+    expect(switchTheme).toBeCalledWith('light')
+  })
+
+  it('calls switchTheme to dark when the dark-mode button is clicked', async () => {
+    const switchTheme = jest.spyOn(themeUtils, 'switchTheme')
+    render(<ThemeToggle />)
+
+    const darkThemeButton = screen.getByLabelText('dark-theme')
+    await waitFor(() => userEvent.click(darkThemeButton))
+    expect(switchTheme).toBeCalledWith('dark')
   })
 })
