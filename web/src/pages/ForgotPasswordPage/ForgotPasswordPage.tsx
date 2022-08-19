@@ -6,7 +6,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
-import Button from 'src/components/input/Button/Button'
+import Button from 'src/components/Button/Button'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()

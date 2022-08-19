@@ -5,7 +5,7 @@ import { MetaTags } from '@redwoodjs/web'
 // import { MetaTags, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
-import Button from 'src/components/input/Button/Button'
+import Button from 'src/components/Button/Button'
 
 export const QUERY = gql`
   query GetEvent($id: Int!) {

@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
 import { useState } from 'react'
-import Button from 'src/components/input/Button/Button'
+import Button from 'src/components/Button/Button'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
 import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'

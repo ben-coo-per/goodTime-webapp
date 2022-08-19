@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/dist/toast'
 
-import Button from 'src/components/input/Button/Button'
+import Button from 'src/components/Button/Button'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'
 
