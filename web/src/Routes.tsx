@@ -15,6 +15,7 @@ import WebAppLayout from './layouts/WebAppLayout/WebAppLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/about" page={AboutPage} name="about" />
       <AuthPageLayout>
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />

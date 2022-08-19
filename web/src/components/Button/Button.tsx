@@ -39,24 +39,24 @@ const Button = ({
         switch (color) {
           case 'secondary':
             if (variant == 'outline') {
-              return `border border-amber-600 text-amber-600 enabled:hover:border-amber-600 disabled:opacity-75`
+              return `border border-amber-500 dark:border-amber-400  text-amber-600 dark:text-amber-200  enabled:dark:hover:border-amber-200 enabled:hover:border-amber-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-amber-600  enabled:hover:bg-amber-200 enabled:hover:text-amber-800 disabled:opacity-75`
+              return `text-amber-700 dark:text-amber-200 enabled:hover:bg-amber-200 enabled:hover:text-amber-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-amber-600 enabled:hover:text-amber-800 undeline disabled:opacity-75`
+              return `text-amber-600 dark:text-amber-200 enabled:dark:hover:text-amber-100 enabled:hover:text-amber-800 underline disabled:opacity-75`
             }
             return `bg-amber-700 enabled:hover:bg-amber-800 text-white disabled:opacity-75`
           default:
             if (variant == 'outline') {
-              return `border border-teal-600 text-teal-600  enabled:hover:border-teal-600 disabled:opacity-75`
+              return `border border-teal-500 dark:border-teal-400  text-teal-600 dark:text-teal-200  enabled:dark:hover:border-teal-200 enabled:hover:border-teal-700 disabled:opacity-75`
             }
             if (variant == 'ghost') {
-              return `text-teal-600 enabled:hover:bg-teal-200 enabled:hover:text-teal-800 disabled:opacity-75`
+              return `text-teal-700 dark:text-teal-200 enabled:hover:bg-teal-200 enabled:hover:text-teal-800 disabled:opacity-75`
             }
             if (variant == 'link') {
-              return `text-teal-600 enabled:hover:text-teal-800 underline disabled:opacity-75`
+              return `text-teal-600 dark:text-teal-200 enabled:dark:hover:text-teal-100 enabled:hover:text-teal-800 underline disabled:opacity-75`
             }
             return `bg-teal-700 enabled:hover:bg-teal-800 text-white disabled:opacity-75`
         }
