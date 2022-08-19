@@ -64,17 +64,20 @@ const AuthenticatedUserMenu = ({
         animate={dropdownExpanded ? 'open' : 'closed'}
         variants={variants}
         transition={{ ease: 'easeOut', duration: 0.25 }}
-        className="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-lg bg-teal-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="absolute right-0 z-10 mt-1 w-64 origin-top-right rounded-lg bg-teal-800 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:w-48"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
         tabIndex={-1}
       >
-        <div className="flex flex-col items-end py-1" role="none">
-          <ThemeToggle className="w-5/6 px-4 text-sm" />
+        <div
+          className="text-md flex flex-col items-end py-1 md:text-sm"
+          role="none"
+        >
+          <ThemeToggle className="w-5/6 px-4 " />
           <Link
             to="/"
-            className="px-4 py-2 text-sm"
+            className="px-4 py-2 "
             role="menuitem"
             tabIndex={-1}
             id="menu-item-0"
@@ -83,7 +86,7 @@ const AuthenticatedUserMenu = ({
           </Link>
           <button
             onClick={() => logOut()}
-            className="px-4 py-2 text-sm"
+            className="px-4 py-2 "
             role="menuitem"
             tabIndex={-1}
             id="menu-item-1"

@@ -27,7 +27,7 @@ const PageFooter = () => {
         <div>about us</div>
         <div>etc.</div>
       </div>
-      <div className="bg-teal-700 px-2 dark:bg-indigo-700">
+      <div className="bg-teal-700 px-8 dark:bg-indigo-700 md:px-2">
         <span className="text-sm text-dark-gray">© Ben Cooper | 2022</span>
       </div>
     </footer>
