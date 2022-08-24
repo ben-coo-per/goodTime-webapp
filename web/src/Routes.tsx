@@ -15,7 +15,6 @@ import WebAppLayout from './layouts/WebAppLayout/WebAppLayout'
 const Routes = () => {
   return (
     <Router>
-      <Route path="/about" page={AboutPage} name="about" />
       <AuthPageLayout>
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />
@@ -24,6 +23,7 @@ const Routes = () => {
       </AuthPageLayout>
       <Route path="/" page={HomePage} name="home" />
       <WebAppLayout>
+        <Route path="/about" page={AboutPage} name="about" />
         <Private unauthenticated="login">
           <Route path="/response/{id:Int}" page={EventResponsePage} name="eventResponse" />
           <Route path="/create-event" page={CreateEventPage} name="createEvent" />

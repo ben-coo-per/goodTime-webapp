@@ -1,4 +1,5 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/solid'
+import { Link } from '@redwoodjs/router'
 import { useEffect, useState } from 'react'
 import { switchTheme } from 'src/utils/theme'
 import { Illustration } from './Illustration'
@@ -24,7 +25,7 @@ const PageFooter = () => {
       <Illustration />
       <div className="-my-1 bg-teal-700 p-10 text-white dark:bg-indigo-700">
         <div>social links</div>
-        <div>about us</div>
+        <Link to="/about">about</Link>
         <div>etc.</div>
       </div>
       <div className="bg-teal-700 px-10 pb-4 dark:bg-indigo-700 md:px-2 md:pb-0">
