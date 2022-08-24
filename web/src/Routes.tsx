@@ -22,8 +22,8 @@ const Routes = () => {
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       </AuthPageLayout>
       <Route path="/" page={HomePage} name="home" />
+      <Route path="/about" page={AboutPage} name="about" />
       <WebAppLayout>
-        <Route path="/about" page={AboutPage} name="about" />
         <Private unauthenticated="login">
           <Route path="/response/{id:Int}" page={EventResponsePage} name="eventResponse" />
           <Route path="/create-event" page={CreateEventPage} name="createEvent" />
