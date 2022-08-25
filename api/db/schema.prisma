@@ -56,3 +56,12 @@ model TimeRange {
 
 }
 
+/// Feedback submissions how I will keep track of user feedback because I don't want to set up or pay for a messaging API because there will likely be very little fb
+model FeedbackSubmission {
+  id           Int       @id @default(autoincrement())
+
+  message      String
+  email        String
+
+  createdAt    DateTime  @default(now())
+}
