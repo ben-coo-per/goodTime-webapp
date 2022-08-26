@@ -76,7 +76,7 @@ const AuthenticatedUserMenu = ({
         >
           <ThemeToggle className="w-5/6 px-4 " />
           <Link
-            to="/"
+            to="/account"
             className="px-4 py-2 "
             role="menuitem"
             tabIndex={-1}
