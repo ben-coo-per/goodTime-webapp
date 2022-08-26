@@ -61,7 +61,7 @@ model FeedbackSubmission {
   id           Int       @id @default(autoincrement())
 
   message      String
-  email        String
+  email        String?
 
   createdAt    DateTime  @default(now())
 }

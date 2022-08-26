@@ -2,7 +2,7 @@ export const schema = gql`
   type FeedbackSubmission {
     id: Int!
     message: String!
-    email: String!
+    email: String
     createdAt: DateTime!
   }
 
@@ -13,7 +13,7 @@ export const schema = gql`
 
   input CreateFeedbackSubmissionInput {
     message: String!
-    email: String!
+    email: String
   }
 
   input UpdateFeedbackSubmissionInput {
@@ -24,7 +24,7 @@ export const schema = gql`
   type Mutation {
     createFeedbackSubmission(
       input: CreateFeedbackSubmissionInput!
-    ): FeedbackSubmission! @skipAuth
+    ): FeedbackSubmission! @requireAuth
     updateFeedbackSubmission(
       id: Int!
       input: UpdateFeedbackSubmissionInput!

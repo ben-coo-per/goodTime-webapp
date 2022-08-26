@@ -1,10 +1,14 @@
-import type { Prisma } from '@prisma/client'
+import type { Prisma, FeedbackSubmission } from '@prisma/client'
+import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.FeedbackSubmissionCreateArgs>({
   feedbackSubmission: {
-    one: { data: { message: 'String', email: 'String' } },
-    two: { data: { message: 'String', email: 'String' } },
+    one: { data: { message: 'String' } },
+    two: { data: { message: 'String' } },
   },
 })
 
-export type StandardScenario = typeof standard
+export type StandardScenario = ScenarioData<
+  FeedbackSubmission,
+  'feedbackSubmission'
+>

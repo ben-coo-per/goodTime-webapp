@@ -1,3 +1,5 @@
+import type { FeedbackSubmission } from '@prisma/client'
+
 import {
   feedbackSubmissions,
   feedbackSubmission,
@@ -38,19 +40,18 @@ describe('feedbackSubmissions', () => {
 
   scenario('creates a feedbackSubmission', async () => {
     const result = await createFeedbackSubmission({
-      input: { message: 'String', email: 'String' },
+      input: { message: 'String' },
     })
 
     expect(result.message).toEqual('String')
-    expect(result.email).toEqual('String')
   })
 
   scenario(
     'updates a feedbackSubmission',
     async (scenario: StandardScenario) => {
-      const original = await feedbackSubmission({
+      const original = (await feedbackSubmission({
         id: scenario.feedbackSubmission.one.id,
-      })
+      })) as FeedbackSubmission
       const result = await updateFeedbackSubmission({
         id: original.id,
         input: { message: 'String2' },
@@ -63,9 +64,9 @@ describe('feedbackSubmissions', () => {
   scenario(
     'deletes a feedbackSubmission',
     async (scenario: StandardScenario) => {
-      const original = await deleteFeedbackSubmission({
+      const original = (await deleteFeedbackSubmission({
         id: scenario.feedbackSubmission.one.id,
-      })
+      })) as FeedbackSubmission
       const result = await feedbackSubmission({ id: original.id })
 
       expect(result).toEqual(null)

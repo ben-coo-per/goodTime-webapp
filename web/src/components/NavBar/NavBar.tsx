@@ -24,6 +24,7 @@ export default NavBar
 
 const UserElement = () => {
   const { isAuthenticated, loading, currentUser, logOut } = useAuth()
+  // console.log(currentUser)
 
   if (loading) {
     return (
