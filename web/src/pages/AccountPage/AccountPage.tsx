@@ -1,5 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/dist/toast'
+
 import AccountUpdateForm from 'src/components/AccountUpdateForm/AccountUpdateForm'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'

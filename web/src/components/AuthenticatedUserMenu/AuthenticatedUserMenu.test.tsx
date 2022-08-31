@@ -1,7 +1,11 @@
-import { render, screen, waitFor } from '@redwoodjs/testing/web'
-import { phoneNumberStyling } from 'src/utils/textFormatting'
-import NavBar from '../NavBar/NavBar'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen, waitFor } from '@redwoodjs/testing/web'
+
+import { phoneNumberStyling } from 'src/utils/textFormatting'
+
+import NavBar from '../NavBar/NavBar'
+
 import AuthenticatedUserMenu from './AuthenticatedUserMenu'
 
 //   Improve this test with help from the Redwood Testing Doc:

@@ -1,15 +1,11 @@
-import { Link, routes, useLocation } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/dist/toast'
-import { useEffect, useRef } from 'react'
-import Button from 'src/components/Button/Button'
+
 import FeedbackForm from 'src/components/FeedbackForm/FeedbackForm'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'
 
 const AboutPage = () => {
-  const feedbackForm = useRef(null)
-
   return (
     <>
       <MetaTags
@@ -31,8 +27,8 @@ const AboutPage = () => {
             </p>
             <p className="lowercase leading-relaxed">
               Of course there are wonderful products out there like Calendly,
-              but that felt too formal and heavy-duty for the types of plans I'm
-              making on a daily basis
+              but that felt too formal and heavy-duty for the types of plans
+              i&apos;m making on a daily basis
             </p>
             <p className="lowercase leading-relaxed">
               This is still very much a work in progress and I would love any
