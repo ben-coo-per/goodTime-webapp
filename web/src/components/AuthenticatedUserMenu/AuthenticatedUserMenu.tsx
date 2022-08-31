@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/solid'
 import { motion } from 'framer-motion'
 
-import { Link } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 
 import { phoneNumberStyling } from 'src/utils/textFormatting'
+
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 export type AuthenticatedUserMenuDisplayProps = {
@@ -85,7 +86,10 @@ const AuthenticatedUserMenu = ({
             Account settings
           </Link>
           <button
-            onClick={() => logOut()}
+            onClick={() => {
+              logOut()
+              navigate(routes.home())
+            }}
             className="px-4 py-2 "
             role="menuitem"
             tabIndex={-1}
