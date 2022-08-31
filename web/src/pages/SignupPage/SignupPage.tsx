@@ -38,12 +38,16 @@ const SignupPage = () => {
 
   const onSubmit = async (data) => {
     const response = await signUp({ ...data })
+    const loadingToast = toast.loading("dotting the I's, crossing the T's...")
 
     if (response.message) {
+      toast.remove(loadingToast)
       toast(response.message)
     } else if (response.error) {
+      toast.remove(loadingToast)
       toast.error(response.error)
     } else {
+      toast.remove(loadingToast)
       // user is signed in automatically
       toast.success('Welcome!')
     }

@@ -9,13 +9,7 @@ import {
   PasswordField,
   FieldError,
 } from '@redwoodjs/forms'
-import {
-  Link,
-  navigate,
-  routes,
-  useLocation,
-  useParams,
-} from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -34,7 +28,7 @@ const LoginPage = () => {
         navigate(routes.home())
       }
     }
-  }, [isAuthenticated])
+  }, [continueYourJourney, isAuthenticated, search])
 
   const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
@@ -43,12 +37,16 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
+    const loadingToast = toast.loading('Loading...')
 
     if (response.message) {
+      toast.remove(loadingToast)
       toast(response.message)
     } else if (response.error) {
+      toast.remove(loadingToast)
       toast.error(response.error)
     } else {
+      toast.remove(loadingToast)
       toast.success('Welcome back!')
     }
   }
