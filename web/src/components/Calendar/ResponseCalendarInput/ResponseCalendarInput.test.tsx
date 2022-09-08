@@ -1,10 +1,14 @@
-import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
-import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
-import ResponseCalendarInput from './ResponseCalendarInput'
+/* eslint-disable no-unused-expressions */
 import userEvent from '@testing-library/user-event'
 
+import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
+
+import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
+
+import ResponseCalendarInput from './ResponseCalendarInput'
+
 describe('ResponseCalendarInput', () => {
-  let times: ProvidedTimes[] = [
+  const times: ProvidedTimes[] = [
     {
       id: 1,
       endTime: 1817600090,
@@ -17,7 +21,7 @@ describe('ResponseCalendarInput', () => {
     },
   ]
 
-  let timeRanges = [
+  const timeRanges = [
     {
       endTime: 1817600090,
       startTime: 1817589290,
@@ -33,7 +37,7 @@ describe('ResponseCalendarInput', () => {
       />
     )
 
-    const tableHeader = await screen.findByRole('column-header')
+    const tableHeader = await screen.findByTestId('column-header')
     expect(await within(tableHeader).findByText('Fri')).toBeInTheDocument
     expect(await within(tableHeader).findByText('Aug 06')).toBeInTheDocument
     expect(await within(tableHeader).findByText('2027')).toBeInTheDocument
@@ -47,9 +51,9 @@ describe('ResponseCalendarInput', () => {
         setTimeRanges={jest.fn()}
       />
     )
-    const timeCells = await screen.findAllByRole('time-cell')
+    const timeCells = await screen.findAllByTestId('time-cell')
     timeCells.forEach((timeCell) => {
-      expect(timeCell).toHaveClass('bg-teal-500')
+      expect(timeCell).toHaveClass('bg-indigo-300')
     })
   })
 
@@ -74,19 +78,19 @@ describe('ResponseCalendarInput', () => {
       '15 minute increment'
     )
 
-    let timeCells = await screen.findAllByRole('time-cell')
+    let timeCells = await screen.findAllByTestId('time-cell')
     waitFor(async () => {
       timeCells
     })
     expect(timeCells.length).toBe(3)
     await waitFor(() => userEvent.click(timeIncrementThirtyMin))
-    timeCells = await screen.findAllByRole('time-cell')
+    timeCells = await screen.findAllByTestId('time-cell')
     expect(timeCells.length).toBe(6)
     await waitFor(() => userEvent.click(timeIncrementFifteenMin))
-    timeCells = await screen.findAllByRole('time-cell')
+    timeCells = await screen.findAllByTestId('time-cell')
     expect(timeCells.length).toBe(12)
     await waitFor(() => userEvent.click(timeIncrementSixtyMin))
-    timeCells = await screen.findAllByRole('time-cell')
+    timeCells = await screen.findAllByTestId('time-cell')
     expect(timeCells.length).toBe(3)
   })
 })

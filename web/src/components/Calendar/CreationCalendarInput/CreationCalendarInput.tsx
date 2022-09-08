@@ -5,17 +5,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import { Moment } from 'moment'
 
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
-
-import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
+
 import CalendarHeaderCell from '../components/CalendarHeaderCell/CalendarHeaderCell'
 import TimeCell from '../components/TimeCell/TimeCell'
+import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 
 export type TimeIncrement = 15 | 30 | 60
-interface TimeCellProps {
-  time: string
-  colNum: number
-}
 
 type CalendarSelectionInputProps = {
   timeRanges: SelectedTimeRange[]
@@ -124,13 +120,13 @@ const CreationCalendarInput = ({
           </thead>
         </table>
         <div
-          role="calendar-table"
+          data-testid="calendar-table"
           className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto"
         >
           {daysToRender.map((day: Moment, di: number) => {
             return (
               <div
-                role="calendar-table-column"
+                data-testid="calendar-table-column"
                 className="col"
                 key={`${di}`}
                 ref={scrollableDiv}

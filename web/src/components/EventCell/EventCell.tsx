@@ -1,10 +1,11 @@
 import type { FindEventQuery, FindEventQueryVariables } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import { useAuth } from '@redwoodjs/auth'
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+
+import EventOwnerSummary from '../EventOwnerSummary/EventOwnerSummary'
 import EventResponseForm from '../EventResponseForm/EventResponseForm'
 import EventResponseReview from '../EventResponseReview/EventResponseReview'
-import EventOwnerSummary from '../EventOwnerSummary/EventOwnerSummary'
 
 export const QUERY = gql`
   query FindEventQuery($id: Int!) {

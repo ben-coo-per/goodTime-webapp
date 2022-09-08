@@ -1,5 +1,7 @@
-import { render, screen, waitFor, within } from '@redwoodjs/testing/web'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen, waitFor, within } from '@redwoodjs/testing/web'
+
 import CreationCalendarInput from './CreationCalendarInput'
 
 //   Improve this test with help from the Redwood Testing Doc:
@@ -27,7 +29,7 @@ describe('CreationCalendarInput', () => {
         setTimeRanges={setTimeRanges}
       />
     )
-    const timeCells = await screen.findAllByRole('time-cell')
+    const timeCells = await screen.findAllByTestId('time-cell')
 
     const button = within(timeCells[timeCells.length - 1]).getByRole('button')
     await waitFor(() => userEvent.click(button))

@@ -35,7 +35,7 @@ const TimeCell = ({
       return 'cell calendar-table-cell cursor-not-allowed bg-light-gray dark:bg-transparent dark:opacity-70'
     }
     return (
-      <div className={getClassName()} role="time-cell">
+      <div className={getClassName()} data-testid="time-cell">
         <button
           disabled
           className="h-full w-full p-2 text-text-subtle dark:text-dark-gray"
@@ -51,8 +51,9 @@ const TimeCell = ({
   if (isSelected()) {
     return (
       <div
-        className="cell calendar-table-cell bg-indigo-300 hover:bg-indigo-500 dark:bg-indigo-600 hover:dark:bg-indigo-700"
-        role="time-cell"
+        className="cell calendar-table-cell bg-indigo-300 hover:bg-indigo-400 dark:bg-indigo-600 hover:dark:bg-indigo-700"
+        data-testid="time-cell"
+        data-selected={true}
       >
         <button
           className="h-full w-full p-2 font-medium"
@@ -68,7 +69,8 @@ const TimeCell = ({
   return (
     <div
       className="cell calendar-table-cell hover:bg-indigo-100 hover:dark:bg-indigo-700"
-      role="time-cell"
+      data-testid="time-cell"
+      data-selected={false}
     >
       <button
         className="h-full w-full p-2"

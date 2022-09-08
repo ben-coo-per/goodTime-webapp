@@ -1,12 +1,15 @@
+import { useState } from 'react'
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
-import { useState } from 'react'
+
 import Button from 'src/components/Button/Button'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
-import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
-import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
+import { getTimesToRender } from 'src/utils/calendarFactory'
+
 import TimeCell from '../components/TimeCell/TimeCell'
 import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
+import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
 
 interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
@@ -139,7 +142,7 @@ const ResponseCalendarInput = ({
                   <th
                     className="calendar-table-cell"
                     key={i}
-                    role="column-header"
+                    data-testid="column-header"
                   >
                     <p className="text-sm font-normal leading-3 text-text-subtle dark:text-dark-gray">
                       {d[0]}
@@ -155,12 +158,16 @@ const ResponseCalendarInput = ({
           </thead>
         </table>
         <div
-          role="calendar-table"
+          data-testid="calendar-table"
           className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto"
         >
           {daysToRender.map((day: Moment, di: number) => {
             return (
-              <div role="calendar-table-column" className="col" key={`${di}`}>
+              <div
+                data-testid="calendar-table-column"
+                className="col"
+                key={`${di}`}
+              >
                 {getTimesToRender({ day, timeIncrement, times }).map(
                   (time, ti) => {
                     return (
