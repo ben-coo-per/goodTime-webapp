@@ -2,6 +2,8 @@ import { DbAuthHandler } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
+const twilio = require('twilio')
+
 export const handler = async (event, context) => {
   const forgotPasswordOptions = {
     // handler() is invoked after verifying that a user was found with the given
@@ -16,7 +18,27 @@ export const handler = async (event, context) => {
     // You could use this return value to, for example, show the email
     // address in a toast message so the user will know it worked and where
     // to look for the email.
-    handler: (user) => {
+    handler: async (user) => {
+      const accountSid = process.env.TWILIO_ACCOUNT_SID
+      const authToken = process.env.TWILIO_AUTH_TOKEN
+      const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER
+      const userPhoneNumber = `+1${user.phoneNumber}`
+      const resetPasswordMessage = `Reset your goodtime password at ${process.env.BASE_URL}reset-your-password?resetToken=${user.resetToken}`
+
+      // eslint-disable-next-line new-cap
+      const client = new twilio(accountSid, authToken)
+      try {
+        await client.messages
+          .create({
+            body: resetPasswordMessage,
+            to: userPhoneNumber, // Text this number
+            from: twilioPhoneNumber, // From a valid Twilio number
+          })
+          .then((message) => console.log('message:', message.sid))
+      } catch (e) {
+        console.log('error:', e)
+      }
+
       return user
     },
 
@@ -27,9 +49,9 @@ export const handler = async (event, context) => {
       // for security reasons you may want to be vague here rather than expose
       // the fact that the email address wasn't found (prevents fishing for
       // valid email addresses)
-      usernameNotFound: 'Username not found',
+      usernameNotFound: 'Phone number not found',
       // if the user somehow gets around client validation
-      usernameRequired: 'Username is required',
+      usernameRequired: 'Your phone number is required',
     },
   }
 

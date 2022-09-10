@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { useAuth } from '@redwoodjs/auth'
+import { Form, Label, PasswordField, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
-import {
-  Form,
-  Label,
-  PasswordField,
-  Submit,
-  FieldError,
-} from '@redwoodjs/forms'
+
+import Button from 'src/components/Button/Button'
 
 const ResetPasswordPage = ({ resetToken }) => {
   const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
@@ -58,8 +55,49 @@ const ResetPasswordPage = ({ resetToken }) => {
   return (
     <>
       <MetaTags title="Reset Password" />
+      <main>
+        <Toaster toastOptions={{ duration: 6000 }} />
+        <div>
+          <header>
+            <h2 className="text-center font-display text-3xl lowercase">
+              Reset Your Password
+            </h2>
+          </header>
 
-      <main className="rw-main">
+          <div className="my-4 rounded-lg bg-white p-8 shadow dark:bg-indigo-800">
+            <Form onSubmit={onSubmit} className="flex flex-col">
+              <Label
+                name="password"
+                className="label mb-2"
+                errorClassName="label mb-2 error"
+              >
+                New Password
+              </Label>
+              <PasswordField
+                name="password"
+                autoComplete="new-password"
+                className="input mb-8"
+                errorClassName="input error mb-1"
+                disabled={!enabled}
+                ref={passwordRef}
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Password is required',
+                  },
+                }}
+              />
+
+              <FieldError name="password" className="field-error mb-8" />
+              <Button disabled={!enabled} type="submit">
+                Submit
+              </Button>
+            </Form>
+          </div>
+        </div>
+      </main>
+
+      {/* <main className="rw-main">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
@@ -109,7 +147,7 @@ const ResetPasswordPage = ({ resetToken }) => {
             </div>
           </div>
         </div>
-      </main>
+      </main> */}
     </>
   )
 }
