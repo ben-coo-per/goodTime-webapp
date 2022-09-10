@@ -1,6 +1,8 @@
 # README
 
-Welcome to [RedwoodJS](https://redwoodjs.com)!
+## goodtime web app
+
+This is the repo that holds the code for the web app. It is written in Redwood JS, so I am keeping most of their boilerplate here until I get around to updating it.
 
 > **Prerequisites**
 >
@@ -27,9 +29,11 @@ Your browser should automatically open to http://localhost:8910 where you'll see
 > Congratulations on running your first Redwood CLI command!
 > From dev to deploy, the CLI is with you the whole way.
 > And there's quite a few commands at your disposal:
+>
 > ```
 > yarn redwood --help
 > ```
+>
 > For all the details, see the [CLI reference](https://redwoodjs.com/docs/cli-commands).
 
 ## Prisma and the database
@@ -94,7 +98,7 @@ Redwood fully integrates Jest with the front and the backends and makes it easy 
 yarn rw test
 ```
 
-To make the integration even more seamless, Redwood augments Jest with database [scenarios](https://redwoodjs.com/docs/testing.md#scenarios)  and [GraphQL mocking](https://redwoodjs.com/docs/testing.md#mocking-graphql-calls).
+To make the integration even more seamless, Redwood augments Jest with database [scenarios](https://redwoodjs.com/docs/testing.md#scenarios) and [GraphQL mocking](https://redwoodjs.com/docs/testing.md#mocking-graphql-calls).
 
 ## Ship it
 
