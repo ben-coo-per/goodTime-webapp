@@ -17628,6 +17628,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mixpanel-browser@npm:^2.45.0":
+  version: 2.45.0
+  resolution: "mixpanel-browser@npm:2.45.0"
+  checksum: 4ae62626dbfad6dd2fb650e9a68981bdb0e43b108edfdf5cce3aaab7f00d6205bab9d426fac2f9407efb9ee42bbade1180ee848feb7127ecfa588660d6106537
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^0.5.1, mkdirp@npm:^0.5.3":
   version: 0.5.6
   resolution: "mkdirp@npm:0.5.6"
@@ -24274,6 +24281,7 @@ __metadata:
     autoprefixer: ^10.4.7
     framer-motion: ^6.4.3
     heroicons: ^1.0.6
+    mixpanel-browser: ^2.45.0
     moment: ^2.29.4
     postcss: ^8.4.14
     postcss-loader: ^7.0.0

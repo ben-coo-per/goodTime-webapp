@@ -20,6 +20,7 @@
     "@redwoodjs/web": "^2.2.3",
     "framer-motion": "^6.4.3",
     "heroicons": "^1.0.6",
+    "mixpanel-browser": "^2.45.0",
     "moment": "^2.29.4",
     "prettier": "^2.7.1",
     "prop-types": "15.8.1",
