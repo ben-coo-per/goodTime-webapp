@@ -28,13 +28,15 @@ const CreationCalendarInput = ({
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
   const scrollableDiv = useRef(null)
 
+  const scrollToRef = (ref) => {
+    ref.current.parentElement.scrollTo(0, ref.current.offsetTop)
+  }
+
   useEffect(() => {
     if (scrollableDiv.current) {
-      scrollableDiv.current.scrollIntoView({
-        block: 'nearest',
-      })
+      scrollToRef(scrollableDiv)
     }
-  }, [timeIncrement])
+  }, [timeIncrement, scrollableDiv])
 
   function handleSelectTime(time: number) {
     const updatedTimeRanges = timeRanges
