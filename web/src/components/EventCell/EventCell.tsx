@@ -1,8 +1,10 @@
 import type { FindEventQuery, FindEventQueryVariables } from 'types/graphql'
 
 import { useAuth } from '@redwoodjs/auth'
+import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import Button from '../Button/Button'
 import EventOwnerSummary from '../EventOwnerSummary/EventOwnerSummary'
 import EventResponseForm from '../EventResponseForm/EventResponseForm'
 import EventResponseReview from '../EventResponseReview/EventResponseReview'
@@ -34,7 +36,15 @@ export const QUERY = gql`
 
 export const Loading = () => <LoadingIndicator />
 
-export const Empty = () => <LoadingIndicator />
+export const Empty = () => (
+  <div className="flex flex-col gap-4">
+    <p className="font-display text-3xl lowercase">Oops!</p>
+    <p className="">We can&apos;t seem to find the event you are looking for</p>
+    <Link to={routes.home()}>
+      <Button>Back Home</Button>
+    </Link>
+  </div>
+)
 
 export const Failure = ({
   error,
