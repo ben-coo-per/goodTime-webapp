@@ -1,6 +1,4 @@
-# README
-
-## goodtime web app
+# goodtime web app
 
 This is the repo that holds the code for the web app. It is written in Redwood JS, so I am keeping most of their boilerplate here until I get around to updating it.
 
