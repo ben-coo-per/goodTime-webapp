@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
@@ -16,12 +16,14 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 import Button from 'src/components/Button/Button'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn, loading } = useAuth()
+  const { isAuthenticated, logIn, loading: authLoading } = useAuth()
   const { search } = useLocation()
   const continueYourJourney = search.replace('?redirectTo=', '')
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (isAuthenticated) {
+      setLoading(true)
       if (/redirectTo=.+$/.test(search)) {
         navigate(continueYourJourney)
       } else {
@@ -116,7 +118,7 @@ const LoginPage = () => {
                   </Link>
                 </div>
 
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" loading={loading || authLoading}>
                   Log In
                 </Button>
               </Form>

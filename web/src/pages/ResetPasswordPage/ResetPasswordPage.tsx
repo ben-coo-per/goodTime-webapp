@@ -12,9 +12,12 @@ const ResetPasswordPage = ({ resetToken }) => {
   const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
     useAuth()
   const [enabled, setEnabled] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (isAuthenticated) {
+      setEnabled(false)
+      setLoading(true)
       navigate(routes.home())
     }
   }, [isAuthenticated])
@@ -37,7 +40,8 @@ const ResetPasswordPage = ({ resetToken }) => {
     passwordRef.current.focus()
   }, [])
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { password: string }) => {
+    setLoading(true)
     const response = await resetPassword({
       resetToken,
       password: data.password,
@@ -45,6 +49,7 @@ const ResetPasswordPage = ({ resetToken }) => {
 
     if (response.error) {
       toast.error(response.error)
+      setLoading(false)
     } else {
       toast.success('Password changed!')
       await reauthenticate()
@@ -89,65 +94,13 @@ const ResetPasswordPage = ({ resetToken }) => {
               />
 
               <FieldError name="password" className="field-error mb-8" />
-              <Button disabled={!enabled} type="submit">
+              <Button disabled={!enabled} type="submit" loading={loading}>
                 Submit
               </Button>
             </Form>
           </div>
         </div>
       </main>
-
-      {/* <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-amber">Reset Password</h2>
-            </header>
-
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="text-left">
-                    <Label
-                      name="password"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      New Password
-                    </Label>
-                    <PasswordField
-                      name="password"
-                      autoComplete="new-password"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      disabled={!enabled}
-                      ref={passwordRef}
-                      validation={{
-                        required: {
-                          value: true,
-                          message: 'Password is required',
-                        },
-                      }}
-                    />
-
-                    <FieldError name="password" className="rw-field-error" />
-                  </div>
-
-                  <div className="rw-button-group">
-                    <Submit
-                      className="rw-button rw-button-blue"
-                      disabled={!enabled}
-                    >
-                      Submit
-                    </Submit>
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main> */}
     </>
   )
 }

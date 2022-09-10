@@ -5,6 +5,7 @@ type ButtonProps = {
   size?: 'sm' | 'md' | 'lg'
   icon_position?: 'left' | 'right'
   disabled?: boolean
+  loading?: boolean
   onClick?: () => void
   additionalClasses?: string
   type?: 'button' | 'submit' | 'reset'
@@ -17,6 +18,7 @@ const Button = ({
   size = 'md',
   icon_position = 'left',
   disabled = false,
+  loading = false,
   onClick,
   additionalClasses,
   type,
@@ -92,11 +94,19 @@ const Button = ({
   return (
     <button
       className={getClassName()}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       type={type}
     >
       {children}
+      {loading && (
+        <img
+          src="./flowerIcon.svg"
+          alt="loading icon"
+          className="animate-spin"
+          width={size === 'lg' ? 20 : size === 'sm' ? 10 : 16}
+        />
+      )}
     </button>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Form, Label, TextField, FieldError } from '@redwoodjs/forms'
@@ -10,9 +10,11 @@ import Button from 'src/components/Button/Button'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (isAuthenticated) {
+      setLoading(true)
       navigate(routes.home())
     }
   }, [isAuthenticated])
@@ -23,9 +25,11 @@ const ForgotPasswordPage = () => {
   }, [])
 
   const onSubmit = async (data) => {
+    setLoading(true)
     const response = await forgotPassword(data.username)
 
     if (response.error) {
+      setLoading(false)
       toast.error(response.error)
     } else {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
@@ -73,7 +77,9 @@ const ForgotPasswordPage = () => {
               />
               <FieldError name="username" className="field-error mb-8" />
 
-              <Button type="submit">Submit</Button>
+              <Button type="submit" loading={loading}>
+                Submit
+              </Button>
             </Form>
           </div>
         </div>
