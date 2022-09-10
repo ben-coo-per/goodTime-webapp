@@ -25,7 +25,7 @@ export const QUERY = gql`
 
 const ShareEventPage = () => {
   const { id } = useParams()
-  const textToCopy = `www.goodtime.to/response/${id}`
+  const textToCopy = `www.goodtime.to/respond/${id}`
 
   function handleCopy() {
     navigator.clipboard.writeText(textToCopy)

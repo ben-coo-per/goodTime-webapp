@@ -1,14 +1,16 @@
-import { MoonIcon, SunIcon } from '@heroicons/react/solid'
-import { Link } from '@redwoodjs/router'
 import { useEffect, useState } from 'react'
-import { switchTheme } from 'src/utils/theme'
+
+import { MoonIcon, SunIcon } from '@heroicons/react/solid'
+
+import { Link, routes } from '@redwoodjs/router'
+
 import { Illustration } from './Illustration'
 
 const PageFooter = () => {
   const [theme, setTheme] = useState<string>(localStorage.theme)
 
   useEffect(() => {
-    window.addEventListener('storage', (e) => {
+    window.addEventListener('storage', () => {
       setTheme(localStorage.getItem('theme'))
     })
   }, [])
@@ -24,7 +26,7 @@ const PageFooter = () => {
       </div>
       <Illustration />
       <div className="-my-1 bg-teal-700 p-10 text-light-gray dark:bg-indigo-700">
-        <Link className="hover:text-white hover:underline" to="/about">
+        <Link className="hover:text-white hover:underline" to={routes.about()}>
           about goodtime
         </Link>
         <p>
@@ -32,6 +34,7 @@ const PageFooter = () => {
             target="_blank"
             href="https://bencooper.xyz/"
             className="hover:text-white hover:underline"
+            rel="noreferrer"
           >
             my other work
           </a>
@@ -42,6 +45,7 @@ const PageFooter = () => {
             target="_blank"
             href="https://redwoodjs.com/"
             className="hover:text-white hover:underline"
+            rel="noreferrer"
           >
             redwood js
           </a>
