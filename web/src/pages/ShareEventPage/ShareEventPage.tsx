@@ -1,6 +1,6 @@
-import { ClipboardIcon } from '@heroicons/react/solid'
+import { ArrowRightIcon, ClipboardIcon } from '@heroicons/react/solid'
 
-import { useParams } from '@redwoodjs/router'
+import { Link, routes, useParams } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 // import { MetaTags, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -37,7 +37,7 @@ const ShareEventPage = () => {
         title="Share Event"
         description="Share this event with the people you're asking to come."
       />
-      <div className="flex h-full flex-col rounded py-8 sm:px-20">
+      <div className="flex h-full flex-col gap-4 rounded py-8 sm:px-20">
         <h3 className="mb-10 font-display text-2xl lowercase">
           Let&apos;s share your event with the people you&apos;re inviting!
         </h3>
@@ -52,6 +52,13 @@ const ShareEventPage = () => {
           >
             <ClipboardIcon className="h-10 w-10" />
           </Button>
+        </div>
+        <div className="flex w-full flex-row justify-end">
+          <Link to={routes.eventResponse({ id: JSON.parse(id) })}>
+            <Button variant="ghost">
+              View Responses <ArrowRightIcon className="h-10 w-10" />{' '}
+            </Button>
+          </Link>
         </div>
       </div>
     </>
