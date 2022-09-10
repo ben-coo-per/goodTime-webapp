@@ -1,8 +1,10 @@
-import { toast } from '@redwoodjs/web/dist/toast'
 import { Moment } from 'moment'
-import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
+import { User } from 'types/graphql'
+
+import { toast } from '@redwoodjs/web/dist/toast'
+
+import { Mixpanel } from 'src/utils/mixPanel'
 import { phoneNumberStyling } from 'src/utils/textFormatting'
-import { TimeRange, User } from 'types/graphql'
 
 interface UserDisplay extends Pick<User, 'displayName' | 'phoneNumber' | 'id'> {
   color?: string
@@ -19,9 +21,9 @@ const SummaryTimeCell = ({
   time,
   availableUsers,
   totalNumRespondents,
-  isCollapsed = false,
 }: SummaryTimeCellProps) => {
   function handleCopy() {
+    Mixpanel.track('copied date to clipboard')
     navigator.clipboard.writeText(time.format('ddd MM/DD @hh:mma'))
     toast.success(`"${time.format('ddd MM/DD @hh:mma')}" copied to clipboard`)
   }
@@ -39,7 +41,7 @@ const SummaryTimeCell = ({
     return classes.join(' ')
   }
   return (
-    <div className={classNames()} role="time-cell">
+    <div className={classNames()} data-testid="time-cell">
       <button
         className="flex h-full w-full flex-col gap-0 p-2"
         onClick={handleCopy}

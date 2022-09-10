@@ -1,11 +1,18 @@
+import { useEffect } from 'react'
+
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Button from 'src/components/Button/Button'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const HomePage = () => {
+  useEffect(() => {
+    Mixpanel.track('landed on homepage')
+  })
+
   return (
     <>
       <MetaTags title="Home" description="Home page" />

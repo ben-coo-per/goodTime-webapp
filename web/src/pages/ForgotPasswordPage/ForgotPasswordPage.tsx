@@ -7,17 +7,23 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import Button from 'src/components/Button/Button'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const ForgotPasswordPage = () => {
-  const { isAuthenticated, forgotPassword } = useAuth()
+  const { isAuthenticated, forgotPassword, currentUser } = useAuth()
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (isAuthenticated) {
+      Mixpanel.identify(currentUser.id)
+      Mixpanel.people.set({
+        $name: currentUser.displayName,
+        $phoneNumber: currentUser.phoneNumber,
+      })
       setLoading(true)
       navigate(routes.home())
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, currentUser])
 
   const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
@@ -31,6 +37,9 @@ const ForgotPasswordPage = () => {
     if (response.error) {
       setLoading(false)
       toast.error(response.error)
+      Mixpanel.track('password reset linke sending unsuccessfuly', {
+        error: response.error,
+      })
     } else {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
@@ -39,6 +48,7 @@ const ForgotPasswordPage = () => {
         'A link to reset your password was sent to ' + response.phoneNumber
       )
       navigate(routes.login())
+      Mixpanel.track('password reset link successfully sent')
     }
   }
 

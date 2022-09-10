@@ -1,6 +1,9 @@
-import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
+
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
+
 import GroupAvailabilityCalendar from './GroupAvailabilityCalendar'
 
 Object.assign(navigator, {
@@ -67,7 +70,7 @@ describe('GroupAvailabilityCalendar', () => {
         numberOfUsers={0}
       />
     )
-    const timeCells = await screen.findAllByRole('time-cell')
+    const timeCells = await screen.findAllByTestId('time-cell')
 
     const button = within(timeCells[timeCells.length - 1]).getByRole('button')
     await waitFor(() => userEvent.click(button))

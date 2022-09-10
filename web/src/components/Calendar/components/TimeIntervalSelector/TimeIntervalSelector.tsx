@@ -3,6 +3,9 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { motion } from 'framer-motion'
+
+import { Mixpanel } from 'src/utils/mixPanel'
+
 import { TimeIncrement } from '../../CreationCalendarInput/CreationCalendarInput'
 
 interface TimeIntervalSelectorProps {
@@ -17,6 +20,7 @@ const TimeIntervalSelector = ({
   const animationXPos =
     timeIncrement === 60 ? 0 : timeIncrement === 30 ? 37.5 : 75
 
+  const incrementOptions = [60, 30, 15]
   return (
     <div className="relative w-40" aria-label="time increment selector">
       <p className="mb-1 text-xs">Time Increment:</p>
@@ -27,30 +31,22 @@ const TimeIntervalSelector = ({
         transition={{ ease: 'easeInOut', duration: 0.25 }}
       />
       <div className="relative z-10 flex w-full flex-row justify-between text-sm">
-        <span
-          onClick={() => setTimeIncrement(60)}
-          className="time-increment-selector"
-          aria-label="60 minute increment"
-          role="time-increment-selector"
-        >
-          60
-        </span>
-        <span
-          onClick={() => setTimeIncrement(30)}
-          className="time-increment-selector"
-          aria-label="30 minute increment"
-          role="time-increment-selector"
-        >
-          30
-        </span>
-        <span
-          onClick={() => setTimeIncrement(15)}
-          className="time-increment-selector"
-          aria-label="15 minute increment"
-          role="time-increment-selector"
-        >
-          15
-        </span>
+        {incrementOptions.map((increment: TimeIncrement) => {
+          return (
+            <span
+              key={increment}
+              onClick={() => {
+                Mixpanel.track('set time increment', { increment })
+                setTimeIncrement(increment)
+              }}
+              className="time-increment-selector"
+              aria-label="60 minute increment"
+              data-testid="time-increment-selector"
+            >
+              {increment}
+            </span>
+          )
+        })}
       </div>
     </div>
   )

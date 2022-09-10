@@ -14,15 +14,30 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import Button from 'src/components/Button/Button'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const SignupPage = () => {
-  const { isAuthenticated, signUp, loading: authLoading } = useAuth()
+  const {
+    isAuthenticated,
+    signUp,
+    loading: authLoading,
+    currentUser,
+  } = useAuth()
   const [loading, setLoading] = useState<boolean>(false)
   const { search } = useLocation()
   const continueYourJourney = search.replace('?redirectTo=', '')
 
   useEffect(() => {
     if (isAuthenticated) {
+      try {
+        Mixpanel.alias(currentUser.id)
+      } catch {
+        Mixpanel.identify(currentUser.id)
+      }
+      Mixpanel.people.set({
+        $name: currentUser.displayName,
+        $phoneNumber: currentUser.phoneNumber,
+      })
       setLoading(true)
       if (/redirectTo=.+$/.test(search)) {
         navigate(continueYourJourney)
@@ -30,7 +45,7 @@ const SignupPage = () => {
         navigate(routes.home())
       }
     }
-  }, [continueYourJourney, isAuthenticated, search])
+  }, [isAuthenticated, currentUser])
 
   // focus on email box on page load
   const usernameRef = useRef<HTMLInputElement>()
@@ -45,13 +60,16 @@ const SignupPage = () => {
     if (response.message) {
       toast.remove(loadingToast)
       toast(response.message)
+      Mixpanel.track('signup action', { message: response.message })
     } else if (response.error) {
       toast.remove(loadingToast)
       toast.error(response.error)
+      Mixpanel.track('unsuccessful signup', { error: response.error })
     } else {
       toast.remove(loadingToast)
       // user is signed in automatically
       toast.success('Welcome!')
+      Mixpanel.track('successful signup')
     }
   }
 

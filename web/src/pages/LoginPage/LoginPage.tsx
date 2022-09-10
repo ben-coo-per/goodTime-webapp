@@ -14,9 +14,15 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import Button from 'src/components/Button/Button'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn, loading: authLoading } = useAuth()
+  const {
+    isAuthenticated,
+    currentUser,
+    logIn,
+    loading: authLoading,
+  } = useAuth()
   const { search } = useLocation()
   const continueYourJourney = search.replace('?redirectTo=', '')
   const [loading, setLoading] = useState<boolean>(false)
@@ -24,13 +30,18 @@ const LoginPage = () => {
   useEffect(() => {
     if (isAuthenticated) {
       setLoading(true)
+      Mixpanel.identify(currentUser.id)
+      Mixpanel.people.set({
+        $name: currentUser.displayName,
+        $phoneNumber: currentUser.phoneNumber,
+      })
       if (/redirectTo=.+$/.test(search)) {
         navigate(continueYourJourney)
       } else {
         navigate(routes.home())
       }
     }
-  }, [continueYourJourney, isAuthenticated, search])
+  }, [continueYourJourney, isAuthenticated, search, currentUser])
 
   const usernameRef = useRef<HTMLInputElement>()
   useEffect(() => {
@@ -43,13 +54,16 @@ const LoginPage = () => {
 
     if (response.message) {
       toast.remove(loadingToast)
+      Mixpanel.track('login action', { message: response.message })
       toast(response.message)
     } else if (response.error) {
       toast.remove(loadingToast)
       toast.error(response.error)
+      Mixpanel.track('unsuccessful login', { error: response.error })
     } else {
       toast.remove(loadingToast)
       toast.success('Welcome back!')
+      Mixpanel.track('successful login')
     }
   }
 

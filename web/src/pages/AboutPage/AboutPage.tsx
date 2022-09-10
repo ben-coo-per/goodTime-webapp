@@ -1,11 +1,18 @@
+import { useEffect } from 'react'
+
 import { MetaTags } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/dist/toast'
 
 import FeedbackForm from 'src/components/FeedbackForm/FeedbackForm'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const AboutPage = () => {
+  useEffect(() => {
+    Mixpanel.track('landed on about page')
+  }, [])
+
   return (
     <>
       <MetaTags

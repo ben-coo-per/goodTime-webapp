@@ -5,6 +5,8 @@ import { useForm, Form, Label, TextField } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
+import { Mixpanel } from 'src/utils/mixPanel'
+
 import Button from '../Button/Button'
 
 const UPDATE_USER_MUTATION = gql`
@@ -27,12 +29,14 @@ const AccountUpdateForm = () => {
     {
       onCompleted: (event) => {
         toast.success(`Your profile was successfully updated`)
+        Mixpanel.track('account update successful', { event })
         formMethods.reset()
         formMethods.setValue('phoneNumber', event.updateUser.phoneNumber)
         formMethods.setValue('displayName', event.updateUser.displayName)
       },
       onError: (error) => {
         toast.error(error.message)
+        Mixpanel.track('account update unsuccessful', { error: error.message })
       },
     }
   )

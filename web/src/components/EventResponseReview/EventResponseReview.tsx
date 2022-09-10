@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
+
 import { useAuth } from '@redwoodjs/auth'
 import { Form } from '@redwoodjs/forms'
 import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-import { useEffect, useState } from 'react'
+
+import { Mixpanel } from 'src/utils/mixPanel'
+
 import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCalendarInput'
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 
@@ -49,12 +53,14 @@ const EventResponseReview = ({
   const [createTimeRanges, { loading: createLoading }] = useMutation(
     CREATE_TIME_RANGES,
     {
-      onCompleted: (event) => {
+      onCompleted: () => {
         toast.success('Your times have been updated!')
+        Mixpanel.track('respondant times successfully updated')
         setHasChanged(false)
       },
       onError: (error) => {
         toast.error(error.message)
+        Mixpanel.track('respondant time update unsuccessful')
       },
     }
   )
@@ -93,7 +99,7 @@ const EventResponseReview = ({
   return (
     <div className="flex h-full flex-1 flex-col">
       <h1 className="mb-2 font-display text-2xl lowercase">
-        Here are the times you said you're available:
+        Here are the times you said you&apos;re available:
       </h1>
       <Form onSubmit={onSubmit} className="h-full overflow-auto">
         <ResponseCalendarInput

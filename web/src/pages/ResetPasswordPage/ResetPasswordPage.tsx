@@ -7,20 +7,31 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import Button from 'src/components/Button/Button'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const ResetPasswordPage = ({ resetToken }) => {
-  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
-    useAuth()
+  const {
+    isAuthenticated,
+    reauthenticate,
+    validateResetToken,
+    resetPassword,
+    currentUser,
+  } = useAuth()
   const [enabled, setEnabled] = useState(true)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (isAuthenticated) {
+      Mixpanel.identify(currentUser.id)
+      Mixpanel.people.set({
+        $name: currentUser.displayName,
+        $phoneNumber: currentUser.phoneNumber,
+      })
       setEnabled(false)
       setLoading(true)
       navigate(routes.home())
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, currentUser])
 
   useEffect(() => {
     const validateToken = async () => {
@@ -50,8 +61,10 @@ const ResetPasswordPage = ({ resetToken }) => {
     if (response.error) {
       toast.error(response.error)
       setLoading(false)
+      Mixpanel.track('Password reset unsuccessful', { error: response.error })
     } else {
       toast.success('Password changed!')
+      Mixpanel.track('Password reset successful')
       await reauthenticate()
       navigate(routes.login())
     }

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 
 import { Link, navigate, routes } from '@redwoodjs/router'
 
+import { Mixpanel } from 'src/utils/mixPanel'
 import { phoneNumberStyling } from 'src/utils/textFormatting'
 
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
@@ -36,6 +37,7 @@ const AuthenticatedUserMenu = ({
         dropdownExpanded
       ) {
         setDropdownExpanded(false)
+        Mixpanel.track('closed user menu')
       }
     }
     // Bind the event listener
@@ -53,7 +55,14 @@ const AuthenticatedUserMenu = ({
         aria-expanded="false"
         aria-haspopup="true"
         id="menu-button"
-        onClick={() => setDropdownExpanded(!dropdownExpanded)}
+        onClick={() => {
+          setDropdownExpanded(!dropdownExpanded)
+          if (!dropdownExpanded) {
+            Mixpanel.track('opened user menu')
+          } else {
+            Mixpanel.track('closed user menu')
+          }
+        }}
       >
         <UserCircleIcon className="mr-1 h-12" />
         {displayName != undefined && displayName != ''
@@ -89,6 +98,7 @@ const AuthenticatedUserMenu = ({
             onClick={() => {
               logOut()
               navigate(routes.home())
+              Mixpanel.track('user logged out')
             }}
             className="px-4 py-2 "
             role="menuitem"

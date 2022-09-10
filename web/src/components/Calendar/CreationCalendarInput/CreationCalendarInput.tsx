@@ -6,6 +6,7 @@ import { Moment } from 'moment'
 
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
 import { getDaysToRender, getTimesToRender } from 'src/utils/calendarFactory'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 import CalendarHeaderCell from '../components/CalendarHeaderCell/CalendarHeaderCell'
 import TimeCell from '../components/TimeCell/TimeCell'
@@ -39,6 +40,7 @@ const CreationCalendarInput = ({
   }, [timeIncrement, scrollableDiv])
 
   function handleSelectTime(time: number) {
+    Mixpanel.track('selected time', { time })
     const updatedTimeRanges = timeRanges
     const startMatchIndex = timeRanges.findIndex(
       (tr) => tr.startTime - timeIncrement * 60 == time
@@ -71,6 +73,7 @@ const CreationCalendarInput = ({
   }
 
   function handleDeselectTime(time: number) {
+    Mixpanel.track('deselected time', { time })
     const updatedTimeRanges = timeRanges
     const startMatchIndex = timeRanges.findIndex((tr) => tr.startTime == time)
     const endMatchIndex = timeRanges.findIndex(
