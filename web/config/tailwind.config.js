@@ -61,6 +61,15 @@ module.exports = {
           },
         },
       },
+      keyframes: {
+        'text-wiggle': {
+          '0%, 100%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(4deg)' },
+        },
+      },
+      animation: {
+        'text-wiggle': 'text-wiggle 1s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

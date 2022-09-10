@@ -101,7 +101,7 @@ const Button = ({
       {children}
       {loading && (
         <img
-          src="./flowerIcon.svg"
+          src="/flowerIcon.svg"
           alt="loading icon"
           className="animate-spin"
           width={size === 'lg' ? 20 : size === 'sm' ? 10 : 16}
