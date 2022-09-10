@@ -34,6 +34,18 @@ body {
   @apply dark:bg-indigo-900;
 }
 
+.toggle-bg:after {
+  content: '';
+  @apply absolute top-1.5 left-1.5 h-8 w-8 rounded border border-dark-gray shadow-sm transition dark:bg-indigo-800;
+}
+input:checked + .toggle-bg:after {
+  transform: translateX(100%);
+  @apply border-white bg-white;
+}
+input:checked + .toggle-bg {
+  @apply border-teal-700 bg-teal-700;
+}
+
 .error {
   @apply border-rose-700 text-rose-700 dark:border-rose-500 dark:text-rose-300;
 }
