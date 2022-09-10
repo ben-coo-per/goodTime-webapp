@@ -17,6 +17,7 @@ interface ResponseCalendarInputProps {
   timeRanges: any[]
   isSummary?: boolean
   isDisabled?: boolean
+  isLoading?: boolean
 }
 
 const ResponseCalendarInput = ({
@@ -25,6 +26,7 @@ const ResponseCalendarInput = ({
   timeRanges,
   isSummary = false,
   isDisabled = false,
+  isLoading = false,
 }: ResponseCalendarInputProps) => {
   // ensures timeranges are in a non-readonly format
   timeRanges = timeRanges.map((tr) => ({
@@ -225,7 +227,7 @@ const ResponseCalendarInput = ({
         </div>
       </div>
       <div className="flex flex-row-reverse justify-between">
-        <Button type="submit" disabled={isDisabled}>
+        <Button type="submit" disabled={isDisabled} loading={isLoading}>
           {isSummary ? 'Update' : 'Submit'}
         </Button>
       </div>

@@ -84,7 +84,8 @@ const AccountUpdateForm = () => {
       <Button
         type="submit"
         additionalClasses="mt-8 "
-        disabled={!formMethods.formState.isDirty || updateLoading}
+        disabled={!formMethods.formState.isDirty}
+        loading={updateLoading}
       >
         Submit
       </Button>

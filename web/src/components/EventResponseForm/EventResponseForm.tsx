@@ -1,10 +1,12 @@
-import { useAuth } from '@redwoodjs/auth'
+import { useEffect, useState } from 'react'
+
+import { TimeRange, User } from 'types/graphql'
+
 import { Form } from '@redwoodjs/forms'
-import { navigate, routes, useParams } from '@redwoodjs/router'
+import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-import { useEffect, useRef, useState } from 'react'
-import { TimeRange, User } from 'types/graphql'
+
 import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCalendarInput'
 
 export interface ProvidedTimes
@@ -39,12 +41,11 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
     } else {
       setHasChanged(true)
     }
-  }, [timeRanges])
+  }, [hasChanged, timeRanges])
 
   const [createTimeRanges, { loading }] = useMutation(CREATE_TIME_RANGES, {
-    onCompleted: (event) => {
+    onCompleted: () => {
       toast.success('Your available times have been saved!')
-      // navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
     },
     onError: (error) => {
       toast.error(error.message)
@@ -72,7 +73,8 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
           times={times}
           setTimeRanges={setTimeRanges}
           timeRanges={timeRanges}
-          isDisabled={!hasChanged || loading}
+          isDisabled={!hasChanged}
+          isLoading={loading}
         />
       </Form>
     </div>

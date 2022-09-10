@@ -121,7 +121,7 @@ const EventCreatePage = () => {
             <Button
               size="lg"
               type="submit"
-              disabled={loading}
+              loading={loading}
               additionalClasses="mt-2"
             >
               {formStep > 0 ? 'Create' : 'Next'}
