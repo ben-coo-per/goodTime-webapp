@@ -2,7 +2,6 @@ import { ArrowRightIcon, ClipboardIcon } from '@heroicons/react/solid'
 
 import { Link, routes, useParams } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-// import { MetaTags, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
 import Button from 'src/components/Button/Button'
@@ -68,11 +67,3 @@ const ShareEventPage = () => {
 }
 
 export default ShareEventPage
-
-// const EventSummary = () => {
-//   const { loading, error, data } = useQuery(QUERY)
-//   if (loading) {
-//     return <p>loading...</p>
-//   }
-//   return <p>mm</p>
-// }
