@@ -1,5 +1,6 @@
-import { render, screen, waitFor } from '@redwoodjs/testing/web'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen, waitFor } from '@redwoodjs/testing/web'
 
 import TimeIntervalSelector from './TimeIntervalSelector'
 

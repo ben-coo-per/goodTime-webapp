@@ -7,6 +7,8 @@ import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
+import { Mixpanel } from 'src/utils/mixPanel'
+
 import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCalendarInput'
 
 export interface ProvidedTimes
@@ -45,9 +47,11 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
 
   const [createTimeRanges, { loading }] = useMutation(CREATE_TIME_RANGES, {
     onCompleted: () => {
+      Mixpanel.track('respondant times successfully submitted')
       toast.success('Your available times have been saved!')
     },
     onError: (error) => {
+      Mixpanel.track('respondant time submission unsuccessful')
       toast.error(error.message)
     },
   })

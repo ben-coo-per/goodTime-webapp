@@ -5,7 +5,10 @@ import { useForm, Form, Label, TextField } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
+import { Mixpanel } from 'src/utils/mixPanel'
+
 import Button from '../Button/Button'
+import ToggleInputField from '../ToggleInputField/ToggleInputField'
 
 const UPDATE_USER_MUTATION = gql`
   mutation updateUser($id: String!, $input: UpdateUserInput!) {
@@ -19,20 +22,26 @@ const UPDATE_USER_MUTATION = gql`
 const AccountUpdateForm = () => {
   const { currentUser, loading: authLoading } = useAuth()
   const formMethods = useForm({
-    defaultValues: currentUser,
+    defaultValues: {
+      ...currentUser,
+      allowTracking: true,
+    },
   })
+  const hasOptedInTracking = Mixpanel.get_tracking_state()
 
   const [updateUser, { loading: updateLoading }] = useMutation(
     UPDATE_USER_MUTATION,
     {
       onCompleted: (event) => {
         toast.success(`Your profile was successfully updated`)
+        Mixpanel.track('account update successful', { event })
         formMethods.reset()
         formMethods.setValue('phoneNumber', event.updateUser.phoneNumber)
         formMethods.setValue('displayName', event.updateUser.displayName)
       },
       onError: (error) => {
         toast.error(error.message)
+        Mixpanel.track('account update unsuccessful', { error: error.message })
       },
     }
   )
@@ -41,10 +50,17 @@ const AccountUpdateForm = () => {
     if (currentUser != null && currentUser) {
       formMethods.setValue('phoneNumber', currentUser.phoneNumber)
       formMethods.setValue('displayName', currentUser.displayName)
+      formMethods.setValue('allowTracking', hasOptedInTracking)
     }
-  }, [authLoading, currentUser, formMethods])
+  }, [authLoading, currentUser, formMethods, hasOptedInTracking])
 
   function handleSubmit(data) {
+    if (data.allowTracking && !hasOptedInTracking) {
+      Mixpanel.opt_in_tracking()
+    }
+    if (!data.allowTracking && hasOptedInTracking) {
+      Mixpanel.opt_out_tracking()
+    }
     updateUser({
       variables: {
         id: currentUser.id,
@@ -80,6 +96,8 @@ const AccountUpdateForm = () => {
         display name
       </Label>
       <TextField name="displayName" className="input" />
+
+      <ToggleInputField label="allow activity tracking" name="allowTracking" />
 
       <Button
         type="submit"

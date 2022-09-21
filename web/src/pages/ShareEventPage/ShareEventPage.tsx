@@ -5,6 +5,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
 import Button from 'src/components/Button/Button'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 export const QUERY = gql`
   query GetEvent($id: Int!) {
@@ -31,6 +32,7 @@ const ShareEventPage = () => {
   function handleCopy() {
     navigator.clipboard.writeText(textToCopy)
     toast.success('Link copied to clipboard')
+    Mixpanel.track('copied share link to clipboard')
   }
   return (
     <>

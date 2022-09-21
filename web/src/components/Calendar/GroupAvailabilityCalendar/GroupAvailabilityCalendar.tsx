@@ -1,11 +1,12 @@
+import { useState } from 'react'
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import moment, { Moment } from 'moment'
-import { useState } from 'react'
+
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { getTimesToRender } from 'src/utils/calendarFactory'
-import { colorGenerator } from 'src/utils/colorGenerator'
+
 import SummaryTimeCell from '../components/SummaryTimeCell/SummaryTimeCell'
-import TimeCell from '../components/TimeCell/TimeCell'
 import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
 
@@ -23,7 +24,6 @@ const GroupAvailabilityCalendar = ({
   const now = moment()
   const maxDaysShown = 4
   const [timeIncrement, setTimeIncrement] = useState<TimeIncrement>(60)
-  const [showNames, setShowNames] = useState<boolean>(false)
 
   let days: Moment[] = []
   baseTimes.forEach((t) => {
@@ -35,17 +35,6 @@ const GroupAvailabilityCalendar = ({
       days = [...days, start]
     }
   })
-
-  // console.log(
-  //   JSON.stringify(
-  //     baseTimes.map((i) => ({
-  //       id: i.id,
-  //       startTime: i.startTime,
-  //       endtime: i.endTime,
-  //       user: { id: i.user.id, phoneNumber: i.user.phoneNumber },
-  //     }))
-  //   )
-  // )
 
   // Dedups the array by converting to strings then converts back to moment array
   const daysList = [
@@ -73,7 +62,7 @@ const GroupAvailabilityCalendar = ({
                 <th
                   className="calendar-table-cell"
                   key={i}
-                  role="column-header"
+                  data-testid="column-header"
                 >
                   <p className="text-sm font-normal leading-3 text-text-subtle dark:text-dark-gray">
                     {d[0]}
@@ -89,12 +78,16 @@ const GroupAvailabilityCalendar = ({
         </thead>
       </table>
       <div
-        role="calendar-table"
+        data-testid="calendar-table"
         className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 overflow-y-auto"
       >
         {daysToRender.map((day: Moment, di: number) => {
           return (
-            <div role="calendar-table-column" className="col" key={`${di}`}>
+            <div
+              data-testid="calendar-table-column"
+              className="col"
+              key={`${di}`}
+            >
               {getTimesToRender({ day, timeIncrement, times: baseTimes }).map(
                 (time, ti) => {
                   const availableUsers = allTimes
@@ -111,7 +104,6 @@ const GroupAvailabilityCalendar = ({
                       key={`${di}-${ti}`}
                       availableUsers={availableUsers}
                       totalNumRespondents={numberOfUsers}
-                      isCollapsed={showNames}
                     />
                   )
                 }

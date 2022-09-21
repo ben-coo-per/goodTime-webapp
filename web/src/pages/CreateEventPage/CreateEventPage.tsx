@@ -8,6 +8,7 @@ import { toast } from '@redwoodjs/web/dist/toast'
 
 import Button from 'src/components/Button/Button'
 import CreationCalendarInput from 'src/components/Calendar/CreationCalendarInput/CreationCalendarInput'
+import { Mixpanel } from 'src/utils/mixPanel'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation createEventWithTimes(
@@ -38,9 +39,11 @@ const EventCreatePage = () => {
     {
       onCompleted: (event) => {
         toast.success('Event created!')
+        Mixpanel.track('event successfully created', { event })
         navigate(routes.shareEvent({ id: event.createEventWithTimes.id }))
       },
       onError: (error) => {
+        Mixpanel.track('event creation unsuccessful', { error: error.message })
         toast.error(error.message)
       },
     }
