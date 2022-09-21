@@ -1,7 +1,7 @@
 import Button from './Button'
 
 export default {
-  title: 'Components/Inputs/Button',
+  title: 'Components/Button',
   component: Button,
   argTypes: {
     type: {

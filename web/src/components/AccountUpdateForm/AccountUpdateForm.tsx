@@ -8,7 +8,7 @@ import { toast } from '@redwoodjs/web/dist/toast'
 import { Mixpanel } from 'src/utils/mixPanel'
 
 import Button from '../Button/Button'
-import ToggleInputField from '../ToggleInputField/ToggleInputField'
+import ToggleInputField from '../input/ToggleInputField/ToggleInputField'
 
 const UPDATE_USER_MUTATION = gql`
   mutation updateUser($id: String!, $input: UpdateUserInput!) {

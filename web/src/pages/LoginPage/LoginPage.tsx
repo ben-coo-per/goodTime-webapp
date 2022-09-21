@@ -5,9 +5,9 @@ import { useAuth } from '@redwoodjs/auth'
 import {
   Form,
   Label,
-  TextField,
   PasswordField,
   FieldError,
+  TelField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -89,12 +89,16 @@ const LoginPage = () => {
                 >
                   Phone Number
                 </Label>
-                <TextField
+                <TelField
                   name="username"
                   className="input mb-8"
                   errorClassName="input error mb-1"
                   ref={usernameRef}
                   validation={{
+                    pattern: {
+                      value: /^[0-9]{10}$/i,
+                      message: 'Please enter a valid phone number',
+                    },
                     required: {
                       value: true,
                       message: 'Phone Number is required',

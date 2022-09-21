@@ -102,6 +102,10 @@ const SignupPage = () => {
                   errorClassName="input error mb-1"
                   ref={usernameRef}
                   validation={{
+                    pattern: {
+                      value: /^[0-9]{10}$/i,
+                      message: 'Please enter a valid phone number',
+                    },
                     required: {
                       value: true,
                       message: 'Phone Number is required',

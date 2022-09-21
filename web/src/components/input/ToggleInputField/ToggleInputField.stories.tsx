@@ -3,7 +3,7 @@ import { Form } from '@redwoodjs/forms'
 import ToggleInputField from './ToggleInputField'
 
 export default {
-  title: 'Components/ToggleInputField',
+  title: 'Components/Inputs/ToggleInputField',
   component: ToggleInputField,
   argTypes: {
     type: {

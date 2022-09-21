@@ -29,7 +29,7 @@ body {
 }
 
 .input {
-  @apply p-3;
+  @apply w-full p-3;
   @apply rounded-lg border border-dark-gray;
   @apply dark:bg-indigo-900;
 }
