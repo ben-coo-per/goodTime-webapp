@@ -9,7 +9,7 @@ export const schema = gql`
   }
 
   type Query {
-    events: [Event!]! @requireAuth
+    events(userId: String, selectPastEvents: Boolean): [Event!]! @requireAuth
     event(id: Int!): Event @skipAuth
   }
 
