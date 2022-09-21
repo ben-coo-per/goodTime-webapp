@@ -75,7 +75,7 @@ export const EventDisplayBlock = ({ event }: { event: Partial<Event> }) => {
 
   return (
     <Link
-      to={routes.eventResponse({ id: event.id })}
+      to={routes.eventResponse({ id: event.id, back: true })}
       className="grid w-full grid-cols-7 place-items-center p-4"
     >
       <div className="col-span-6 grid w-full grid-rows-2 gap-1">
