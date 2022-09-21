@@ -1,20 +1,30 @@
-import { UserCircleIcon } from '@heroicons/react/solid'
+import { ArrowLeftIcon, UserCircleIcon } from '@heroicons/react/solid'
 
 import { useAuth } from '@redwoodjs/auth'
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, back, useParams } from '@redwoodjs/router'
 
 import AuthenticatedUserMenu, {
   AuthenticatedUserMenuDisplayProps,
 } from '../AuthenticatedUserMenu/AuthenticatedUserMenu'
 
 const NavBar = ({ hasLogo = true }: { hasLogo?: boolean }) => {
+  const { back: hasBackButton } = useParams()
+
   return (
     <header className="mx-auto flex h-40 w-full flex-row-reverse items-center justify-between p-8">
       <UserElement />
-      {hasLogo && (
-        <Link className="cursor-pointer" to={routes.home()}>
-          <img src="/text-logo.svg" alt="Text Logo" />
-        </Link>
+      {hasBackButton ? (
+        <button className="cursor-pointer" onClick={() => back()}>
+          <ArrowLeftIcon className="h-10" />
+        </button>
+      ) : (
+        <>
+          {hasLogo && (
+            <Link className="cursor-pointer" to={routes.home()}>
+              <img src="/text-logo.svg" alt="Text Logo" />
+            </Link>
+          )}
+        </>
       )}
     </header>
   )
@@ -24,7 +34,6 @@ export default NavBar
 
 const UserElement = () => {
   const { isAuthenticated, loading, currentUser, logOut } = useAuth()
-  // console.log(currentUser)
 
   if (loading) {
     return (
