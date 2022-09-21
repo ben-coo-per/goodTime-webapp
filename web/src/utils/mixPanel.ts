@@ -1,6 +1,5 @@
 import mixpanel from 'mixpanel-browser'
 mixpanel.init('039f9b0f12e14f9a8bd1521d879771ce', {
-  debug: true,
   ignore_dnt: true,
   opt_out_tracking_by_default: false,
 })
