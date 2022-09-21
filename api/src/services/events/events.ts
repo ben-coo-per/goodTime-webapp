@@ -6,8 +6,32 @@ import type {
 
 import { db } from 'src/lib/db'
 
-export const events: QueryResolvers['events'] = () => {
-  return db.event.findMany()
+export const events: QueryResolvers['events'] = ({
+  userId,
+  selectPastEvents = false,
+}) => {
+  const now = Math.floor(Date.now() / 1000) // Get current unix time
+  const timeFilter = selectPastEvents
+    ? {
+        lte: now,
+      }
+    : {
+        gte: now,
+      }
+
+  return db.event.findMany({
+    where: {
+      ownerId: userId,
+      times: {
+        some: {
+          endTime: timeFilter,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 }
 
 export const event: QueryResolvers['event'] = ({ id }) => {

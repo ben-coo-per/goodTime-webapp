@@ -1,14 +1,17 @@
 import { useEffect } from 'react'
 
+import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Button from 'src/components/Button/Button'
+import EventsCell from 'src/components/EventsCell'
 import NavBar from 'src/components/NavBar/NavBar'
 import PageFooter from 'src/components/PageFooter/PageFooter'
 import { Mixpanel } from 'src/utils/mixPanel'
 
 const HomePage = () => {
+  const { userMetadata } = useAuth()
   useEffect(() => {
     Mixpanel.track('landed on homepage')
   })
@@ -33,6 +36,10 @@ const HomePage = () => {
                   </Button>
                 </Link>
               </div>
+            </div>
+            <h2 className="mt-20 text-left">Your Events</h2>
+            <div className="hidden-scrollbar::-webkit-scrollbar hidden-scrollbar  overflow-x-hidden overflow-y-scroll">
+              <EventsCell userId={userMetadata} />
             </div>
           </div>
         </div>
