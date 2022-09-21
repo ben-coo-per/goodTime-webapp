@@ -1,4 +1,7 @@
-import { render, screen } from '@redwoodjs/testing/web'
+import moment from 'moment'
+
+import { render, screen, within } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './EventsCell'
 import { standard } from './EventsCell.mock'
 
@@ -37,5 +40,59 @@ describe('EventsCell', () => {
     expect(() => {
       render(<Success events={standard().events} />)
     }).not.toThrow()
+  })
+
+  it('renders events that the user created', async () => {
+    mockCurrentUser({
+      displayName: 'Ben',
+      id: 'cl8bkm95l0172j50qmf9phatt',
+      phoneNumber: '7132546843',
+    })
+
+    render(<Success events={standard().events} />)
+    const createdByStatment = await screen.findByText('created by you')
+    expect(createdByStatment).toBeInTheDocument()
+  })
+
+  it('renders events that the user responded to, but didnt create', async () => {
+    mockCurrentUser({
+      displayName: 'Ben',
+      id: 'cl8bkm95l0172j50qmf9phatt',
+      phoneNumber: '7132546843',
+    })
+
+    render(<Success events={standard().events} />)
+    const createdByStatment = await screen.findByText('created by Zeus')
+    expect(createdByStatment).toBeInTheDocument()
+  })
+
+  it('gets the correct number of responses', async () => {
+    mockCurrentUser({
+      displayName: 'Ben',
+      id: 'cl8bkm95l0172j50qmf9phatt',
+      phoneNumber: '7132546843',
+    })
+
+    render(<Success events={standard().events} />)
+    const responsesCount = await screen.findAllByTestId('responses-count')
+    const countOfOne = await within(responsesCount[0]).findByText('1')
+    expect(countOfOne).toBeInTheDocument()
+  })
+
+  it('gets the correct time until the event', async () => {
+    mockCurrentUser({
+      displayName: 'Ben',
+      id: 'cl8bkm95l0172j50qmf9phatt',
+      phoneNumber: '7132546843',
+    })
+    const firstDayInEvent = standard()
+      .events[0].times.map((timeRange) => timeRange.endTime)
+      .sort((a, b) => a - b)[0]
+
+    render(<Success events={standard().events} />)
+    const untilStatement = await screen.findAllByText(
+      moment.unix(firstDayInEvent).fromNow()
+    )
+    expect(untilStatement[0]).toBeInTheDocument()
   })
 })

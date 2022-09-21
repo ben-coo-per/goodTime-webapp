@@ -21,10 +21,10 @@ export const events: QueryResolvers['events'] = ({
 
   return db.event.findMany({
     where: {
-      ownerId: userId,
       times: {
         some: {
           endTime: timeFilter,
+          userId: userId,
         },
       },
     },

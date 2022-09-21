@@ -14,6 +14,11 @@ export const failure = (args) => {
 }
 
 export const success = (args) => {
+  mockCurrentUser({
+    displayName: 'Ben',
+    id: 'cl8bkm95l0172j50qmf9phatt',
+    phoneNumber: '7132546843',
+  })
   return Success ? <Success {...standard()} {...args} /> : null
 }
 
