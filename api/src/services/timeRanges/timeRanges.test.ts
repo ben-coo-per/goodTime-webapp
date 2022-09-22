@@ -1,4 +1,3 @@
-import { TimeRange } from 'types/graphql'
 import {
   timeRanges,
   timeRange,

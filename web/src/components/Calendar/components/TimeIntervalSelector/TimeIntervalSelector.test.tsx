@@ -33,6 +33,7 @@ describe('TimeIntervalSelector', () => {
     const unselectedIncrement = screen.getByText('30')
     await waitFor(() => userEvent.click(unselectedIncrement))
 
+    // eslint-disable-next-line no-unused-expressions
     expect(setTimeIncrement).toBeCalled
   })
 })

@@ -1,5 +1,6 @@
-import { render } from '@redwoodjs/testing/web'
 import moment from 'moment'
+
+import { render } from '@redwoodjs/testing/web'
 
 import CalendarHeaderCell from './CalendarHeaderCell'
 

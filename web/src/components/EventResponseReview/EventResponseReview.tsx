@@ -73,7 +73,7 @@ const EventResponseReview = ({
     } else {
       setHasChanged(true)
     }
-  }, [timeRanges])
+  }, [hasChanged, timeRanges])
 
   async function onSubmit() {
     if (hasChanged) {

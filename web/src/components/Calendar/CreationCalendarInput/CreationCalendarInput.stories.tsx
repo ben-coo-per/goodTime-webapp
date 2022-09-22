@@ -1,5 +1,7 @@
 import { useState } from 'react'
+
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
+
 import CalendarSelectionInput from './CreationCalendarInput'
 
 export const Default = () => {

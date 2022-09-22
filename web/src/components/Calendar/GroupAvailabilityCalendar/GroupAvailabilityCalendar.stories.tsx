@@ -1,4 +1,5 @@
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
+
 import GroupAvailabilityCalendar from './GroupAvailabilityCalendar'
 
 const baseTimes: ProvidedTimes[] = [
@@ -21,7 +22,16 @@ const baseTimes: ProvidedTimes[] = [
     user: { id: 'cl6ydgdjz1327570qfuvnw03q', phoneNumber: '7132546843' },
   },
 ]
-const allTimes: any[] = [
+
+interface TimesWColor extends ProvidedTimes {
+  user: {
+    id: string
+    phoneNumber: string
+    color: string
+  }
+}
+
+const allTimes: TimesWColor[] = [
   {
     id: 5,
     startTime: 1693418400,

@@ -8,6 +8,7 @@ import {
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
+
 import Button from '../Button/Button'
 
 const CREATE_FEEDBACK_SUBMISSION_MUTATION = gql`
@@ -23,7 +24,7 @@ const FeedbackForm = () => {
   const [createFeebackSubmission, { loading }] = useMutation(
     CREATE_FEEDBACK_SUBMISSION_MUTATION,
     {
-      onCompleted: (event) => {
+      onCompleted: () => {
         toast.success(
           `Your feedback was submitted!
 
@@ -53,7 +54,7 @@ const FeedbackForm = () => {
         className="my-4 flex flex-col gap-2 rounded-xl bg-white p-8 shadow dark:bg-indigo-800"
       >
         <h2 className="mb-4 font-display text-xl lowercase">
-          Tell us how we're doing
+          Tell us how we&apos;re doing
         </h2>
         <Label name="message" className="label">
           your message

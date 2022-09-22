@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import SummaryTimeCell from './SummaryTimeCell'
 
 const fakeUsers = [

@@ -1,8 +1,10 @@
 import moment, { Moment } from 'moment'
 
+import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
+
 type TimeCellProps = {
   time: Moment
-  timeRanges: any[]
+  timeRanges: Partial<ProvidedTimes>[]
   handleSelectTime: (time: number) => void
   handleDeselectTime: (time: number) => void
 }

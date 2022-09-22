@@ -1,5 +1,7 @@
 import { useState } from 'react'
+
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
+
 import ResponseCalendarInput from './ResponseCalendarInput'
 
 const timesFixture = [

@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from '@prisma/client'
 
 export const standard = defineScenario<Prisma.EventCreateArgs>({
   event: {
@@ -6,9 +6,9 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
       data: {
         owner: {
           create: {
-            phoneNumber: "String759720",
-            hashedPassword: "String",
-            salt: "String",
+            phoneNumber: 'String759720',
+            hashedPassword: 'String',
+            salt: 'String',
           },
         },
       },
@@ -17,14 +17,14 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
       data: {
         owner: {
           create: {
-            phoneNumber: "String6405916",
-            hashedPassword: "String",
-            salt: "String",
+            phoneNumber: 'String6405916',
+            hashedPassword: 'String',
+            salt: 'String',
           },
         },
       },
     },
   },
-});
+})
 
-export type StandardScenario = typeof standard;
+export type StandardScenario = typeof standard

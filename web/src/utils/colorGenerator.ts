@@ -1,7 +1,7 @@
 // const tailwindColorNames = ['amber', 'teal', 'violet', 'blue', 'rose']
 // const tailwindShades = ['300', '400', '500', '600']
 
-let colorOptions = [
+const colorOptions = [
   'bg-amber-400',
   'bg-amber-500',
   'bg-amber-600',
@@ -24,7 +24,7 @@ type ColorGeneratorProps = {
   prefix?: string
 }
 
-export function colorGenerator({ numColors, prefix }: ColorGeneratorProps) {
+export function colorGenerator({ numColors }: ColorGeneratorProps) {
   let colors: string[] = []
 
   for (let i = 0; i < numColors; i++) {

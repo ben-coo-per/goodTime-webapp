@@ -1,4 +1,5 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/solid'
+
 import { switchTheme } from 'src/utils/theme'
 
 const ThemeToggle = ({ className }: { className?: string }) => {

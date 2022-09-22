@@ -1,6 +1,9 @@
-import moment from 'moment'
 import { useState } from 'react'
+
+import moment from 'moment'
+
 import { SelectedTimeRange } from 'src/pages/CreateEventPage/CreateEventPage'
+
 import TimeCell from './TimeCell'
 
 export const Default = () => {
@@ -14,10 +17,10 @@ export const Default = () => {
 
   return (
     <div
-      role="calendar-table"
+      data-testid="calendar-table"
       className="flexbox-table hidden-scrollbar::-webkit-scrollbar hidden-scrollbar h-96 w-40 overflow-y-auto"
     >
-      <div role="calendar-table-column" className="col">
+      <div data-testid="calendar-table-column" className="col">
         <TimeCell
           time={now}
           timeRanges={timeRanges}

@@ -1,6 +1,7 @@
-import { render, screen, within, waitFor } from '@redwoodjs/testing/web'
+import { render } from '@redwoodjs/testing/web'
+
 import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
-import userEvent from '@testing-library/user-event'
+
 import EventResponseReview from './EventResponseReview'
 
 const times: ProvidedTimes[] = [

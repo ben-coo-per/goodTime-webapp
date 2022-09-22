@@ -1,6 +1,8 @@
-import { render, screen, waitFor } from '@redwoodjs/testing/web'
-import * as themeUtils from 'src/utils/theme'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen, waitFor } from '@redwoodjs/testing/web'
+
+import * as themeUtils from 'src/utils/theme'
 
 import ThemeToggle from './ThemeToggle'
 

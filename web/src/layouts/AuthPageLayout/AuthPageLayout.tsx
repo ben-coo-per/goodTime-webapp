@@ -1,4 +1,5 @@
 import { Toaster } from '@redwoodjs/web/dist/toast'
+
 import PageFooter from 'src/components/PageFooter/PageFooter'
 
 type AuthPageLayoutProps = {

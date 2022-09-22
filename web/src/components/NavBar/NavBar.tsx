@@ -33,7 +33,7 @@ const NavBar = ({ hasLogo = true }: { hasLogo?: boolean }) => {
 export default NavBar
 
 const UserElement = () => {
-  const { isAuthenticated, loading, currentUser, logOut } = useAuth()
+  const { isAuthenticated, loading, currentUser } = useAuth()
 
   if (loading) {
     return (
@@ -50,7 +50,6 @@ const UserElement = () => {
       <AuthenticatedUserMenu
         displayName={displayName}
         phoneNumber={phoneNumber}
-        logOut={logOut}
       />
     )
   }

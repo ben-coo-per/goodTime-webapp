@@ -14,8 +14,8 @@ import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
 
 interface ResponseCalendarInputProps {
   times: ProvidedTimes[]
-  setTimeRanges: React.Dispatch<React.SetStateAction<any[]>>
-  timeRanges: any[]
+  setTimeRanges: React.Dispatch<React.SetStateAction<Partial<ProvidedTimes>[]>>
+  timeRanges: Partial<ProvidedTimes>[]
   isSummary?: boolean
   isDisabled?: boolean
   isLoading?: boolean

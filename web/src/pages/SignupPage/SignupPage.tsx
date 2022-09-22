@@ -45,7 +45,7 @@ const SignupPage = () => {
         navigate(routes.home())
       }
     }
-  }, [isAuthenticated, currentUser])
+  }, [isAuthenticated, currentUser, search, continueYourJourney])
 
   // focus on email box on page load
   const usernameRef = useRef<HTMLInputElement>()

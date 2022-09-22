@@ -1,5 +1,6 @@
-import { AuthProvider } from '@redwoodjs/auth'
+import { useEffect } from 'react'
 
+import { AuthProvider } from '@redwoodjs/auth'
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 
@@ -8,8 +9,8 @@ import Routes from 'src/Routes'
 
 import './scaffold.css'
 import './index.css'
-import { useEffect } from 'react'
-import { setDefaultTheme, setThemeClass } from './utils/theme'
+
+import { setDefaultTheme } from './utils/theme'
 
 const App = () => {
   useEffect(() => {

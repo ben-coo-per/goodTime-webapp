@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/solid'
 import { motion } from 'framer-motion'
 
+import { useAuth } from '@redwoodjs/auth'
 import { Link, navigate, routes } from '@redwoodjs/router'
 
 import { Mixpanel } from 'src/utils/mixPanel'
@@ -13,14 +14,13 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle'
 export type AuthenticatedUserMenuDisplayProps = {
   phoneNumber: string
   displayName?: string
-  logOut: (options?: unknown) => Promise<any>
 }
 
 const AuthenticatedUserMenu = ({
   phoneNumber,
   displayName,
-  logOut,
 }: AuthenticatedUserMenuDisplayProps) => {
+  const { logOut } = useAuth()
   const [dropdownExpanded, setDropdownExpanded] = useState<boolean>(false)
   const variants = {
     open: { opacity: 1, y: 0 },
