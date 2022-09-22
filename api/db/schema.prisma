@@ -23,6 +23,7 @@ model User {
 
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt @default(now())
+  notifPreferences      Boolean   @default(true)
 
   eventsOwned           Event[]       /// Collection of all of the events this person owns
   timeRanges            TimeRange[]   /// Collection of all of the timeranges this person says they are available for
