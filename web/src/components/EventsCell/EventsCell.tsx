@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/solid'
 import moment from 'moment'
-import type { Event, EventsQuery } from 'types/graphql'
+import type { Event, FindEventsQuery } from 'types/graphql'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
@@ -9,7 +9,7 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
 
 export const QUERY = gql`
-  query FindEventQuery($userId: String, $selectPastEvents: Boolean) {
+  query FindEventsQuery($userId: String, $selectPastEvents: Boolean) {
     events: events(userId: $userId, selectPastEvents: $selectPastEvents) {
       id
       createdAt
@@ -41,7 +41,7 @@ export const Failure = ({ error }: CellFailureProps) => (
   </div>
 )
 
-export const Success = ({ events }: CellSuccessProps<EventsQuery>) => {
+export const Success = ({ events }: CellSuccessProps<FindEventsQuery>) => {
   const { isAuthenticated } = useAuth()
   return (
     <>
