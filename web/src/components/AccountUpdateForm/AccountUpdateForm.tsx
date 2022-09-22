@@ -15,6 +15,7 @@ const UPDATE_USER_MUTATION = gql`
     updateUser(id: $id, input: $input) {
       phoneNumber
       displayName
+      notifPreferences
     }
   }
 `
@@ -24,7 +25,7 @@ const AccountUpdateForm = () => {
   const formMethods = useForm({
     defaultValues: {
       ...currentUser,
-      allowTracking: true,
+      allowTracking: false,
     },
   })
   const hasOptedInTracking = Mixpanel.get_tracking_state()
@@ -33,11 +34,13 @@ const AccountUpdateForm = () => {
     UPDATE_USER_MUTATION,
     {
       onCompleted: (event) => {
+        console.log(event)
         toast.success(`Your profile was successfully updated`)
         Mixpanel.track('account update successful', { event })
         formMethods.reset()
         formMethods.setValue('phoneNumber', event.updateUser.phoneNumber)
         formMethods.setValue('displayName', event.updateUser.displayName)
+        formMethods.setValue('notifPreferences', event.notifPreferences)
       },
       onError: (error) => {
         toast.error(error.message)
@@ -50,11 +53,13 @@ const AccountUpdateForm = () => {
     if (currentUser != null && currentUser) {
       formMethods.setValue('phoneNumber', currentUser.phoneNumber)
       formMethods.setValue('displayName', currentUser.displayName)
+      formMethods.setValue('notifPreferences', currentUser.notifPreferences)
       formMethods.setValue('allowTracking', hasOptedInTracking)
     }
   }, [authLoading, currentUser, formMethods, hasOptedInTracking])
 
   function handleSubmit(data) {
+    console.log(data)
     if (data.allowTracking && !hasOptedInTracking) {
       Mixpanel.opt_in_tracking()
     }
@@ -97,6 +102,10 @@ const AccountUpdateForm = () => {
       </Label>
       <TextField name="displayName" className="input" />
 
+      <ToggleInputField
+        label="notify me when someone responds to my event"
+        name="notifPreferences"
+      />
       <ToggleInputField label="allow activity tracking" name="allowTracking" />
 
       <Button

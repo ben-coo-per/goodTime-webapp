@@ -9,6 +9,7 @@ export const schema = gql`
     resetTokenExpiresAt: DateTime
     createdAt: DateTime!
     updatedAt: DateTime!
+    notifPreferences: Boolean!
     eventsOwned: [Event]!
     timeRanges: [TimeRange]!
   }
@@ -25,6 +26,7 @@ export const schema = gql`
     salt: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
+    notifPreferences: Boolean
   }
 
   input UpdateUserInput {
@@ -34,6 +36,7 @@ export const schema = gql`
     salt: String
     resetToken: String
     resetTokenExpiresAt: DateTime
+    notifPreferences: Boolean
   }
 
   type Mutation {
