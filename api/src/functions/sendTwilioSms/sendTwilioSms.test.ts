@@ -3,7 +3,7 @@ import {
   missingEventId,
   missingMsgType,
   missingPhoneNumber,
-  missingUserAndEventName,
+  updateMissingUserAndEventName,
   standard,
 } from './sendTwilioSms.scenarios'
 
@@ -21,15 +21,16 @@ describe('sendTwilioSms function', () => {
   })
 
   it("Should respond with 200 without user and event name when they aren't provided", async () => {
-    const response = await handler(missingUserAndEventName(), null)
+    const response = await handler(updateMissingUserAndEventName(), null)
     const { data } = JSON.parse(response.body)
-    const { eventId } = JSON.parse(missingUserAndEventName().body)
+    const { eventId } = JSON.parse(updateMissingUserAndEventName().body)
 
     expect(response.statusCode).toBe(200)
     expect(data.sent).toBe(true)
     expect(data.message).toContain(eventId)
     expect(data.message).toContain('someone')
     expect(data.message).toContain('your event')
+    expect(data.message).toContain('changed their response')
   })
 
   it("Should respond with 400 when a message type isn't provided", async () => {

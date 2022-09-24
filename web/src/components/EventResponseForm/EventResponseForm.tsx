@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { TimeRange, User } from 'types/graphql'
 
+import { useAuth } from '@redwoodjs/auth'
 import { Form } from '@redwoodjs/forms'
 import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -27,7 +28,15 @@ const CREATE_TIME_RANGES = gql`
         id
         startTime
         endTime
+        user {
+          displayName
+          phoneNumber
+        }
       }
+      owner {
+        phoneNumber
+      }
+      name
     }
   }
 `
@@ -36,6 +45,7 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
   const [timeRanges, setTimeRanges] = useState([])
   const [hasChanged, setHasChanged] = useState<boolean | undefined>()
   const { id } = useParams()
+  const { currentUser } = useAuth()
 
   useEffect(() => {
     if (hasChanged == undefined) {
@@ -46,9 +56,25 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
   }, [hasChanged, timeRanges])
 
   const [createTimeRanges, { loading }] = useMutation(CREATE_TIME_RANGES, {
-    onCompleted: () => {
+    onCompleted: async (event) => {
       Mixpanel.track('respondant times successfully submitted')
       toast.success('Your available times have been saved!')
+
+      const smsMsgReqBody = {
+        eventId: event.addTimesToEvent.id,
+        eventName: event.addTimesToEvent.name,
+        phoneNumber: event.addTimesToEvent.owner.phoneNumber,
+        user: currentUser.displayName || currentUser.phoneNumber,
+        msgType: 'event-response',
+      }
+      await fetch(`${process.env.BASE_URL}.netlify/functions/sendTwilioSms`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(smsMsgReqBody),
+      })
     },
     onError: (error) => {
       Mixpanel.track('respondant time submission unsuccessful')

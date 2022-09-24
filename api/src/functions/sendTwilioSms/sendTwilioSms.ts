@@ -56,11 +56,6 @@ export const sendSMS = async (event: APIGatewayEvent) => {
 
 ${getMessageContent(msgType, user, eventName)}
 www.goodtime.to/respond/${eventId}
-
-__________________
-__________________
-sent with love from
-goodtime.to
     `
     // validate the phone number
     const validatedPhoneNumber = validatePhoneNumber(phoneNumber)
@@ -105,11 +100,8 @@ function validatePhoneNumber(phoneNumber: string) {
 
   const pattern = /^[0-9]{10}$/i // 10 digit number
 
-  // strip quotation marks out of number
-  const formattedNumber = phoneNumber
-
-  if (pattern.test(formattedNumber)) {
-    return formattedNumber
+  if (pattern.test(phoneNumber)) {
+    return phoneNumber
   } else {
     throw Error('Please provide a valid phone number')
   }
@@ -121,21 +113,37 @@ function getMessageContent(
   eventName?: string
 ) {
   if (msgType == 'event-response') {
-    return `${user ? user : 'someone'} has responded to ${
-      eventName ? eventName : 'your event'
-    }.`
+    return `${
+      user ? userPhoneNumberFormatting(user) : 'someone'
+    } has responded to ${eventName ? eventName : 'your event'}.`
   } else if (msgType == 'event-response-update') {
-    return `${user ? user : 'someone'} has changed their response to ${
-      eventName ? eventName : 'your event'
-    }.`
+    return `${
+      user ? userPhoneNumberFormatting(user) : 'someone'
+    } has changed their response to ${eventName ? eventName : 'your event'}.`
   } else if (msgType == 'event-update') {
     // not currently used, but keeping jic I want it in the future.
     return `${
-      user ? user : 'the event creator'
+      user ? userPhoneNumberFormatting(user) : 'the event creator'
     } has updated the possible times for ${
       eventName ? eventName : "an event you've responsed to"
     }.`
   } else {
     throw Error('Please provide a valid message type')
   }
+}
+
+function userPhoneNumberFormatting(str: string) {
+  //Filter only numbers from the input
+  const cleaned = ('' + str).replace(/\D/g, '')
+
+  //Check if the input is of correct length
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+
+  // If the user is a phone number, not a display name, format it
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+  }
+
+  // otherwise, just return the display name
+  return str
 }

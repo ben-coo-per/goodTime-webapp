@@ -30,10 +30,10 @@ export const missingEventId = () =>
     }),
   })
 
-export const missingUserAndEventName = () =>
+export const updateMissingUserAndEventName = () =>
   mockHttpEvent({
     body: JSON.stringify({
-      msgType: 'event-response',
+      msgType: 'event-response-update',
       phoneNumber: '7132546843',
       eventId: '4',
     }),
