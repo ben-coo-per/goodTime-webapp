@@ -34,13 +34,13 @@ const AccountUpdateForm = () => {
     UPDATE_USER_MUTATION,
     {
       onCompleted: (event) => {
-        console.log(event)
+        const { phoneNumber, displayName, notifPreferences } = event.updateUser
         toast.success(`Your profile was successfully updated`)
         Mixpanel.track('account update successful', { event })
         formMethods.reset()
-        formMethods.setValue('phoneNumber', event.updateUser.phoneNumber)
-        formMethods.setValue('displayName', event.updateUser.displayName)
-        formMethods.setValue('notifPreferences', event.notifPreferences)
+        formMethods.setValue('phoneNumber', phoneNumber)
+        formMethods.setValue('displayName', displayName)
+        formMethods.setValue('notifPreferences', notifPreferences)
       },
       onError: (error) => {
         toast.error(error.message)
@@ -59,7 +59,6 @@ const AccountUpdateForm = () => {
   }, [authLoading, currentUser, formMethods, hasOptedInTracking])
 
   function handleSubmit(data) {
-    console.log(data)
     if (data.allowTracking && !hasOptedInTracking) {
       Mixpanel.opt_in_tracking()
     }
@@ -69,7 +68,11 @@ const AccountUpdateForm = () => {
     updateUser({
       variables: {
         id: currentUser.id,
-        input: { phoneNumber: data.phoneNumber, displayName: data.displayName },
+        input: {
+          phoneNumber: data.phoneNumber,
+          displayName: data.displayName,
+          notifPreferences: data.notifPreferences,
+        },
       },
     })
   }
