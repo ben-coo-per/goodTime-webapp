@@ -28,7 +28,15 @@ const CREATE_TIME_RANGES = gql`
         id
         startTime
         endTime
+        user {
+          displayName
+          phoneNumber
+        }
       }
+      owner {
+        phoneNumber
+      }
+      name
     }
   }
 `
@@ -43,7 +51,7 @@ const EventResponseReview = ({
   const [hasChanged, setHasChanged] = useState<boolean | undefined>()
   const [timeRanges, setTimeRanges] = useState(selectedTimes)
   const { id } = useParams()
-  const { userMetadata } = useAuth()
+  const { userMetadata, currentUser } = useAuth()
   const [clearTimes, { loading: deleteLoading }] = useMutation(CLEAR_TIMES, {
     onError: (error) => {
       toast.error(error.message)
@@ -53,10 +61,25 @@ const EventResponseReview = ({
   const [createTimeRanges, { loading: createLoading }] = useMutation(
     CREATE_TIME_RANGES,
     {
-      onCompleted: () => {
+      onCompleted: async (event) => {
         toast.success('Your times have been updated!')
         Mixpanel.track('respondant times successfully updated')
         setHasChanged(false)
+        const smsMsgReqBody = {
+          eventId: event.addTimesToEvent.id,
+          eventName: event.addTimesToEvent.name,
+          phoneNumber: event.addTimesToEvent.owner.phoneNumber,
+          user: currentUser.displayName || currentUser.phoneNumber,
+          msgType: 'event-response',
+        }
+        await fetch(`${process.env.BASE_URL}.netlify/functions/sendTwilioSms`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(smsMsgReqBody),
+        })
       },
       onError: (error) => {
         toast.error(error.message)
