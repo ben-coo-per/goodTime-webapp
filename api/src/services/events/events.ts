@@ -1,7 +1,7 @@
 import type {
   QueryResolvers,
   MutationResolvers,
-  EventRelationResolvers,
+  EventResolvers,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -96,7 +96,7 @@ export const deleteEvent: MutationResolvers['deleteEvent'] = ({ id }) => {
   })
 }
 
-export const Event: EventRelationResolvers = {
+export const Event: EventResolvers = {
   times: (_obj, { root }) =>
     db.event.findUnique({ where: { id: root.id } }).times(),
   owner: (_obj, { root }) =>

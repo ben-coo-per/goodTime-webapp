@@ -1,7 +1,7 @@
 import type {
   QueryResolvers,
   MutationResolvers,
-  UserRelationResolvers,
+  UserResolvers,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -35,7 +35,7 @@ export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
   })
 }
 
-export const User: UserRelationResolvers = {
+export const User: UserResolvers = {
   eventsOwned: (_obj, { root }) =>
     db.user.findUnique({ where: { id: root.id } }).eventsOwned(),
   timeRanges: (_obj, { root }) =>

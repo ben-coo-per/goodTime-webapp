@@ -1,7 +1,7 @@
 import type {
   QueryResolvers,
   MutationResolvers,
-  TimeRangeRelationResolvers,
+  TimeRangeResolvers,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -61,7 +61,7 @@ export const deleteTimeRanges: MutationResolvers['deleteTimeRanges'] = async ({
   return false // todo: throw a 401 Error
 }
 
-export const TimeRange: TimeRangeRelationResolvers = {
+export const TimeRange: TimeRangeResolvers = {
   event: (_obj, { root }) =>
     db.timeRange.findUnique({ where: { id: root.id } }).event(),
   user: (_obj, { root }) =>
