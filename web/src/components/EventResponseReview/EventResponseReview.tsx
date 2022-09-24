@@ -72,7 +72,8 @@ const EventResponseReview = ({
           user: currentUser.displayName || currentUser.phoneNumber,
           msgType: 'event-response',
         }
-        await fetch(`${process.env.BASE_URL}.netlify/functions/sendTwilioSms`, {
+
+        await fetch(`../.netlify/functions/sendTwilioSms`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
