@@ -51,7 +51,7 @@ export const Success = ({ events }: CellSuccessProps<FindEventsQuery>) => {
             Upcoming Events
           </h2>
           <div className="hidden-scrollbar::-webkit-scrollbar hidden-scrollbar overflow-x-hidden overflow-y-scroll rounded-lg border border-light-gray bg-amber-50 dark:border-indigo-600 dark:bg-indigo-800 ">
-            <div className="flex flex-col gap-2 divide-y divide-light-gray  dark:divide-indigo-600">
+            <div className="flex flex-col divide-y divide-light-gray  dark:divide-indigo-600">
               {events.map((event) => {
                 return <EventDisplayBlock key={event.id} event={event} />
               })}
@@ -78,10 +78,12 @@ export const EventDisplayBlock = ({ event }: { event: Partial<Event> }) => {
       to={routes.eventResponse({ id: event.id, back: true })}
       className="grid w-full grid-cols-7 place-items-center p-4"
     >
-      <div className="col-span-6 grid w-full grid-rows-2 gap-1">
-        <div className="flex flex-row gap-2">
-          <h3 className="text-left text-lg">{event.name}</h3>
-          <span className=" mb-2.5 self-end text-sm">
+      <div className="h-mingrid-rows-2 col-span-6 grid w-full gap-1">
+        <div className="flex flex-col gap-2">
+          <h3 className="-mb-2 text-left font-display text-xl tracking-wide">
+            {event.name}
+          </h3>
+          <span className="text-left text-sm">
             {`created by ${
               event.owner.id == currentUser.id ? 'you' : event.owner.displayName
             }`}

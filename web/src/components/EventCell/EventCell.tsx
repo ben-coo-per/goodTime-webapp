@@ -65,6 +65,7 @@ export const Success = ({
     return (
       <EventOwnerSummary
         times={event.times.filter((time) => time.user.id != event.owner.id)}
+        title={event.name}
         baseTimes={ownerSelectedTimes}
       />
     )
@@ -75,6 +76,7 @@ export const Success = ({
     return (
       <EventResponseReview
         times={ownerSelectedTimes}
+        title={event.name}
         selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
       />
     )
@@ -82,6 +84,6 @@ export const Success = ({
 
   return (
     // if user is event guest who hasn't voted, show response input.
-    <EventResponseForm times={ownerSelectedTimes} />
+    <EventResponseForm times={ownerSelectedTimes} title={event.name} />
   )
 }

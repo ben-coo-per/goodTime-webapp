@@ -41,7 +41,13 @@ const CREATE_TIME_RANGES = gql`
   }
 `
 
-const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
+const EventResponseForm = ({
+  times,
+  title,
+}: {
+  times: ProvidedTimes[]
+  title: string
+}) => {
   const [timeRanges, setTimeRanges] = useState([])
   const [hasChanged, setHasChanged] = useState<boolean | undefined>()
   const { id } = useParams()
@@ -95,9 +101,12 @@ const EventResponseForm = ({ times }: { times: ProvidedTimes[] }) => {
 
   return (
     <div className="flex h-full flex-1 flex-col">
-      <h1 className="mb-2 font-display text-2xl lowercase">
-        What times work for you?
+      <h1 className="mb-2 font-display text-2xl tracking-wider dark:text-light-gray">
+        {title}
       </h1>
+      <h3 className="mb-2 font-sans text-lg lowercase dark:text-light-gray">
+        What times work for you?
+      </h3>
       <Form onSubmit={onSubmit} className=" h-full overflow-auto">
         <ResponseCalendarInput
           times={times}

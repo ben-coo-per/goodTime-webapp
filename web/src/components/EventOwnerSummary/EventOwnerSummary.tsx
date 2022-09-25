@@ -6,9 +6,11 @@ import { ProvidedTimes } from '../EventResponseForm/EventResponseForm'
 const EventOwnerSummary = ({
   times,
   baseTimes,
+  title,
 }: {
   times: ProvidedTimes[]
   baseTimes: ProvidedTimes[]
+  title: string
 }) => {
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index
@@ -27,9 +29,12 @@ const EventOwnerSummary = ({
 
   return (
     <div className="flex h-full flex-1 flex-col">
-      <h1 className="mb-2 font-display text-2xl lowercase dark:text-light-gray">
-        Your group&apos;s available times
+      <h1 className="mb-2 font-display text-2xl tracking-wider dark:text-light-gray">
+        {title}
       </h1>
+      <h3 className="mb-2 font-sans text-lg lowercase dark:text-light-gray">
+        Your group&apos;s available times
+      </h3>
       <div className=" h-full overflow-auto">
         <GroupAvailabilityCalendar
           baseTimes={baseTimes}
