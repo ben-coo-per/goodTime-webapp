@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { TimeRange, User } from 'types/graphql'
 
 import { useAuth } from '@redwoodjs/auth'
-import { Form } from '@redwoodjs/forms'
+import { FieldError, Form, Label, TextField } from '@redwoodjs/forms'
 import { useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
@@ -14,15 +14,21 @@ import ResponseCalendarInput from '../Calendar/ResponseCalendarInput/ResponseCal
 
 export interface ProvidedTimes
   extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
-  user: Pick<User, 'displayName' | 'phoneNumber' | 'id'>
+  user?: Pick<User, 'displayName' | 'phoneNumber' | 'id'>
+  unAuthUserDisplay?: string
 }
 
 const CREATE_TIME_RANGES = gql`
   mutation CreateTimeRangeForEvent(
     $id: Int!
     $input: [CreateTimeRangeInputForEvent!]!
+    $unAuthUserDisplay: String
   ) {
-    addTimesToEvent(id: $id, input: $input) {
+    addTimesToEvent(
+      id: $id
+      input: $input
+      unAuthUserDisplay: $unAuthUserDisplay
+    ) {
       id
       times {
         id
@@ -65,12 +71,11 @@ const EventResponseForm = ({
     onCompleted: async (event) => {
       Mixpanel.track('respondant times successfully submitted')
       toast.success('Your available times have been saved!')
-
       const smsMsgReqBody = {
         eventId: event.addTimesToEvent.id,
         eventName: event.addTimesToEvent.name,
         phoneNumber: event.addTimesToEvent.owner.phoneNumber,
-        user: currentUser.displayName || currentUser.phoneNumber,
+        user: currentUser?.displayName || currentUser?.phoneNumber,
         msgType: 'event-response',
       }
       await fetch(`../.netlify/functions/sendTwilioSms`, {
@@ -88,12 +93,13 @@ const EventResponseForm = ({
     },
   })
 
-  function onSubmit() {
+  function onSubmit(e: { unAuthUserDisplay?: string }) {
     if (hasChanged) {
       createTimeRanges({
         variables: {
           id: id,
           input: timeRanges,
+          ...e,
         },
       })
     }
@@ -107,7 +113,24 @@ const EventResponseForm = ({
       <h3 className="mb-2 font-sans text-lg lowercase dark:text-light-gray">
         What times work for you?
       </h3>
-      <Form onSubmit={onSubmit} className=" h-full overflow-auto">
+      <Form onSubmit={onSubmit} className="h-full overflow-auto">
+        {!currentUser && (
+          <>
+            <Label name="unAuthUserDisplay" className="label mt-8 ">
+              display name
+            </Label>
+            <TextField
+              name="unAuthUserDisplay"
+              className="input"
+              errorClassName="input error"
+              validation={{
+                required:
+                  'Please either log in or provide a name the host will know you by',
+              }}
+            />
+            <FieldError name="unAuthUserDisplay" className="field-error" />
+          </>
+        )}
         <ResponseCalendarInput
           times={times}
           setTimeRanges={setTimeRanges}

@@ -65,19 +65,24 @@ export const createEventWithTimes: MutationResolvers['createEventWithTimes'] =
 export const addTimesToEvent: MutationResolvers['addTimesToEvent'] = ({
   id,
   input,
+  unAuthUserDisplay,
 }) => {
   const timeRanges = input.map((tr) => ({
     ...tr,
     userId: context?.currentUser?.id,
+    unAuthUserDisplay: unAuthUserDisplay,
   }))
-  return db.event.update({
-    data: {
-      times: {
-        create: [...timeRanges],
+
+  if (!timeRanges.includes(null)) {
+    return db.event.update({
+      data: {
+        times: {
+          create: [...timeRanges],
+        },
       },
-    },
-    where: { id },
-  })
+      where: { id },
+    })
+  }
 }
 
 export const updateEvent: MutationResolvers['updateEvent'] = ({

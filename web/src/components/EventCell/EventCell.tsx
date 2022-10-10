@@ -57,7 +57,7 @@ export const Success = ({
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
   const { currentUser } = useAuth()
   const ownerSelectedTimes = event.times.filter(
-    (time) => time.user.id === event.owner.id
+    (time) => time.user?.id === event.owner.id
   )
 
   if (event.owner.id === currentUser?.id) {
@@ -71,7 +71,10 @@ export const Success = ({
     )
   }
 
-  if (event.times.map((t) => t.user.id).includes(currentUser.id)) {
+  if (
+    currentUser &&
+    event.times.map((t) => t.user?.id).includes(currentUser?.id)
+  ) {
     // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
       <EventResponseReview
