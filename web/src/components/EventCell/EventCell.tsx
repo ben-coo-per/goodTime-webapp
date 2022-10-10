@@ -29,6 +29,7 @@ export const QUERY = gql`
           displayName
           phoneNumber
         }
+        unAuthUserDisplay
       }
     }
   }
@@ -64,7 +65,7 @@ export const Success = ({
     // if user is event owner, redirect to summary page.
     return (
       <EventOwnerSummary
-        times={event.times.filter((time) => time.user.id != event.owner.id)}
+        times={event.times.filter((time) => time.user?.id != event.owner.id)}
         title={event.name}
         baseTimes={ownerSelectedTimes}
       />
@@ -80,7 +81,7 @@ export const Success = ({
       <EventResponseReview
         times={ownerSelectedTimes}
         title={event.name}
-        selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
+        selectedTimes={event.times.filter((t) => t.user?.id === currentUser.id)}
       />
     )
   }
