@@ -35,8 +35,11 @@ export const schema = gql`
       timeInput: [CreateTimeRangeInputForEvent!]!
     ): Event! @requireAuth
 
-    addTimesToEvent(id: Int!, input: [CreateTimeRangeInputForEvent!]!): Event!
-      @requireAuth
+    addTimesToEvent(
+      id: Int!
+      input: [CreateTimeRangeInputForEvent!]!
+      unAuthUserDisplay: String
+    ): Event! @skipAuth
     updateEvent(id: Int!, input: UpdateEventInput!): Event! @requireAuth
 
     deleteEvent(id: Int!): Event! @requireAuth

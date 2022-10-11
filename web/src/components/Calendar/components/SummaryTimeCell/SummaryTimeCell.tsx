@@ -1,13 +1,18 @@
 import { Moment } from 'moment'
-import { User } from 'types/graphql'
+import { TimeRange } from 'types/graphql'
 
 import { toast } from '@redwoodjs/web/dist/toast'
 
 import { Mixpanel } from 'src/utils/mixPanel'
-import { phoneNumberStyling } from 'src/utils/textFormatting'
 
-interface UserDisplay extends Pick<User, 'displayName' | 'phoneNumber' | 'id'> {
+type UserDisplay = {
+  displayName: string
   color?: string
+}
+
+export interface RenderableTime
+  extends Pick<TimeRange, 'startTime' | 'endTime' | 'id'> {
+  user: UserDisplay
 }
 
 type SummaryTimeCellProps = {
@@ -73,9 +78,7 @@ const UserDotIndicator = ({ user }: { user: UserDisplay }) => {
     <div className="flex flex-row gap-2">
       <div className={dotClasses()} />
       <span className="text-xs">
-        {user.displayName
-          ? user.displayName
-          : phoneNumberStyling(user.phoneNumber)}
+        {user.displayName ? user.displayName : '~~~'}
       </span>
     </div>
   )

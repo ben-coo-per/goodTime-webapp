@@ -29,6 +29,7 @@ export const QUERY = gql`
           displayName
           phoneNumber
         }
+        unAuthUserDisplay
       }
     }
   }
@@ -57,27 +58,30 @@ export const Success = ({
 }: CellSuccessProps<FindEventQuery, FindEventQueryVariables>) => {
   const { currentUser } = useAuth()
   const ownerSelectedTimes = event.times.filter(
-    (time) => time.user.id === event.owner.id
+    (time) => time.user?.id === event.owner.id
   )
 
   if (event.owner.id === currentUser?.id) {
     // if user is event owner, redirect to summary page.
     return (
       <EventOwnerSummary
-        times={event.times.filter((time) => time.user.id != event.owner.id)}
+        times={event.times.filter((time) => time.user?.id != event.owner.id)}
         title={event.name}
         baseTimes={ownerSelectedTimes}
       />
     )
   }
 
-  if (event.times.map((t) => t.user.id).includes(currentUser.id)) {
+  if (
+    currentUser &&
+    event.times.map((t) => t.user?.id).includes(currentUser?.id)
+  ) {
     // if user is event guest who has voted, show response table with thier existing times & option to switch to edit mode.
     return (
       <EventResponseReview
         times={ownerSelectedTimes}
         title={event.name}
-        selectedTimes={event.times.filter((t) => t.user.id === currentUser.id)}
+        selectedTimes={event.times.filter((t) => t.user?.id === currentUser.id)}
       />
     )
   }

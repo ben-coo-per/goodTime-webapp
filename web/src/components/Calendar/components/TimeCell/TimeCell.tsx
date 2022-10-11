@@ -53,7 +53,7 @@ const TimeCell = ({
   if (isSelected()) {
     return (
       <div
-        className="cell calendar-table-cell bg-indigo-300 hover:bg-indigo-400 dark:bg-indigo-600 hover:dark:bg-indigo-700"
+        className="cell calendar-table-cell bg-indigo-300 dark:bg-indigo-600 sm:hover:bg-indigo-400 sm:hover:dark:bg-indigo-700"
         data-testid="time-cell"
         data-selected={true}
       >
@@ -70,7 +70,7 @@ const TimeCell = ({
   }
   return (
     <div
-      className="cell calendar-table-cell hover:bg-indigo-100 hover:dark:bg-indigo-700"
+      className="cell calendar-table-cell sm:hover:bg-indigo-100 sm:hover:dark:bg-indigo-700"
       data-testid="time-cell"
       data-selected={false}
     >

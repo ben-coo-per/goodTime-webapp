@@ -17,10 +17,11 @@ const Routes = () => {
       <Route path="/edit-your-account" page={AccountPage} name="account" />
       <WebAppLayout>
         <Private unauthenticated="login">
-          <Route path="/respond/{id:Int}" page={EventResponsePage} name="eventResponse" />
           <Route path="/create-an-event" page={CreateEventPage} name="createEvent" />
           <Route path="/share-your-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
         </Private>
+        <Route path="/respond/{id:Int}" page={EventResponsePage} name="eventResponse" />
+        <Route path="/sign-up-after-response" page={SignUpAfterResponsePage} name="signUpAfterResponse" />
       </WebAppLayout>
       <Route notfound page={NotFoundPage} />
     </Router>

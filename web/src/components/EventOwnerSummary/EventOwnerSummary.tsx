@@ -15,16 +15,36 @@ const EventOwnerSummary = ({
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index
   }
-  const listOfUsers = times.map((t) => t.user).filter(onlyUnique)
+  const listOfUsers = times
+    .map((t) => {
+      if (!t.user) {
+        return t.unAuthUserDisplay
+      }
+      return t.user?.displayName || t.user?.phoneNumber
+    })
+    .filter(onlyUnique)
 
   // Assign a color to each user
   const listOfColors = colorGenerator({
     numColors: listOfUsers.length,
     prefix: 'bg',
   })
-  times = times.map((time) => ({
+  const renderableTimes = times.map((time) => ({
     ...time,
-    user: { ...time.user, color: listOfColors[listOfUsers.indexOf(time.user)] },
+    user: {
+      displayName:
+        time.user?.displayName ||
+        time.user?.phoneNumber ||
+        time.unAuthUserDisplay,
+      color:
+        listOfColors[
+          listOfUsers.indexOf(
+            time.user?.displayName ||
+              time.user?.phoneNumber ||
+              time.unAuthUserDisplay
+          )
+        ],
+    },
   }))
 
   return (
@@ -38,7 +58,7 @@ const EventOwnerSummary = ({
       <div className=" h-full overflow-auto">
         <GroupAvailabilityCalendar
           baseTimes={baseTimes}
-          allTimes={times}
+          allTimes={renderableTimes}
           numberOfUsers={listOfUsers.length}
         />
       </div>
