@@ -6,13 +6,15 @@ import moment, { Moment } from 'moment'
 import { ProvidedTimes } from 'src/components/EventResponseForm/EventResponseForm'
 import { getTimesToRender } from 'src/utils/calendarFactory'
 
-import SummaryTimeCell from '../components/SummaryTimeCell/SummaryTimeCell'
+import SummaryTimeCell, {
+  RenderableTime,
+} from '../components/SummaryTimeCell/SummaryTimeCell'
 import TimeIntervalSelector from '../components/TimeIntervalSelector/TimeIntervalSelector'
 import { TimeIncrement } from '../CreationCalendarInput/CreationCalendarInput'
 
 interface GroupAvailabilityCalendarProps {
   baseTimes: ProvidedTimes[]
-  allTimes: ProvidedTimes[]
+  allTimes: RenderableTime[]
   numberOfUsers: number
 }
 

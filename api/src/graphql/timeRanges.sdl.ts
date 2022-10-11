@@ -6,8 +6,9 @@ export const schema = gql`
     createdAt: DateTime!
     event: Event!
     eventId: Int!
-    user: User!
-    userId: String!
+    user: User
+    userId: String
+    unAuthUserDisplay: String
   }
 
   type Query {

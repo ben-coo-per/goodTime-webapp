@@ -52,9 +52,10 @@ model TimeRange {
   event       Event       @relation(fields: [eventId], references: [id])  /// Each timerange needs to be attached to an event
   eventId     Int
 
-  user        User        @relation(fields: [userId], references: [id])   /// Each timerange needs to be attached to a user
-  userId      String
+  user        User?        @relation(fields: [userId], references: [id])   /// Each timerange can be attached to a user
+  userId      String?
 
+  unAuthUserDisplay String?  /// if there is not a user attached to the timerange, add a string as the display name
 }
 
 /// Feedback submissions how I will keep track of user feedback because I don't want to set up or pay for a messaging API because there will likely be very little fb

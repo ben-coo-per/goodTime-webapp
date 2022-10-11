@@ -138,7 +138,7 @@ export const handler = async (event, context) => {
     errors: {
       // `field` will be either "username" or "password"
       fieldMissing: '${field} is required',
-      usernameTaken: 'Username `${username}` already in use',
+      usernameTaken: '`${username}` is already being used with another account',
     },
   }
 
