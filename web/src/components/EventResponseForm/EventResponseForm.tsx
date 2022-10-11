@@ -4,7 +4,7 @@ import { TimeRange, User } from 'types/graphql'
 
 import { useAuth } from '@redwoodjs/auth'
 import { FieldError, Form, Label, TextField } from '@redwoodjs/forms'
-import { useParams } from '@redwoodjs/router'
+import { navigate, routes, useParams } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
@@ -38,6 +38,7 @@ const CREATE_TIME_RANGES = gql`
           displayName
           phoneNumber
         }
+        unAuthUserDisplay
       }
       owner {
         phoneNumber
@@ -56,6 +57,8 @@ const EventResponseForm = ({
 }) => {
   const [timeRanges, setTimeRanges] = useState([])
   const [hasChanged, setHasChanged] = useState<boolean | undefined>()
+  const [unAuthDisplayNameToPass, setUnAuthDisplayNameToPass] =
+    useState<string>()
   const { id } = useParams()
   const { currentUser } = useAuth()
 
@@ -86,6 +89,19 @@ const EventResponseForm = ({
         },
         body: JSON.stringify(smsMsgReqBody),
       })
+
+      if (!currentUser) {
+        navigate(
+          routes.signUpAfterResponse({
+            displayName: unAuthDisplayNameToPass,
+            trs: event.addTimesToEvent.times
+              .filter(
+                (t: TimeRange) => t.unAuthUserDisplay == unAuthDisplayNameToPass
+              )
+              .map((t: TimeRange) => t.id),
+          })
+        )
+      }
     },
     onError: (error) => {
       Mixpanel.track('respondant time submission unsuccessful')
@@ -95,6 +111,7 @@ const EventResponseForm = ({
 
   function onSubmit(e: { unAuthUserDisplay?: string }) {
     if (hasChanged) {
+      setUnAuthDisplayNameToPass(e.unAuthUserDisplay)
       createTimeRanges({
         variables: {
           id: id,

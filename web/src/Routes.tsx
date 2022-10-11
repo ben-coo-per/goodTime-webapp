@@ -21,6 +21,7 @@ const Routes = () => {
           <Route path="/share-your-event/{id:Int}" page={ShareEventPage} name="shareEvent" />
         </Private>
         <Route path="/respond/{id:Int}" page={EventResponsePage} name="eventResponse" />
+        <Route path="/sign-up-after-response" page={SignUpAfterResponsePage} name="signUpAfterResponse" />
       </WebAppLayout>
       <Route notfound page={NotFoundPage} />
     </Router>
