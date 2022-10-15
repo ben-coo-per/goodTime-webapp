@@ -40,6 +40,18 @@ const SignUpAfterResponsePage = () => {
   const onSubmit = async (data) => {
     const response = await signUp({ ...data })
 
+    if (response.message) {
+      toast(response.message)
+      Mixpanel.track('successful signup action after event response', {
+        message: response.message,
+      })
+    } else if (response.error) {
+      toast.error(response.error)
+      Mixpanel.track('unsuccessful signup after event response', {
+        error: response.error,
+      })
+    }
+
     await signUp({ ...data }).then(async () => {
       try {
         await getCurrentUser().then((user) => {
@@ -59,18 +71,6 @@ const SignUpAfterResponsePage = () => {
         })
       }
     })
-
-    if (response.message) {
-      toast(response.message)
-      Mixpanel.track('signup action after event response', {
-        message: response.message,
-      })
-    } else if (response.error) {
-      toast.error(response.error)
-      Mixpanel.track('unsuccessful signup after event response', {
-        error: response.error,
-      })
-    }
   }
 
   return (
