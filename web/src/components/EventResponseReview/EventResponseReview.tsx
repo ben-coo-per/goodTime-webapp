@@ -18,7 +18,7 @@ const CLEAR_TIMES = gql`
 `
 
 const CREATE_TIME_RANGES = gql`
-  mutation CreateTimeRangeForEvent(
+  mutation UpdateTimeRangesForEvent(
     $id: Int!
     $input: [CreateTimeRangeInputForEvent!]!
   ) {

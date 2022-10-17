@@ -14,6 +14,7 @@ const Routes = () => {
       </AuthPageLayout>
       <Route path="/" page={HomePage} name="home" />
       <Route path="/read-about-us" page={AboutPage} name="about" />
+      <Route path="/contact-us" page={ContactUsPage} name="contactUs" />
       <Route path="/edit-your-account" page={AccountPage} name="account" />
       <WebAppLayout>
         <Private unauthenticated="login">

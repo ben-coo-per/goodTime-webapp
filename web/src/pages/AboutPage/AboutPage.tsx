@@ -22,7 +22,7 @@ const AboutPage = () => {
       <div className="min-h-screen bg-background-light text-text-default dark:bg-background-dark dark:text-light-gray">
         <Toaster toastOptions={{ className: 'toast', duration: 6000 }} />
         <NavBar />
-        <div className="container mx-auto grid max-w-3xl">
+        <div className="container mx-auto grid max-w-3xl px-6 sm:px-0">
           <div className="flex flex-col gap-6 rounded py-8 sm:px-20">
             <h1 className="font-display text-3xl lowercase">About goodtime</h1>
             <p className="lowercase leading-relaxed">

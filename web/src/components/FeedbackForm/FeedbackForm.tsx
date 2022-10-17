@@ -19,7 +19,7 @@ const CREATE_FEEDBACK_SUBMISSION_MUTATION = gql`
   }
 `
 
-const FeedbackForm = () => {
+const FeedbackForm = ({ title }: { title?: string }) => {
   const formMethods = useForm()
   const [createFeebackSubmission, { loading }] = useMutation(
     CREATE_FEEDBACK_SUBMISSION_MUTATION,
@@ -47,14 +47,17 @@ const FeedbackForm = () => {
   }
 
   return (
-    <div className="my-8 flex flex-col gap-6 rounded py-8 sm:px-20">
+    <div
+      className="my-8 flex flex-col gap-6 rounded py-8 sm:px-20"
+      id="feedback"
+    >
       <Form
         onSubmit={handleSendResponse}
         formMethods={formMethods}
         className="my-4 flex flex-col gap-2 rounded-xl bg-white p-8 shadow dark:bg-indigo-800"
       >
         <h2 className="mb-4 font-display text-xl lowercase">
-          Tell us how we&apos;re doing
+          {title ? title : `Tell us how we're doing`}
         </h2>
         <Label name="message" className="label">
           your message

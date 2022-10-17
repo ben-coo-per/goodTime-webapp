@@ -25,34 +25,44 @@ const PageFooter = () => {
         )}
       </div>
       <Illustration />
-      <div className="-my-1 bg-teal-700 p-10 text-light-gray dark:bg-indigo-700">
-        <Link className="hover:text-white hover:underline" to={routes.about()}>
-          about goodtime
+      <div className="-my-1 flex flex-col gap-2 bg-teal-700 p-10 text-gray-200 dark:bg-indigo-700 sm:flex-row sm:gap-6">
+        <Link className="hover:text-white hover:underline" to={routes.home()}>
+          Home
         </Link>
-        <p>
+        <Link className="hover:text-white hover:underline" to={routes.about()}>
+          About
+        </Link>
+        <Link
+          className="hover:text-white hover:underline"
+          to={routes.contactUs()}
+        >
+          Contact Us
+        </Link>
+      </div>
+      <div className="flex flex-row justify-between bg-teal-700 px-10 pb-4 dark:bg-indigo-700 ">
+        <span className="text-sm text-gray-300">
+          ©{' '}
           <a
             target="_blank"
             href="https://bencooper.xyz/"
             className="hover:text-white hover:underline"
             rel="noreferrer"
           >
-            my other work
-          </a>
-        </p>
-        <p>
-          built with{' '}
+            Ben Cooper
+          </a>{' '}
+          | 2022
+        </span>
+        <p className="text-sm text-gray-300">
+          Built with{' '}
           <a
             target="_blank"
             href="https://redwoodjs.com/"
             className="hover:text-white hover:underline"
             rel="noreferrer"
           >
-            redwood js
+            Redwood JS
           </a>
         </p>
-      </div>
-      <div className="bg-teal-700 px-10 pb-4 dark:bg-indigo-700 md:px-2 md:pb-0">
-        <span className="text-sm text-dark-gray">© Ben Cooper | 2022</span>
       </div>
     </footer>
   )

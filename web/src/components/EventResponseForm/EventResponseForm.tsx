@@ -19,7 +19,7 @@ export interface ProvidedTimes
 }
 
 const CREATE_TIME_RANGES = gql`
-  mutation CreateTimeRangeForEvent(
+  mutation CreateTimeRangesForEvent(
     $id: Int!
     $input: [CreateTimeRangeInputForEvent!]!
     $unAuthUserDisplay: String
