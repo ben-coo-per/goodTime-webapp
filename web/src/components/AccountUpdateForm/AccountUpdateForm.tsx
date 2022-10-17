@@ -25,7 +25,7 @@ const AccountUpdateForm = () => {
   const formMethods = useForm({
     defaultValues: {
       ...currentUser,
-      allowTracking: false,
+      allowTracking: Mixpanel.get_tracking_state(),
     },
   })
   const hasOptedInTracking = Mixpanel.get_tracking_state()
@@ -41,6 +41,7 @@ const AccountUpdateForm = () => {
         formMethods.setValue('phoneNumber', phoneNumber)
         formMethods.setValue('displayName', displayName)
         formMethods.setValue('notifPreferences', notifPreferences)
+        formMethods.setValue('allowTracking', hasOptedInTracking)
       },
       onError: (error) => {
         toast.error(error.message)
