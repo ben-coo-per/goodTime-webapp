@@ -22,6 +22,7 @@ export const QUERY = gql`
         startTime
         endTime
         userId
+        unAuthUserDisplay
       }
     }
   }
@@ -70,7 +71,9 @@ export const EventDisplayBlock = ({ event }: { event: Partial<Event> }) => {
     .sort((a, b) => a - b)[0]
 
   const numResponses = new Set(
-    event.times.map((t) => t.userId).filter((uId) => uId != event.owner.id)
+    event.times
+      .map((t) => t.userId || t.unAuthUserDisplay)
+      .filter((uId) => uId != event.owner.id)
   ).size
 
   return (
@@ -78,7 +81,7 @@ export const EventDisplayBlock = ({ event }: { event: Partial<Event> }) => {
       to={routes.eventResponse({ id: event.id, back: true })}
       className="grid w-full grid-cols-7 place-items-center p-4"
     >
-      <div className="h-mingrid-rows-2 col-span-6 grid w-full gap-1">
+      <div className="col-span-6 grid w-full gap-1">
         <div className="flex flex-col gap-2">
           <h3 className="-mb-2 text-left font-display text-xl tracking-wide">
             {event.name}
